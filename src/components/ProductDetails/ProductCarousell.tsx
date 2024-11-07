@@ -97,6 +97,8 @@ export const ProductCarousell = ({ inLightbox = false }) => {
                                 alt='sneakers image'
                                 className='transition-transform duration-500 ease-in-out'
                                 style={{ transform: `translateX(-${curImageIdx * 100}%)` }}
+                                width={1000}
+                                height={1000}
                             />
                         ))}
                         <figcaption className='sr-only'>showcasing the sneaker images</figcaption>
@@ -185,7 +187,13 @@ export const ProductCarousell = ({ inLightbox = false }) => {
                                 'focus-visible:outline-offset-2',
                                 inLightbox && 'shadow-none focus-visible:outline-Light_grayish_blue'
                             ])}>
-                            <img src={imgThumb} alt='sneakers thumbnail image' className='w-40' />
+                            <img 
+                                src={imgThumb} 
+                                alt='sneakers thumbnail image' 
+                                className='w-40' 
+                                width={176}
+                                height={176}
+                                />
                         </Button>
                     ))}
                 </div>

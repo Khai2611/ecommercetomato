@@ -65,7 +65,6 @@ import spfFour from "./specialOffer/spfFour.webp";
 //profile pics 
 import lul from './lul.jpg';
 import screen from './screen.png';
-// import cover from './cover.jpg';
 
 export const assets = {
     
