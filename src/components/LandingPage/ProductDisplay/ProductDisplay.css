@@ -1,0 +1,28 @@
+.product-display{
+    /* margin-top: 30px; */
+}
+.product-display h2{
+    font-size: max(2vw,24px);
+    font-weight: 600;
+}
+.product-display-list{
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(240px,1fr));
+    margin-top: 30px;
+    gap: 30px;
+    row-gap: 50px;
+}
+
+.product-display-title h1{
+    color: #262626;
+    font-weight: 550; /* Change to 700 for bolder text */
+    font-size: max(2vw,24px);
+    margin-left: 1px;
+    /* margin: 0; Remove default margin */
+    margin-top: 10px; /* Remove default margin */
+    margin-bottom: 5px; /* Set a small bottom margin */
+}
+.explore-products-text{
+    max-width: 60%;
+    columns: #808080;
+}

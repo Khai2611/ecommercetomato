@@ -1,0 +1,33 @@
+/* brands */
+/* h2{
+    color: #262626;
+    font-weight: 600;
+    margin-left:5px;
+    margin-bottom: 50px;
+    margin-top: 150px;
+  } */
+   
+
+  /* partners' logo */
+  .brands-display{
+    color: #262626;
+    font-weight: 600;
+    font-size: max(2vw,24px);
+    margin: 20px 0 40px; /* Increase top margin to move it down */
+}
+  .partners {
+    display: flex;
+    flex-direction: row;
+    gap: 0.2rem;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    margin-left: 10px;
+  }
+  .partners img {
+    width: 25%;
+    height: 100%;
+    object-fit: contain;
+    margin-top: 10px;
+  }
+  
