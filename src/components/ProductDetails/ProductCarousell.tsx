@@ -1,30 +1,39 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
-import { useCarousel } from './use-carousel';
-import { useUIStore } from './ui.store';
-import { cm } from '../../utils/class-merger';
-import { assets } from '../../assets/frontend_assets/assets'; 
-import { ToolTip } from './tooltip';
-import { Button } from '../ui/Button';
-import { CloseIcon, ChevronLeftIcon, ChevronRightIcon } from '../ui/Icons';
+import {useState, useCallback, useEffect, useRef} from 'react';
+import {useCarousel} from './use-carousel';
+import {useUIStore} from './ui.store';
+import {cm} from '../../utils/class-merger';
+import {assets} from '../../assets/frontend_assets/assets';
+import {ToolTip} from './tooltip';
+import {Button} from '../ui/Button2';
+import {CloseIcon, ChevronLeftIcon, ChevronRightIcon} from '../ui/Icons';
 import React from 'react';
 
-export const ProductCarousell = ({ inLightbox = false }) => {
+export const ProductCarousell = ({inLightbox = false}) => {
     const mainCarouselRef = useRef<HTMLDivElement>(null);
     const [curImageIdx, setCurImageIdx] = useState(0);
 
-    const setLightboxStatus = useUIStore(s => s.setLightboxStatus);
-    const { carouselRef, carouselImagesRef, closeButtonRef, prevBtnRef, nextBtnRef } =
-        useCarousel(inLightbox);
+    const setLightboxStatus = useUIStore((s) => s.setLightboxStatus);
+    const {
+        carouselRef,
+        carouselImagesRef,
+        closeButtonRef,
+        prevBtnRef,
+        nextBtnRef,
+    } = useCarousel(inLightbox);
 
     const fullImgs = [assets.p1, assets.p2, assets.p3, assets.p4];
     const thumbImgs = [assets.p11, assets.p22, assets.p33, assets.p44];
 
     const displayPrevImage = useCallback(() => {
-        setCurImageIdx(prevIdx => (prevIdx === 0 ? fullImgs.length - 1 : prevIdx - 1));
+        setCurImageIdx((prevIdx) =>
+            prevIdx === 0 ? fullImgs.length - 1 : prevIdx - 1,
+        );
     }, []);
 
     const displayNextImage = useCallback(() => {
-        setCurImageIdx(prevIdx => (prevIdx === fullImgs.length - 1 ? 0 : prevIdx + 1));
+        setCurImageIdx((prevIdx) =>
+            prevIdx === fullImgs.length - 1 ? 0 : prevIdx + 1,
+        );
     }, []);
 
     useEffect(() => {
@@ -52,7 +61,13 @@ export const ProductCarousell = ({ inLightbox = false }) => {
         return () => {
             document.removeEventListener('keydown', handler);
         };
-    }, [displayNextImage, displayPrevImage, inLightbox, nextBtnRef, prevBtnRef]);
+    }, [
+        displayNextImage,
+        displayPrevImage,
+        inLightbox,
+        nextBtnRef,
+        prevBtnRef,
+    ]);
 
     useEffect(() => {
         if (mainCarouselRef.current && inLightbox) {
@@ -70,12 +85,14 @@ export const ProductCarousell = ({ inLightbox = false }) => {
                         onClick={() => setLightboxStatus(false)}
                         className={cm([
                             'group p-1 rounded -translate-y-3',
-                            'focus-visible:outline-offset-4 focus-visible:outline-Light_grayish_blue'
-                        ])}>
+                            'focus-visible:outline-offset-4 focus-visible:outline-Light_grayish_blue',
+                        ])}
+                    >
                         <ToolTip
                             tip={'Close lightbox or press Esc key'}
                             className='place-self-start after:-top-4'
-                            renderOnHover>
+                            renderOnHover
+                        >
                             <CloseIcon className='group-hover:fill-Orange fill-white' />
                         </ToolTip>
                     </Button>
@@ -87,8 +104,9 @@ export const ProductCarousell = ({ inLightbox = false }) => {
                     tabIndex={0}
                     className={cm([
                         'relative outline-none group rounded-3xl',
-                        'lg:focus-visible:outline-Orange lg:focus-visible:outline-1'
-                    ])}>
+                        'lg:focus-visible:outline-Orange lg:focus-visible:outline-1',
+                    ])}
+                >
                     <figure className='relative flex items-center overflow-hidden lg:rounded-3xl'>
                         {fullImgs.map((image, idx) => (
                             <img
@@ -96,12 +114,18 @@ export const ProductCarousell = ({ inLightbox = false }) => {
                                 key={`slide_${idx}`}
                                 alt='sneakers image'
                                 className='transition-transform duration-500 ease-in-out'
-                                style={{ transform: `translateX(-${curImageIdx * 100}%)` }}
+                                style={{
+                                    transform: `translateX(-${
+                                        curImageIdx * 100
+                                    }%)`,
+                                }}
                                 width={1000}
                                 height={1000}
                             />
                         ))}
-                        <figcaption className='sr-only'>showcasing the sneaker images</figcaption>
+                        <figcaption className='sr-only'>
+                            showcasing the sneaker images
+                        </figcaption>
                     </figure>
 
                     {/* ARROWS */}
@@ -110,11 +134,12 @@ export const ProductCarousell = ({ inLightbox = false }) => {
                             tip={'previous image'}
                             className={cm([
                                 'after:-top-12 after:duration-400',
-                                'absolute top-1/2 left-0 translate-x-1/2 -translate-y-1/2'
+                                'absolute top-1/2 left-0 translate-x-1/2 -translate-y-1/2',
                             ])}
                             renderTime={1000}
                             renderCenter
-                            renderOnHover>
+                            renderOnHover
+                        >
                             <Button
                                 ref={prevBtnRef}
                                 variant={'carousel'}
@@ -123,8 +148,9 @@ export const ProductCarousell = ({ inLightbox = false }) => {
                                     'group/prev-btn lg:hidden',
                                     'absolute top-1/2 left-0 translate-x-1/2 -translate-y-1/2',
                                     'group-hover:block group-focus-within:block',
-                                    inLightbox && 'lg:block -translate-x-1/2'
-                                ])}>
+                                    inLightbox && 'lg:block -translate-x-1/2',
+                                ])}
+                            >
                                 <ChevronLeftIcon className='group-hover/prev-btn:fill-Orange' />
                             </Button>
                         </ToolTip>
@@ -133,11 +159,12 @@ export const ProductCarousell = ({ inLightbox = false }) => {
                             tip={'next image'}
                             className={cm([
                                 'after:-top-12 after:duration-400',
-                                'absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2'
+                                'absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2',
                             ])}
                             renderTime={1000}
                             renderCenter
-                            renderOnHover>
+                            renderOnHover
+                        >
                             <Button
                                 ref={nextBtnRef}
                                 variant={'carousel'}
@@ -146,8 +173,9 @@ export const ProductCarousell = ({ inLightbox = false }) => {
                                     'group/next-btn lg:hidden',
                                     'absolute top-1/2 right-0 -translate-x-1/2 -translate-y-1/2 z-30',
                                     'group-hover:block group-focus-within:block',
-                                    inLightbox && 'lg:block translate-x-1/2'
-                                ])}>
+                                    inLightbox && 'lg:block translate-x-1/2',
+                                ])}
+                            >
                                 <ChevronRightIcon className='group-hover/next-btn:fill-Orange' />
                             </Button>
                         </ToolTip>
@@ -162,8 +190,9 @@ export const ProductCarousell = ({ inLightbox = false }) => {
                             'tracking-wider text-Very_light_grayish_blue',
                             'group-hover:translate-y-0 group-hover:opacity-100',
                             'group-focus-within:opacity-100 group-focus-within:translate-y-0',
-                            inLightbox && 'lg:hidden'
-                        ])}>
+                            inLightbox && 'lg:hidden',
+                        ])}
+                    >
                         <p className='p-4 text-xl rounded-md bg-Very_dark_blue/50 ring-1 ring-Very_light_grayish_blue'>
                             Slide with <span>⬅</span> and <span>➡</span>
                         </p>
@@ -174,7 +203,7 @@ export const ProductCarousell = ({ inLightbox = false }) => {
                 <div className='hidden mt-16 lg:items-center lg:justify-between lg:flex'>
                     {thumbImgs.map((imgThumb, idx) => (
                         <Button
-                            ref={btn => {
+                            ref={(btn) => {
                                 if (btn) carouselImagesRef[idx] = btn;
                             }}
                             key={`thumb_${idx}`}
@@ -185,15 +214,17 @@ export const ProductCarousell = ({ inLightbox = false }) => {
                                 '[&[aria-current="true"]]:border-2 [&[aria-current="true"]]:after:bg-Pale_orange',
                                 'after:absolute after:inset-0 after:opacity-50',
                                 'focus-visible:outline-offset-2',
-                                inLightbox && 'shadow-none focus-visible:outline-Light_grayish_blue'
-                            ])}>
-                            <img 
-                                src={imgThumb} 
-                                alt='sneakers thumbnail image' 
-                                className='w-40' 
+                                inLightbox &&
+                                    'shadow-none focus-visible:outline-Light_grayish_blue',
+                            ])}
+                        >
+                            <img
+                                src={imgThumb}
+                                alt='sneakers thumbnail image'
+                                className='w-40'
                                 width={176}
                                 height={176}
-                                />
+                            />
                         </Button>
                     ))}
                 </div>

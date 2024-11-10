@@ -1,81 +1,55 @@
-import {
-	FC,
-	Dispatch,
-	ComponentProps,
-	MouseEventHandler,
-	SetStateAction,
-	useState
-} from 'react';
-import { cm } from '../../utils/class-merger';
-import { ChevronLeftIcon } from './Icons';
-import { Button } from './Button';
-import React from 'react';
+import * as React from "react"
+import * as AccordionPrimitive from "@radix-ui/react-accordion"
+import { ChevronDown } from "lucide-react"
 
-type AccordionProps = {
-	header: string;
-	icon?: JSX.Element;
-	headerColor?: string;
-	bodyStyle?: string;
-	initState?: boolean;
-	setState?: Dispatch<SetStateAction<boolean>>;
-} & ComponentProps<'section'>;
+import { cn } from "@/lib/utils"
 
-export const Accordion: FC<AccordionProps> = ({
-	header,
-	bodyStyle,
-	headerColor,
-	initState = true,
-	setState,
-	...props
-}) => {
-	const [isExpanded, setIsExpanded] = useState(initState);
+const Accordion = AccordionPrimitive.Root
 
-	const handleClick: MouseEventHandler = e => {
-		e.stopPropagation();
-		if (setState) setState(pv => !pv);
-		setIsExpanded(pv => !pv);
-	};
+const AccordionItem = React.forwardRef<
+  React.ElementRef<typeof AccordionPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
+>(({ className, ...props }, ref) => (
+  <AccordionPrimitive.Item
+    ref={ref}
+    className={cn("border-b", className)}
+    {...props}
+  />
+))
+AccordionItem.displayName = "AccordionItem"
 
-	return (
-		<section
-			className={cm([
-				'my-4 overflow-hidden text-white lg:my-8 rounded-2xl shadow-md',
-				props.className
-			])}>
-			<header
-				onClick={handleClick}
-				className={cm([
-					'flex items-center justify-between px-8 py-4 bg-Orange',
-					headerColor
-				])}>
-				<h4 className='text-2xl font-semibold'>{header}</h4>
-				<Button
-					onClick={handleClick}
-					aria-expanded={isExpanded}
-					className='bg-white rounded-full focus-visible:outline-Very_dark_blue focus-visible:outline-dotted'>
-					<ChevronLeftIcon
-						className={cm([
-							'transition-transform duration-300 rotate-90',
-							'hover:fill-Orange',
-							isExpanded && '-rotate-90'
-						])}
-					/>
-				</Button>
-			</header>
+const AccordionTrigger = React.forwardRef<
+  React.ElementRef<typeof AccordionPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
+>(({ className, children, ...props }, ref) => (
+  <AccordionPrimitive.Header className="flex">
+    <AccordionPrimitive.Trigger
+      ref={ref}
+      className={cn(
+        "flex flex-1 items-center justify-between py-4 text-sm font-medium transition-all hover:underline text-left [&[data-state=open]>svg]:rotate-180",
+        className
+      )}
+      {...props}
+    >
+      {children}
+      <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200" />
+    </AccordionPrimitive.Trigger>
+  </AccordionPrimitive.Header>
+))
+AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName
 
-			<div
-				className={cm([
-					'relative grid grid-rows-[0fr] bg-Pale_orange',
-					// 'relative grid grid-rows-[0fr] bg-Dark_grayish_blue',
-					'transition-[grid-template-rows] duration-500',
-					isExpanded && 'grid-rows-[1fr]',
-					bodyStyle
-				])}>
-				<div className='absolute inset-0 border-t border-Very_light_grayish_blue'>
-					&nbsp;
-				</div>
-				<div className='overflow-hidden'>{props.children}</div>
-			</div>
-		</section>
-	);
-};
+const AccordionContent = React.forwardRef<
+  React.ElementRef<typeof AccordionPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
+>(({ className, children, ...props }, ref) => (
+  <AccordionPrimitive.Content
+    ref={ref}
+    className="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+    {...props}
+  >
+    <div className={cn("pb-4 pt-0", className)}>{children}</div>
+  </AccordionPrimitive.Content>
+))
+AccordionContent.displayName = AccordionPrimitive.Content.displayName
+
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent }
