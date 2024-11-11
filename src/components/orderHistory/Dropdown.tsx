@@ -25,7 +25,7 @@ function Dropdown() {
             name: 'Product 2',
             category: 'Category 2',
             price: 'RM150',
-            image: p1, // Replace with the correct image
+            image: p1,
             quantity: 8,
             orderId: 'abc123',
             date: 'Oct 20, 2024',
@@ -35,47 +35,53 @@ function Dropdown() {
             name: 'Product 3',
             category: 'Category 3',
             price: 'RM150',
-            image: p1, // Replace with the correct image
+            image: p1,
             quantity: 82,
             orderId: 'abc234',
             date: 'Oct 20, 2024',
         },
-        // Add more products as needed
     ];
-    const order = {
-        orderId: 'abc123',
-        orderDate: '30 Oct 2024',
-    };
 
-    const filteredProducts = products.filter(
-        (product) => product.orderId === order.orderId,
-    );
+    const orders = [
+        {
+            orderId: 'abc123',
+            orderDate: '30 Oct 2024',
+        },
+        {
+            orderId: 'abc234',
+            orderDate: '30 Nov 2025',
+        },
+    ];
 
     return (
         <div className='space-y-5 mt-20'>
-            <Accordion type='single' collapsible className='w-full border'>
-                <AccordionItem value='item-1'>
-                    <AccordionTrigger className='mx-5 '>
-                        <Title
-                            orderId={order.orderId}
-                            orderDate={order.orderDate}
-                        ></Title>
-                    </AccordionTrigger>
-                    <AccordionContent className='border'>
-                        <ProductList products={filteredProducts}></ProductList>
-                    </AccordionContent>
-                </AccordionItem>
-            </Accordion>
-            {/* <Accordion type='single' collapsible className='w-full border'>
-                <AccordionItem value='item-1'>
-                    <AccordionTrigger className='mx-5'>
-                        Order ID: {order.orderId}
-                    </AccordionTrigger>
-                    <AccordionContent>
-                        <ProductList products={filteredProducts}></ProductList>
-                    </AccordionContent>
-                </AccordionItem>
-            </Accordion> */}
+            {orders.map((order) => {
+                // Filter products based on current orderId
+                const filteredProducts = products.filter(
+                    (product) => product.orderId === order.orderId,
+                );
+
+                return (
+                    <Accordion
+                        key={order.orderId}
+                        type='single'
+                        collapsible
+                        className='w-full border'
+                    >
+                        <AccordionItem value={order.orderId}>
+                            <AccordionTrigger className='mx-5'>
+                                <Title
+                                    orderId={order.orderId}
+                                    orderDate={order.orderDate}
+                                />
+                            </AccordionTrigger>
+                            <AccordionContent className='border'>
+                                <ProductList products={filteredProducts} />
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                );
+            })}
         </div>
     );
 }
