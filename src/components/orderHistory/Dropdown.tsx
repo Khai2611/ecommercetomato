@@ -42,28 +42,40 @@ function Dropdown() {
         },
         // Add more products as needed
     ];
+    const order = {
+        orderId: 'abc123',
+        orderDate: '30 Oct 2024',
+    };
+
+    const filteredProducts = products.filter(
+        (product) => product.orderId === order.orderId,
+    );
+
     return (
-        <div className='space-y-5'>
+        <div className='space-y-5 mt-20'>
             <Accordion type='single' collapsible className='w-full border'>
                 <AccordionItem value='item-1'>
                     <AccordionTrigger className='mx-5 '>
-                        <Title></Title>
+                        <Title
+                            orderId={order.orderId}
+                            orderDate={order.orderDate}
+                        ></Title>
                     </AccordionTrigger>
                     <AccordionContent className='border'>
-                        <ProductList></ProductList>
+                        <ProductList products={filteredProducts}></ProductList>
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
-            <Accordion type='single' collapsible className='w-full border'>
+            {/* <Accordion type='single' collapsible className='w-full border'>
                 <AccordionItem value='item-1'>
                     <AccordionTrigger className='mx-5'>
-                        Order ID: abc123
+                        Order ID: {order.orderId}
                     </AccordionTrigger>
                     <AccordionContent>
-                        <ProductList></ProductList>
+                        <ProductList products={filteredProducts}></ProductList>
                     </AccordionContent>
                 </AccordionItem>
-            </Accordion>
+            </Accordion> */}
         </div>
     );
 }

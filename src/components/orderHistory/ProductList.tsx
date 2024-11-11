@@ -1,40 +1,55 @@
 import p1 from '../../assets/frontend_assets/p1.jpg';
 import {Button} from '../ui/button';
 
-function ProductList() {
-    const products = [
-        {
-            id: 1,
-            name: 'Product 1 adsadas sadasdasd sadsadwa sdasdwad',
-            category: 'Category 1',
-            price: 'RM230',
-            image: p1,
-            quantity: 12,
-            orderId: 'abc123',
-            date: 'Oct 20, 2024',
-        },
-        {
-            id: 2,
-            name: 'Product 2',
-            category: 'Category 2',
-            price: 'RM150',
-            image: p1, // Replace with the correct image
-            quantity: 8,
-            orderId: 'abc123',
-            date: 'Oct 20, 2024',
-        },
-        {
-            id: 3,
-            name: 'Product 3',
-            category: 'Category 3',
-            price: 'RM150',
-            image: p1, // Replace with the correct image
-            quantity: 82,
-            orderId: 'abc234',
-            date: 'Oct 20, 2024',
-        },
-        // Add more products as needed
-    ];
+interface Product {
+    id: number;
+    name: string;
+    category: string;
+    price: string;
+    image: string;
+    quantity: number;
+    orderId: string;
+    date: string;
+}
+
+interface ProductListProps {
+    products: Product[];
+}
+
+function ProductList({products}: ProductListProps) {
+    // const products = [
+    //     {
+    //         id: 1,
+    //         name: 'Product 1 adsadas sadasdasd sadsadwa sdasdwad',
+    //         category: 'Category 1',
+    //         price: 'RM230',
+    //         image: p1,
+    //         quantity: 12,
+    //         orderId: 'abc123',
+    //         date: 'Oct 20, 2024',
+    //     },
+    //     {
+    //         id: 2,
+    //         name: 'Product 2',
+    //         category: 'Category 2',
+    //         price: 'RM150',
+    //         image: p1, // Replace with the correct image
+    //         quantity: 8,
+    //         orderId: 'abc123',
+    //         date: 'Oct 20, 2024',
+    //     },
+    //     {
+    //         id: 3,
+    //         name: 'Product 3',
+    //         category: 'Category 3',
+    //         price: 'RM150',
+    //         image: p1, // Replace with the correct image
+    //         quantity: 82,
+    //         orderId: 'abc234',
+    //         date: 'Oct 20, 2024',
+    //     },
+    //     // Add more products as needed
+    // ];
 
     return (
         <div className='space-y-4 p-4 divide-y divide-gray-300 '>
