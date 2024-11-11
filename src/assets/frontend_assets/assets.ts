@@ -45,29 +45,58 @@ import p22 from './p2-176.jpg';
 import p33 from './p3-176.jpg';
 import p44 from './p4-176.jpg';
 
-import newArrOne from "./newArrival/newArrOne.webp";
-import newArrTwo from "./newArrival/newArrTwo.webp";
-import newArrThree from "./newArrival/newArrThree.webp";
-import newArrFour from "./newArrival/newArrFour.webp";
-
-// Best Sellers
-import bestSellerOne from "./bestSeller/bestSellerOne.webp";
-import bestSellerTwo from "./bestSeller/bestSellerTwo.webp";
-import bestSellerThree from "./bestSeller/bestSellerThree.webp";
-import bestSellerFour from "./bestSeller/bestSellerFour.webp";
-
-// Special Offers
-import spfOne from "./specialOffer/spfOne.webp";
-import spfTwo from "./specialOffer/spfTwo.webp";
-import spfThree from "./specialOffer/spfThree.webp";
-import spfFour from "./specialOffer/spfFour.webp";
 
 //profile pics 
 import lul from './lul.jpg';
 import screen from './screen.png';
 
+//profile list's page 
+import cardigan2 from './clothes/cardigan2.jpg';
+import cardigan3 from './clothes/kidcardigan.jpg';
+import shirt1 from './clothes/turtleneck.jpg';
+import shirt2 from './clothes/tshirt.jpg';
+import shirt3 from './clothes/flannel.jpg';
+import shirt4 from './clothes/sweatshirt.jpg';
+import shirt5 from './clothes/crewnecktee.jpg';
+import shirt6 from './clothes/shirt.jpg';
+
+import dress from './clothes/dress.jpg';
+import hoodie from './clothes/hoodie2.jpg';
+import souffle from './clothes/souffle.jpg';
+import pants1 from './clothes/drapeypants.jpg';
+import pants2 from './clothes/kidsweatpants.jpg';
+import pants3 from './clothes/taperedpants.jpg';
+import pants4 from './clothes/widepants.jpg';
+import shoe1 from './clothes/shoe1.png';
+import shoe22 from './clothes/shoe2.png';
+import shoe3 from './clothes/shoe3.png';
+import shoe4 from './clothes/samba.jpg';
+
+
 export const assets = {
     
+    //product lists 
+    cardigan2,
+    cardigan3,
+    shirt1,
+    shirt2,
+    shirt3,
+    shirt4,
+    shirt5,
+    shirt6,
+    dress,
+    hoodie,
+    souffle,
+    pants1,
+    pants2,
+    pants3, 
+    pants4,
+    shoe1,
+    shoe22,
+    shoe3,
+    shoe4,
+    
+
     //cat pics
     autumn,
     summer, 
@@ -111,28 +140,9 @@ export const assets = {
     bag_icon,
     parcel_icon,
 
-	//product list 
-	newArrOne,
-	newArrTwo,
-	newArrThree,
-	newArrFour,
-  
-	// Best Sellers
-	bestSellerOne,
-	bestSellerTwo,
-	bestSellerThree,
-	bestSellerFour,
-  
-	// Sprcial Offers
-	spfOne,
-	spfTwo,
-	spfThree,
-	spfFour,
-
   //profile
   lul, 
   screen, 
-  // cover
 }
 
 export const header = [
@@ -143,7 +153,7 @@ export const header = [
     },
     {
         image: summer,
-        title: "Summer Collectioan",
+        title: "Summer Collection",
         desc: "Embrace the warmth with our vibrant summer clothes collection. From breezy dresses to stylish shorts, find the perfect pieces to keep you cool and chic all season long."
     },
     {
@@ -165,483 +175,243 @@ interface Product {
   des: string;
 }
 
+
+//=================== Landing Page's Product Display Starts here
+
+export const productData = [
+  {
+    _id: "1001",
+    img: cardigan2,
+    productName: "Fleece Turtleneck",
+    price: 135.00,
+    color: "Beige and Orange",
+    badge: true,
+    des: "Fine 100% cotton brushed for a smooth feel.",
+  },
+  {
+    _id: "1002",
+    img: cardigan3,
+    productName: "Fleece Cardigan",
+    price: 180.00,
+    color: "Cream and Orange",
+    badge: true,
+    des: "Fine 100% cotton brushed for a smooth feel.",
+  },
+  {
+    _id: "1003",
+    img: shirt4,
+    productName: "Flannel Shirt",
+    price: 220.00,
+    color: "Black and White",
+    badge: true,
+    des: "Fine 100% cotton brushed for a smooth feel.",
+  },
+  {
+    _id: "1004",
+    img: souffle,
+    productName: "Souffle Sweater",
+    price: 260.00,
+    color: "Green",
+    badge: false,
+    des: "Fine 100% cotton brushed for a smooth feel.",
+  },
+  {
+    _id: "1005",
+    img: pants4,
+    productName: "Wide Pants",
+    price: 180.00,
+    color: "Olive",
+    badge: true,
+    des: "Fine 100% cotton brushed for a smooth feel.",
+  },
+  {
+    _id: "1006",
+    img: shirt1,
+    productName: "Flannel Shirt",
+    price: 220.00,
+    color: "Black and White",
+    badge: true,
+    des: "Fine 100% cotton brushed for a smooth feel.",
+  },
+];
+
+
+
 // =================== PaginationItems Start here ===============
 
 export const paginationItems: Product[] = [
   {
     _id: "1001",
-    img: spfOne,
-    productName: "Cap for Boys",
+    img: shirt1,
+    productName: "Fleece Turtleneck",
     price: "35.00",
-    color: "Blank and White",
+    color: "Beige and Orange",
     badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
+    des: "The sleeves and body have been redesigned for better range of motion.",
   },
   {
     _id: "1002",
-    img: spfTwo,
-    productName: "Tea Table",
+    img: cardigan2,
+    productName: "Fleece Cardigan",
     price: "180.00",
-    color: "Gray",
+    color: "Cream and Orange",
     badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
+    des: "The design combines a fun pattern with a solid color at the body and placket to make styling easy. Buttons feature the Marimekko logos.",
   },
   {
     _id: "1003",
-    img: spfThree,
-    productName: "Headphones",
-    price: "25.00",
-    color: "Mixed",
+    img: cardigan3,
+    productName: "Greece Cardigan",
+    price: "125.00",
+    color: "Cream and Orange",
     badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
+    des: "The design combines a fun pattern with a solid color at the body and placket to make styling easy. Buttons feature the Marimekko logos.",
   },
   {
     _id: "1004",
-    img: spfFour,
-    productName: "Sun glasses",
+    img: shirt3,
+    productName: "Flannel Shirt",
     price: "220.00",
-    color: "Black",
+    color: "Black and White",
     badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
+    des: "Fine 100% cotton brushed for a smooth feel on the outside and soft and cozy warmth on the inside.",
   },
   {
     _id: "1005",
-    img: bestSellerOne,
-    productName: "Flower Base",
+    img: shoe4,
+    productName: "Fall Sneakers",
     price: "35.00",
-    color: "Blank and White",
+    color: "Beige and Orange",
     badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
+    des: "These low-profile sneakers are your perfect casual wear companion.",
   },
   {
     _id: "1006",
-    img: bestSellerTwo,
-    productName: "New Backpack",
-    price: "180.00",
-    color: "Gray",
-    badge: false,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
+    img: shirt6,
+    productName: "Polo Shirt",
+    price: "220.00",
+    color: "Black and White",
+    badge: true,
+    des: "Smooth 'AIRism' fabric with the look of cotton.",
   },
   {
     _id: "1007",
-    img: bestSellerThree,
-    productName: "Household materials",
-    price: "25.00",
-    color: "Mixed",
+    img: hoodie,
+    productName: "Sweat Hoodie",
+    price: "125.00",
+    color: "Pastel Green",
     badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
+    des: "The famous scene of Winnie the Pooh, Piglet, Tigger, and Christopher Robin marching happily is designed with embroidery in a monochrome color palette",
   },
   {
     _id: "1008",
-    img: bestSellerFour,
-    productName: "Travel Bag",
-    price: "220.00",
-    color: "Black",
+    img: shirt4,
+    productName: "Sweatshirt",
+    price: "180.00",
+    color: "Green",
     badge: false,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
+    des: "Classic V-insert and long ribbing at the neckline. Neck tape helps the collar keep its shape even after repeated washing.",
   },
   {
     _id: "1009",
-    img: newArrOne,
-    productName: "Round Table Clock",
-    price: "44.00",
-    color: "Black",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
+    img: shirt2,
+    productName: "Crew Neck Tee",
+    price: "180.00",
+    color: "White",
+    badge: false,
+    des: "The Uniqlo U collection is the realization of a dedicated and skilled team of international designers based at our Paris Research and Development Center led by Artistic Director Christophe Lemaire.",
   },
   {
     _id: "1010",
-    img: newArrTwo,
-    productName: "Smart Watch",
+    img: dress,
+    productName: "Fleece Dress",
     price: "250.00",
-    color: "Black",
+    color: "Cream and Orange",
     badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
+    des: "Marimekko print in an all-over design.",
   },
   {
     _id: "1011",
-    img: newArrThree,
-    productName: "cloth Basket",
+    img: shirt5,
+    productName: "Kids Crew TShirt",
     price: "80.00",
     color: "Mixed",
     badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
+    des: "Smooth 'AIRism' fabric with the look of cotton.",
   },
   {
     _id: "1012",
-    img: newArrFour,
-    productName: "Funny toys for babies",
-    price: "60.00",
-    color: "Mixed",
+    img: souffle,
+    productName: "Souffle Sweater",
+    price: "260.00",
+    color: "Green",
     badge: false,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
+    des: "Sumptuously Soft, non-itchy fabric.Cocoon silhouette with a longer hem at The back.",
   },
   {
     _id: "1013",
-    img: newArrTwo,
-    productName: "Funny toys for babies",
+    img: pants3,
+    productName: "Tapered Pants",
     price: "60.00",
-    color: "Mixed",
-    badge: false,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
+    color: "Black",
+    badge: true,
+    des: "Sleek, tapered silhouette that is suitable for work as well as for sports and casual wear.",
   },
   {
     _id: "1014",
-    img: newArrTwo,
-    productName: "Smart Watch",
+    img: pants1,
+    productName: "Drapey Pants",
     price: "250.00",
-    color: "Black",
+    color: "Cream",
     badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
+    des: "Incredibly soft denim made from a lyocell and cotton blend.",
   },
   {
     _id: "1015",
-    img: newArrFour,
-    productName: "Funny toys for babies",
+    img: pants2,
+    productName: "Kid Sweatpants",
     price: "60.00",
-    color: "Mixed",
+    color: "Gray",
     badge: false,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
+    des: "A unique collaboration has come to life between Andy Warhol, a seminal figure in 20th-century art, and KAWS, a leading artist in contemporary art.",
   },
   {
     _id: "1016",
-    img: newArrTwo,
-    productName: "Smart Watch",
+    img: shoe22,
+    productName: "Lebron Jewel",
     price: "250.00",
-    color: "Black",
+    color: "Mixed",
     badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
+    des: "This version is inspired by LeBron's relationship with his youngest son and the sense of clarity it brings. With its extra-durable rubber outsole, this version gives you traction for outdoor courts.",
   },
   {
     _id: "1017",
-    img: bestSellerFour,
-    productName: "Travel Bag",
+    img: shoe1,
+    productName: "Pegasus Plus",
     price: "220.00",
-    color: "Black",
+    color: "Mixed",
     badge: false,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
+    des: "Take responsive cushioning to the next level with the Pegasus Plus. It energises your ride with full-length, super-light ZoomX foam to give you a high level of energy return for everyday runs.",
   },
   {
     _id: "1018",
-    img: newArrOne,
-    productName: "Round Table Clock",
-    price: "44.00",
-    color: "Black",
+    img: shoe3,
+    productName: "Victory Streakfly",
+    price: "144.00",
+    color: "Mixed",
     badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
+    des: "Low profile with sleek details, it feels like it disappears on your foot to help you better connect with the road on the way to your personal best.",
   },
   {
     _id: "1019",
-    img: newArrTwo,
-    productName: "Smart Watch",
+    img: pants4,
+    productName: "Wide Pants",
     price: "250.00",
-    color: "Black",
+    color: "Olive",
     badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
+    des: "Smooth yet silhouette-retaining fabric with elastic waistband.",
   },
-  {
-    _id: "1020",
-    img: newArrThree,
-    productName: "cloth Basket",
-    price: "80.00",
-    color: "Mixed",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1021",
-    img: spfThree,
-    productName: "Headphones",
-    price: "25.00",
-    color: "Mixed",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1022",
-    img: spfFour,
-    productName: "Sun glasses",
-    price: "220.00",
-    color: "Black",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1023",
-    img: bestSellerOne,
-    productName: "Flower Base",
-    price: "35.00",
-    color: "Blank and White",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1024",
-    img: spfOne,
-    productName: "Cap for Boys",
-    price: "35.00",
-    color: "Blank and White",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1025",
-    img: spfTwo,
-    productName: "Tea Table",
-    price: "180.00",
-    color: "Gray",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1026",
-    img: spfThree,
-    productName: "Headphones",
-    price: "25.00",
-    color: "Mixed",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1027",
-    img: spfFour,
-    productName: "Sun glasses",
-    price: "220.00",
-    color: "Black",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1028",
-    img: bestSellerOne,
-    productName: "Flower Base",
-    price: "35.00",
-    color: "Blank and White",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1029",
-    img: bestSellerTwo,
-    productName: "New Backpack",
-    price: "180.00",
-    color: "Gray",
-    badge: false,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1030",
-    img: bestSellerThree,
-    productName: "Household materials",
-    price: "25.00",
-    color: "Mixed",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1031",
-    img: bestSellerFour,
-    productName: "Travel Bag",
-    price: "220.00",
-    color: "Black",
-    badge: false,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1032",
-    img: newArrOne,
-    productName: "Round Table Clock",
-    price: "44.00",
-    color: "Black",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1033",
-    img: newArrTwo,
-    productName: "Smart Watch",
-    price: "250.00",
-    color: "Black",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1034",
-    img: newArrThree,
-    productName: "cloth Basket",
-    price: "80.00",
-    color: "Mixed",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1035",
-    img: newArrFour,
-    productName: "Funny toys for babies",
-    price: "60.00",
-    color: "Mixed",
-    badge: false,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1036",
-    img: newArrTwo,
-    productName: "Funny toys for babies",
-    price: "60.00",
-    color: "Mixed",
-    badge: false,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1037",
-    img: newArrFour,
-    productName: "Funny toys for babies",
-    price: "60.00",
-    color: "Mixed",
-    badge: false,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1038",
-    img: newArrTwo,
-    productName: "Smart Watch",
-    price: "250.00",
-    color: "Black",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1039",
-    img: bestSellerFour,
-    productName: "Travel Bag",
-    price: "220.00",
-    color: "Black",
-    badge: false,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1040",
-    img: newArrOne,
-    productName: "Round Table Clock",
-    price: "44.00",
-    color: "Black",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1041",
-    img: newArrTwo,
-    productName: "Smart Watch",
-    price: "250.00",
-    color: "Black",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1042",
-    img: newArrThree,
-    productName: "cloth Basket",
-    price: "80.00",
-    color: "Mixed",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1043",
-    img: spfThree,
-    productName: "Headphones",
-    price: "25.00",
-    color: "Mixed",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1044",
-    img: spfFour,
-    productName: "Sun glasses",
-    price: "220.00",
-    color: "Black",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1045",
-    img: bestSellerOne,
-    productName: "Flower Base",
-    price: "35.00",
-    color: "Blank and White",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
-  {
-    _id: "1046",
-    img: spfOne,
-    productName: "Cap for Boys",
-    price: "35.00",
-    color: "Blank and White",
-    badge: true,
-    des: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis.",
-  },
+
 ];
 
-// =================== PaginationItems End here =================
 
-
-
-// export const products: TProduct[] = [
-// 	{
-// 		id: 1,
-// 		title: 'Nike Air Max 90',
-// 		image: { full: '', thumb: p1 },
-// 		size: '10',
-// 		color: 'White',
-// 		price: 120,
-// 		description:
-// 			'The Nike Air Max 90 is a classic sneaker with modern updates that provide comfort and style.',
-// 		availableQty: 8,
-// 		discountPercentage: 17,
-// 		category: 'sports',
-// 		discountedPrice: 99.6
-// 	},
-// 	{
-// 		id: 2,
-// 		title: 'Adidas Ultraboost 21',
-// 		image: { full: '', thumb: p2 },
-// 		size: '9.5',
-// 		color: 'Black',
-// 		price: 180,
-// 		description:
-// 			'The Adidas Ultraboost 21 is a high-performance running shoe with a responsive Boost midsole.',
-// 		availableQty: 5,
-// 		discountPercentage: 11,
-// 		category: 'running',
-// 		discountedPrice: 160.2
-// 	},
-// 	{
-// 		id: 3,
-// 		title: 'Puma Calibrate Runner',
-// 		image: { full: '', thumb: p3 },
-// 		size: '11',
-// 		color: 'Blue',
-// 		price: 90,
-// 		description:
-// 			'The Puma Calibrate Runner is a comfortable and stylish sneaker that is perfect for casual wear.',
-// 		availableQty: 10,
-// 		discountPercentage: 25,
-// 		category: 'running',
-// 		discountedPrice: 67.5
-// 	},
-// 	{
-// 		id: 4,
-// 		title: 'New Balance 990v5',
-// 		image: { full: '', thumb: p4 },
-// 		size: '12',
-// 		color: 'Grey',
-// 		price: 175,
-// 		description:
-// 			'The New Balance 990v5 is a comfortable and versatile sneaker that can be worn for running or everyday activities.',
-// 		availableQty: 3,
-// 		discountPercentage: 15,
-// 		category: 'sports',
-// 		discountedPrice: 148.75
-// 	}];

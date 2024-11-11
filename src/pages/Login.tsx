@@ -1,6 +1,7 @@
 import React from 'react';
-import loginImage from '../assets/frontend_assets/auth.jpg';
+// import loginImage from '../assets/frontend_assets/auth.jpg';
 import LoginForm from '../components/auth/LoginForm';
+import {assets} from '../assets/frontend_assets/assets';
 
 function Login() {
     return (
@@ -10,7 +11,8 @@ function Login() {
             </div>
             <div className='flex-none flex items-center justify-center w-[55%] '>
                 <img
-                    src={loginImage}
+                    // src={loginImage}
+                    src={assets.autumn}
                     alt='Product'
                     className='w-full lg:h-[720px] xl:h-screen object-cover'
                 ></img>

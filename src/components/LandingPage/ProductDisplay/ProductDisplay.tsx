@@ -1,26 +1,17 @@
 import React, { useContext } from "react";
 import "./ProductDisplay.css";
-import { StoreContext } from "../../../context/StoreContext";
 import ProductItem from "../ProductItem/ProductItem";
 import { motion } from "framer-motion";
 import { SlideRight } from "../../../utils/animation";
+import {productData} from "../../../assets/frontend_assets/assets";
+
 // Define the props interface
 interface ProductDisplayProps {
   category: string;
 }
 
-const ProductDisplay: React.FC<ProductDisplayProps> = ({ category }) => {
-
-  const context = useContext(StoreContext);
-  // Check if context is null
-  if (!context) {
-    return null; // Or return a loading spinner or similar
-  }
-  const { prod_list } = context;
-
+const ProductDisplay: React.FC<ProductDisplayProps> =  () => {
   return (
-        
-       
     <div className="product-display" id="product-display">
       
       {/* bestsellers */}
@@ -36,19 +27,18 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ category }) => {
 
 
         <div className="product-display-list">
-          {prod_list
-            .filter(item => category === "All" || category === item.category) // Filter items based on category
-            .slice(0, 6) // Limit to the first 8 items
-            .map((item) => (
-              <ProductItem
-                key={item._id} // Use unique identifier as key
-                id={item._id}
-                name={item.name}
-                description={item.description}
-                price={item.price}
-                image={item.image}
-              />
-            ))}
+             {productData
+              .slice(0, 6) // Limit to the first 6 items
+              .map((item) => (
+                <ProductItem
+                  key={item._id}
+                  id={item._id}
+                  name={item.productName}
+                  description={item.des}
+                  price={item.price}
+                  image={item.img}
+                />
+              ))}
       </div>
 
 
@@ -64,19 +54,18 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ category }) => {
       </motion.div>
             
       <div className="product-display-list">
-          {prod_list
-            .filter(item => category === "All" || category === item.category) // Filter items based on category
-            .slice(0, 6) // Limit to the first 8 items
-            .map((item) => (
-              <ProductItem
-                key={item._id} // Use unique identifier as key
-                id={item._id}
-                name={item.name}
-                description={item.description}
-                price={item.price}
-                image={item.image}
-              />
-            ))}
+            {productData
+              .slice(0, 6) // Limit to the first 6 items
+              .map((item) => (
+                <ProductItem
+                  key={item._id}
+                  id={item._id}
+                  name={item.productName}
+                  description={item.des}
+                  price={item.price}
+                  image={item.img}
+                />
+              ))}
       </div>
 
     </div>

@@ -9,12 +9,12 @@ interface Item {
 }
 
 interface CategoryProps {
-  icons?: boolean;  // Add this line to accept the 'icons' prop
+  icons?: boolean;
 }
 
 const Category: React.FC<CategoryProps> = ({ icons }) => {
-  
   const [showItems] = useState<boolean>(true);
+  const [selectedItem, setSelectedItem] = useState<number | null>(null); // State to track selected item
   const items: Item[] = [
     { _id: 990, title: "Shirts", icons: true },
     { _id: 991, title: "Pants" },
@@ -22,12 +22,15 @@ const Category: React.FC<CategoryProps> = ({ icons }) => {
     { _id: 993, title: "Sneakers" },
   ];
 
+  const handleClick = (id: number) => {
+    setSelectedItem(id); // Update the selected item ID
+  };
 
   return (
     <div>
-       <div className="cursor-pointer" style={{marginTop:"70px"}}>
-          <NavTitle title="Shop by Category" icons={false} />
-       </div>
+      <div className="cursor-pointer" style={{ marginTop: "70px" }}>
+        <NavTitle title="Shop by Category" icons={false} />
+      </div>
       {showItems && (
         <motion.div
           initial={{ y: -20, opacity: 0 }}
@@ -38,7 +41,14 @@ const Category: React.FC<CategoryProps> = ({ icons }) => {
             {items.map((item) => (
               <li
                 key={item._id}
-                className="border-b-[1px] border-b-[#F0F0F0] pb-2 flex items-center gap-2 hover:text-tomato hover:border-tomato duration-300"
+                onClick={() => handleClick(item._id)}
+                className={`border-b-[1px] border-b-[#F0F0F0] pb-2 flex items-center gap-2 duration-300 cursor-pointer
+                  ${selectedItem === item._id ? "text-tomato border-tomato scale-95" : "hover:text-tomato hover:border-tomato"}
+                `}
+                style={{
+                  transform: selectedItem === item._id ? "scale(0.95)" : "scale(1)",
+                  transition: "transform 0.2s",
+                }}
               >
                 {item.title}
               </li>
