@@ -1,28 +1,13 @@
 import React from 'react';
-import {
-  FormControl,
-  FormLabel,
-  Grid,
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-} from '@chakra-ui/react';
 
 const CompanySettings: React.FC = () => {
   return (
-    <Grid
-      templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
-      gap={6}
-    >
-      <FormControl id="companyId">
-        <FormLabel>Company ID</FormLabel>
-        <InputGroup>
-          <InputLeftAddon color="gray.500">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-1xl mx-auto px-2">
+      {/* Company ID */}
+      <div className="flex flex-col">
+        <label htmlFor="companyId" className="text-gray-700 font-medium">Company ID</label>
+        <div className="relative">
+          <div className="absolute left-0 top-0 bottom-0 flex items-center pl-3 text-gray-500">
             <svg width="1em" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"
@@ -30,37 +15,67 @@ const CompanySettings: React.FC = () => {
                 clipRule="evenodd"
               />
             </svg>
-          </InputLeftAddon>
-          <Input
-            focusBorderColor="tomato"
+          </div>
+          <input
+            id="companyId"
             type="text"
             placeholder="apple"
+            className="pl-10 p-2 border rounded focus:ring-2 focus:ring-tomato w-full"
           />
-        </InputGroup>
-      </FormControl>
-      <FormControl id="companyName">
-        <FormLabel>Name</FormLabel>
-        <Input focusBorderColor="tomato" type="text" placeholder="Apple" />
-      </FormControl>
-      <FormControl id="emailCompany">
-        <FormLabel>Email Address</FormLabel>
-        <Input
-          focusBorderColor="tomato"
+        </div>
+      </div>
+
+      {/* Company Name */}
+      <div className="flex flex-col">
+        <label htmlFor="companyName" className="text-gray-700 font-medium">Name</label>
+        <input
+          id="companyName"
+          type="text"
+          placeholder="Apple"
+          className="mt-1 p-2 border rounded focus:ring-2 focus:ring-tomato"
+        />
+      </div>
+
+      {/* Company Email */}
+      <div className="flex flex-col">
+        <label htmlFor="emailCompany" className="text-gray-700 font-medium">Email Address</label>
+        <input
+          id="emailCompany"
           type="email"
           placeholder="info@apple.com"
+          className="mt-1 p-2 border rounded focus:ring-2 focus:ring-tomato"
         />
-      </FormControl>
-      <FormControl>
-        <FormLabel>Size</FormLabel>
-        <NumberInput focusBorderColor="tomato">
-          <NumberInputField placeholder="6000" />
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
-        </NumberInput>
-      </FormControl>
-    </Grid>
+      </div>
+
+      {/* Company Size */}
+      <div className="flex flex-col">
+        <label htmlFor="companySize" className="text-gray-700 font-medium">Size</label>
+        <div className="flex items-center border rounded">
+          <button className="px-3 py-2 border-r focus:outline-none focus:ring-2 focus:ring-tomato">
+            <span className="text-lg">+</span>
+          </button>
+          <input
+            id="companySize"
+            type="number"
+            placeholder="6000"
+            className="w-full px-4 py-2 focus:ring-2 focus:ring-tomato text-center"
+          />
+          <button className="px-3 py-2 border-l focus:outline-none focus:ring-2 focus:ring-tomato">
+            <span className="text-lg">-</span>
+          </button>
+        </div>
+      </div>
+
+
+       {/* Update/Save Button */}
+       <div className="col-span-full mt-5 mb-10">
+        <button
+          className="py-2 px-4 rounded text-white bg-tomato hover:bg-white hover:text-tomato hover:border hover:border-tomato"
+        >
+          Save
+        </button>
+      </div>
+    </div>
   );
 };
 

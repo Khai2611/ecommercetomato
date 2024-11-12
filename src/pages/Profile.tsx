@@ -1,4 +1,3 @@
-import { Container } from "@chakra-ui/layout";
 import Content from "../components/Profile/Content/Content";
 import Sidebar from "../components/Profile/Sidebar/Sidebar";
 import Cover from "../components/Profile/Cover";
@@ -8,14 +7,10 @@ const Profile: React.FC = () => {
   return (
     <div>
       <Cover />
-      <Container
-        display={{ base: "block", md: "flex" }}
-        maxW="container.xl"
-        height="650px" // Set to your desired height
-      >
+      <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row mt-1">
         <Sidebar />
         <Content />
-      </Container>
+      </div>
     </div>
   );
 };

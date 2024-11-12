@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Text, VStack, Button } from "@chakra-ui/react";
+import { Box, Text, VStack } from "@chakra-ui/react";
 
 // Define the type for the items in the list
 interface ListItem {
@@ -40,7 +40,7 @@ const Data: React.FC = () => {
           w="full"
           py={3}
           px={5}
-          d="flex"
+          display="flex"
           alignItems="center"
           justifyContent="space-between"
           borderBottomWidth={1}
@@ -53,19 +53,12 @@ const Data: React.FC = () => {
         </Box>
       ))}
 
-      <Box mt={5} py={5} px={8}>
-        <Button
-          bg="tomato" // Set the background color to tomato
-          color="white" // Optional: change text color for better contrast
-          _hover={{
-            bg: "white", // Background color on hover
-            color: "tomato", // Text color on hover
-            border: "1px solid tomato", // Optional: add a border for better visibility
-          }}
-        >
+     <div className="col-span-full mt-5 mb-10">
+        <button
+          className="py-2 px-4 rounded text-white bg-tomato hover:bg-white hover:text-tomato hover:border hover:border-tomato">
           Log Out
-        </Button>
-      </Box>
+        </button>
+      </div>
     </VStack>
   );
 };

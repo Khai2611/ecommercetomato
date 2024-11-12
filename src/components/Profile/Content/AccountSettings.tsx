@@ -1,168 +1,220 @@
 import React, { useState, useEffect } from "react";
-import { FormControl, FormLabel, Grid, Input, Select, Box, Button } from "@chakra-ui/react";
 
 const AccountSettings: React.FC = () => {
   const [country, setCountry] = useState<string>("america");
   const [city, setCity] = useState<string>("New York");
   const [cityOptions, setCityOptions] = useState<string[]>([]);
-  const [isEditable, setIsEditable] = useState<boolean>(false); // Track if inputs are editable
+  const [isEditable, setIsEditable] = useState<boolean>(false);
 
   // Define comprehensive city options for each country
   const citiesByCountry: Record<string, string[]> = {
     america: [
-      "New York", "Los Angeles", "Chicago", "Houston", "Phoenix",
-      "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose"
+      "New York",
+      "Los Angeles",
+      "Chicago",
+      "Houston",
+      "Phoenix",
+      "Philadelphia",
+      "San Antonio",
+      "San Diego",
+      "Dallas",
+      "San Jose",
     ],
     england: [
-      "London", "Manchester", "Birmingham", "Leeds", "Liverpool",
-      "Sheffield", "Bristol", "Newcastle", "Leicester", "Nottingham"
+      "London",
+      "Manchester",
+      "Birmingham",
+      "Leeds",
+      "Liverpool",
+      "Sheffield",
+      "Bristol",
+      "Newcastle",
+      "Leicester",
+      "Nottingham",
     ],
     poland: [
-      "Warsaw", "Krakow", "Gdansk", "Poznan", "Wroclaw",
-      "Lodz", "Szczecin", "Bydgoszcz", "Lublin", "Katowice"
+      "Warsaw",
+      "Krakow",
+      "Gdansk",
+      "Poznan",
+      "Wroclaw",
+      "Lodz",
+      "Szczecin",
+      "Bydgoszcz",
+      "Lublin",
+      "Katowice",
     ],
     malaysia: [
-      "Kuala Lumpur", "George Town", "Johor Bahru", "Ipoh", "Shah Alam",
-      "Petaling Jaya", "Kota Kinabalu", "Kuching", "Seremban", "Melaka"
+      "Kuala Lumpur",
+      "George Town",
+      "Johor Bahru",
+      "Ipoh",
+      "Shah Alam",
+      "Petaling Jaya",
+      "Kota Kinabalu",
+      "Kuching",
+      "Seremban",
+      "Melaka",
     ],
   };
 
-  // Update city options when the country changes
   const handleCountryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedCountry = event.target.value;
     setCountry(selectedCountry);
     setCityOptions(citiesByCountry[selectedCountry] || []);
-    setCity(citiesByCountry[selectedCountry]?.[0] || ""); // Set the first city as default when country changes
+    setCity(citiesByCountry[selectedCountry]?.[0] || "");
   };
 
-  // Toggle between read-only and editable mode
   const toggleEditMode = () => {
     setIsEditable(!isEditable);
   };
 
   useEffect(() => {
-    // Set initial city options based on the default country
     setCityOptions(citiesByCountry[country] || []);
-    setCity(citiesByCountry[country]?.[0] || ""); // Default first city
+    setCity(citiesByCountry[country]?.[0] || "");
   }, [country]);
 
   return (
-    <Grid templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)" }} gap={6}>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-1xl mx-auto px-2">
       {/* First Name */}
-      <FormControl id="firstName">
-        <FormLabel>First Name</FormLabel>
-        <Input
-          focusBorderColor="tomato"
+      <div className="flex flex-col">
+        <label htmlFor="firstName" className="text-gray-700 font-medium">
+          First Name
+        </label>
+        <input
+          id="firstName"
           type="text"
           placeholder="Tim"
-          isReadOnly={!isEditable} // Make read-only when not editable
+          readOnly={!isEditable}
+          className={`mt-1 p-2 border rounded focus:ring-1 focus:ring-tomato focus:outline-none focus:outline-none ${
+            !isEditable && "bg-white"
+          }`}
         />
-      </FormControl>
+      </div>
 
       {/* Last Name */}
-      <FormControl id="lastName">
-        <FormLabel>Last Name</FormLabel>
-        <Input
-          focusBorderColor="tomato"
+      <div className="flex flex-col">
+        <label htmlFor="lastName" className="text-gray-700 font-medium">
+          Last Name
+        </label>
+        <input
+          id="lastName"
           type="text"
           placeholder="Cook"
-          isReadOnly={!isEditable} // Make read-only when not editable
+          readOnly={!isEditable}
+          className={`mt-1 p-2 border rounded focus:ring-1 focus:ring-tomato focus:outline-none ${
+            !isEditable && "bg-white"
+          }`}
         />
-      </FormControl>
+      </div>
 
       {/* Phone Number */}
-      <FormControl id="phoneNumber">
-        <FormLabel>Phone Number</FormLabel>
-        <Input
-          focusBorderColor="tomato"
+      <div className="flex flex-col">
+        <label htmlFor="phoneNumber" className="text-gray-700 font-medium">
+          Phone Number
+        </label>
+        <input
+          id="phoneNumber"
           type="tel"
           placeholder="(408) 996–1010"
-          isReadOnly={!isEditable} // Make read-only when not editable
+          readOnly={!isEditable}
+          className={`mt-1 p-2 border rounded focus:ring-1 focus:ring-tomato focus:outline-none ${
+            !isEditable && "bg-white"
+          }`}
         />
-      </FormControl>
+      </div>
 
       {/* Email Address */}
-      <FormControl id="emailAddress">
-        <FormLabel>Email Address</FormLabel>
-        <Input
-          focusBorderColor="tomato"
+      <div className="flex flex-col">
+        <label htmlFor="emailAddress" className="text-gray-700 font-medium">
+          Email Address
+        </label>
+        <input
+          id="emailAddress"
           type="email"
           placeholder="tcook@apple.com"
-          isReadOnly={!isEditable} // Make read-only when not editable
+          readOnly={!isEditable}
+          className={`mt-1 p-2 border rounded focus:ring-1 focus:ring-tomato focus:outline-none ${
+            !isEditable && "bg-white"
+          }`}
         />
-      </FormControl>
+      </div>
 
       {/* Country */}
-      <FormControl id="country">
-        <FormLabel>Country</FormLabel>
+      <div className="flex flex-col">
+        <label htmlFor="country" className="text-gray-700 font-medium">
+          Country
+        </label>
         {isEditable ? (
-          <Select
-            focusBorderColor="tomato"
-            placeholder="Select country"
+          <select
+            id="country"
             value={country}
             onChange={handleCountryChange}
+            className={`mt-1 p-2 border rounded focus:ring-1 focus:ring-tomato focus:outline-none ${
+              isEditable ? "bg-white" : "bg-white"
+            }`}
           >
             <option value="america">America</option>
             <option value="england">England</option>
             <option value="poland">Poland</option>
             <option value="malaysia">Malaysia</option>
-          </Select>
+          </select>
         ) : (
-          <Input
-            focusBorderColor="tomato"
-            value={country.charAt(0).toUpperCase() + country.slice(1)} // Capitalize the first letter
-            isReadOnly
+          <input
+            id="country"
+            type="text"
+            value={country.charAt(0).toUpperCase() + country.slice(1)}
+            readOnly
+            className="mt-1 p-2 border rounded focus:ring-1 focus:ring-tomato focus:outline-none"
           />
         )}
-      </FormControl>
+      </div>
 
       {/* City */}
-      <FormControl id="city">
-        <FormLabel>City</FormLabel>
+      <div className="flex flex-col">
+        <label htmlFor="city" className="text-gray-700 font-medium">
+          City
+        </label>
         {isEditable ? (
-          <Select
-            focusBorderColor="tomato"
-            placeholder="Select city"
+          <select
+            id="city"
             value={city}
-            onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setCity(e.target.value)}
-            disabled={!country} // Disable city selection if no country is selected
+            onChange={(e) => setCity(e.target.value)}
+            className={`mt-1 p-2 border rounded focus:ring-1 focus:ring-tomato focus:outline-none ${
+              !country && "bg-white"
+            }`}
+            disabled={!country}
           >
             {cityOptions.map((cityOption) => (
               <option key={cityOption} value={cityOption}>
                 {cityOption}
               </option>
             ))}
-          </Select>
+          </select>
         ) : (
-          <Input
-            focusBorderColor="tomato"
+          <input
+            id="city"
+            type="text"
             value={city}
-            isReadOnly
+            readOnly
+            className="mt-1 p-2 border rounded focus:ring-1 focus:ring-tomato focus:outline-none"
           />
         )}
-      </FormControl>
-
+      </div>
       {/* Update/Save Button */}
-      <Box mt={5} py={5}>
-        <Button
-          bg="tomato" // Tomato when editable, gray when not
-          color="white"
-          _hover={{
-            bg: "white",
-            color: "tomato",
-            border: "1px solid tomato"
-          }}
-          _active={{
-            bg: "white", // Active state background color
-            color: "tomato", // Active state text color
-            border: "1px solid tomato", // Active state border
-          }}
-          onClick={toggleEditMode} // Toggle between editable and read-only
+      <div className="col-span-full mt-5 mb-10">
+        <button
+          onClick={toggleEditMode}
+          className={`py-2 px-4 rounded text-white ${
+            isEditable
+              ? "bg-tomato hover:bg-white hover:text-tomato hover:border hover:border-tomato"
+              : "bg-tomato"
+          }`}
         >
-          {isEditable ? "Save" : "Update"} {/* Button text */}
-        </Button>
-      </Box>
-    </Grid>
+          {isEditable ? "Save" : "Update"}
+        </button>
+      </div>
+    </div>
   );
 };
 

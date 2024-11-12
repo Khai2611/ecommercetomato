@@ -1,12 +1,3 @@
-import {
-  Box,
-  Button,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-} from "@chakra-ui/react";
 import React, { useState } from "react";
 
 import AccountSettings from "./AccountSettings";
@@ -17,53 +8,42 @@ const Content: React.FC = () => {
   const tabs: string[] = ["Account Settings", "Order History"];
 
   return (
-    <Box
-      as="main"
-      flex={3}
-      display="flex"
-      flexDirection="column"
-      justifyContent="space-between"
-      pt={5}
-      bg="white"
-      rounded="10px"
-      borderWidth={1}
-      borderColor="gray.200"
+    <main
+      className="flex flex-col justify-between pt-5 bg-white rounded-lg border border-gray-200 shadow-xl shadow-Orange/30 lg:w-3/4 w-full" // Change width here
       style={{
         transform: "translateY(-100px)",
         marginTop: "90px",
         marginBottom: "0px",
       }}
-      className="shadow-xl shadow-Orange/30 lg:w-2/3"
     >
-      <Tabs index={index} onChange={setIndex}>
-        <TabList px={5}>
-          {tabs.map((tab) => (
-            <Tab
-              key={tab}
-              mx={3}
-              px={0}
-              py={3}
-              fontWeight="semibold"
-              color="brand.cadet"
-              borderBottomWidth={1}
-              _active={{ bg: "transparent" }}
-              _selected={{ color: "tomato", borderColor: "tomato" }}
-            >
-              {tab}
-            </Tab>
-          ))}
-        </TabList>
 
-        <TabPanels px={3} mt={5}>
-          <TabPanel>
+      <div className="border-b border-gray-300 mt-1 flex px-5">
+        {tabs.map((tab, i) => (
+          <button
+            key={tab}
+            onClick={() => setIndex(i)}
+            className={`mx-3 px-0 py-3 font-semibold border-b-2 
+              ${index === i ? "text-tomato border-tomato" : "text-gray-500 border-transparent"}
+            `}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
+
+
+      <div className="px-3 mt-10">
+        {index === 0 ? (
+          <div>
             <AccountSettings />
-          </TabPanel>
-          <TabPanel>
+          </div>
+        ) : (
+          <div>
             <CompanySettings />
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
-    </Box>
+          </div>
+        )}
+      </div>
+    </main>
   );
 };
 
