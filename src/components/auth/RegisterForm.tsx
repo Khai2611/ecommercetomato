@@ -1,23 +1,70 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import { assets } from "@/assets/frontend_assets/assets";
+import React, {useState} from 'react';
+import {Link, useNavigate} from 'react-router-dom';
+import {assets} from '@/assets/frontend_assets/assets';
+import {
+    createUserWithEmailAndPassword,
+    sendEmailVerification,
+} from 'firebase/auth';
+import {auth} from '@/firebase/firebaseConfig';
 
-const RegisterForm = () => {
+const RegisterForm: React.FC = () => {
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [confirmPassword, setConfirmPassword] = useState<string>('');
+    const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate(); // To navigate after successful registration
+
+    // Handle form submission
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError(null);
+
+        if (password !== confirmPassword) {
+            setError("Passwords don't match");
+            return;
+        }
+
+        try {
+            // Create the user with email and password
+            const userCredential = await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password,
+            );
+            const user = userCredential.user;
+
+            // Send email verification
+            await sendEmailVerification(user);
+            setError('Verification email sent! Please check your inbox.');
+
+            console.log('User registered successfully');
+            navigate('/login'); // Redirect to login page after successful registration
+        } catch (err: any) {
+            // Handle Firebase authentication errors
+            console.error('Error during registration:', err);
+            if (err.code === 'auth/email-already-in-use') {
+                setError('Email is already in use');
+            } else {
+                setError('Error creating account. Please try again.');
+            }
+        }
+    };
+
     return (
         <div className='flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8'>
             <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
-            <img
-          alt="Your Company"
-          src={assets.logo}
-          className="mx-auto h-full w-auto"
-        />
+                <img
+                    alt='Your Company'
+                    src={assets.logo}
+                    className='mx-auto h-full w-auto'
+                />
                 <h2 className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>
                     Register an account
                 </h2>
             </div>
 
             <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
-                <form action='#' method='POST' className='space-y-6'>
+                <form onSubmit={handleSubmit} className='space-y-6'>
                     <div>
                         <label
                             htmlFor='name'
@@ -51,6 +98,8 @@ const RegisterForm = () => {
                                 type='email'
                                 required
                                 autoComplete='email'
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                             />
                         </div>
@@ -71,7 +120,9 @@ const RegisterForm = () => {
                                 name='password'
                                 type='password'
                                 required
-                                autoComplete='current-password'
+                                autoComplete='new-password'
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                             />
                         </div>
@@ -93,30 +144,35 @@ const RegisterForm = () => {
                                 type='password'
                                 required
                                 autoComplete='confirm-password'
+                                value={confirmPassword}
+                                onChange={(e) =>
+                                    setConfirmPassword(e.target.value)
+                                }
                                 className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                             />
                         </div>
                     </div>
 
                     <div>
-                        <Link to={'/'}>
-                            <button
-                                type='submit'
-                                className="flex w-full justify-center rounded-md bg-[tomato] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[tomato] focus-visible:outline focus-visible:outline-2 focus-visible"
-                            >
-                                Register
-                            </button>
-                        </Link>
+                        {/* <Link to={'/'}> */}
+                        <button
+                            type='submit'
+                            className='flex w-full justify-center rounded-md bg-[tomato] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[tomato] focus-visible:outline focus-visible:outline-2 focus-visible'
+                        >
+                            Register
+                        </button>
+                        {/* </Link> */}
                     </div>
                 </form>
-
+                {error && <p className='text-red-500 mt-4'>{error}</p>}{' '}
+                {/* Display error if any */}
                 <p className='mt-10 text-center text-sm text-gray-500'>
                     Already have an account?{' '}
                     <Link to={'/Login'}>
                         <a
                             href='#'
-                            className="font-semibold text-[tomato] hover:text-[tomato] hover:text-opacity-80"
-                            >
+                            className='font-semibold text-[tomato] hover:text-[tomato] hover:text-opacity-80'
+                        >
                             Log In
                         </a>
                     </Link>
