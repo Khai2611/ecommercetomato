@@ -25,7 +25,6 @@ const Content: React.FC = () => {
       justifyContent="space-between"
       pt={5}
       bg="white"
-      // bg="tomato"
       rounded="10px"
       borderWidth={1}
       borderColor="gray.200"

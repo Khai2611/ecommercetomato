@@ -124,7 +124,7 @@ const AccountSettings: React.FC = () => {
             focusBorderColor="tomato"
             placeholder="Select city"
             value={city}
-            onChange={(e) => setCity(e.target.value)}
+            onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setCity(e.target.value)}
             disabled={!country} // Disable city selection if no country is selected
           >
             {cityOptions.map((cityOption) => (

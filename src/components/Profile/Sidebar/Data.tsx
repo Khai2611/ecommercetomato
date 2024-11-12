@@ -14,26 +14,26 @@ const list: ListItem[] = [
     id: 1,
     name: "Points",
     value: 32,
-    color: "yellow",
+    color: "#ed9b13",
   },
   {
     id: 2,
     name: "Online Purchase",
     value: 26,
-    color: "green",
+    color: "#36c537",
   },
   {
     id: 3,
     name: "Store Purchase",
     value: 6,
-    color: "blue",
+    color: "#4164e3",
   },
 ];
 
 const Data: React.FC = () => {
   return (
     <VStack as="ul" spacing={0} listStyleType="none">
-      {list.map((item) => (
+    {list.map((item) => (
         <Box
           key={item.id}
           as="li"
@@ -47,14 +47,13 @@ const Data: React.FC = () => {
           borderColor="brand.light"
         >
           <Text color="brand.dark">{item.name}</Text>
-          <Text color={`brand.${item.color}`} fontWeight="bold">
+          <Text color={`${item.color}`} fontWeight="bold">
             {item.value}
           </Text>
         </Box>
       ))}
 
-      <Box mt={5} py={10} px={8}>
-        {/* <Box mt={5} py={10} px={8} borderTopWidth={1} borderColor="brand.light"> */}
+      <Box mt={5} py={5} px={8}>
         <Button
           bg="tomato" // Set the background color to tomato
           color="white" // Optional: change text color for better contrast

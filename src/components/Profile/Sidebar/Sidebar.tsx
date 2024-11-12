@@ -14,7 +14,6 @@ const Sidebar: React.FC = () => {
       rounded="10px"
       borderWidth={1}
       borderColor="brand.light"
-      // borderColor="tomato"
       style={{ transform: 'translateY(-100px)', marginTop:'90px', marginBottom:'0px'}}
       className="items-center justify-center gap-8 shadow-xl shadow-Orange/30 lg:w-2/3"
     >
