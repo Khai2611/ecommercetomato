@@ -1,7 +1,7 @@
 declare module '*.png' {
-    const value: string;
     export default value;
 }
+const value: string;
 
 declare module '*.jpg' {
     const value: string;

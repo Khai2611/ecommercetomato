@@ -3,7 +3,6 @@ import basket_icon from './basket_icon.png'
 import logo from './logo.png'
 import search_icon from './search_icon.png'
 
-
 import add_icon_white from './add_icon_white.png'
 import add_icon_green from './add_icon_green.png'
 import remove_icon_red from './remove_icon_red.png'
@@ -35,132 +34,215 @@ import audiophileLogo from './client-audiophile.svg';
 import meetLogo from './client-meet.svg';
 import makerLogo from './client-maker.svg';
 
-import p1 from './p1-1000.jpg';
-import p2 from './p2-1000.jpg';
-import p3 from './p3-1000.jpg';
-import p4 from './p4-1000.jpg';
-
-import p11 from './p1-176.jpg';
-import p22 from './p2-176.jpg';
-import p33 from './p3-176.jpg';
-import p44 from './p4-176.jpg';
-
-
 //profile pics 
 import lul from './lul.jpg';
 import screen from './screen.png';
 
-//profile list's page 
-import cardigan2 from './clothes/cardigan2.jpg';
-import cardigan3 from './clothes/kidcardigan.jpg';
-import shirt1 from './clothes/turtleneck.jpg';
 import shirt2 from './clothes/tshirt.jpg';
-import shirt3 from './clothes/flannel.jpg';
 import shirt4 from './clothes/sweatshirt.jpg';
-import shirt5 from './clothes/crewnecktee.jpg';
 import shirt6 from './clothes/shirt.jpg';
 
 import dress from './clothes/dress.jpg';
-import hoodie from './clothes/hoodie2.jpg';
-import souffle from './clothes/souffle.jpg';
-import pants1 from './clothes/drapeypants.jpg';
-import pants2 from './clothes/kidsweatpants.jpg';
-import pants3 from './clothes/taperedpants.jpg';
 import pants4 from './clothes/widepants.jpg';
-import shoe1 from './clothes/shoe1.png';
-import shoe22 from './clothes/shoe2.png';
-import shoe3 from './clothes/shoe3.png';
-import shoe4 from './clothes/samba.jpg';
+import shoe2 from './clothes/shoe2.png';
 
+
+// product list & Product details
+import shirt1a from './clothes/shirt1a.jpg';
+import shirt1b from './clothes/shirt1b.jpg';
+import shirt1c from './clothes/shirt1c.jpg';
+import shirt1d from './clothes/shirt1d.jpg';
+
+import shirt3a from './clothes/shirt3a.jpg';
+import shirt3b from './clothes/shirt3b.jpg';
+import shirt3c from './clothes/shirt3c.jpg';
+import shirt3d from './clothes/shirt3d.jpg';
+
+import shirt5a from './clothes/shirt5a.jpg';
+import shirt5b from './clothes/shirt5b.jpg';
+import shirt5c from './clothes/shirt5c.jpg';
+import shirt5d from './clothes/shirt5d.jpg';
+
+import pants1a from './clothes/pants1a.jpg';
+import pants1b from './clothes/pants1b.jpg';
+import pants1c from './clothes/pants1c.jpg';
+import pants1d from './clothes/pants1d.jpg';
+
+import pants2a from './clothes/pants2a.jpg';
+import pants2b from './clothes/pants2b.jpg';
+import pants2c from './clothes/pants2c.jpg';
+import pants2d from './clothes/pants2d.jpg';
+
+import pants3 from './clothes/pants3.jpg';
+
+
+import shoe1a from './clothes/shoe1a.png';
+import shoe1b from './clothes/shoe1b.png';
+import shoe1c from './clothes/shoe1c.png';
+import shoe1d from './clothes/shoe1d.png';
+
+import shoe4a from './clothes/shoe4a.jpg';
+import shoe4b from './clothes/shoe4b.jpg';
+import shoe4c from './clothes/shoe4c.jpg';
+import shoe4d from './clothes/shoe4d.jpg';
+import shoe4e from './clothes/shoe4e.jpg';
+
+import shoe3a from './clothes/shoe3a.png';
+import shoe3b from './clothes/shoe3b.png';
+import shoe3c from './clothes/shoe3c.png';
+import shoe3d from './clothes/shoe3d.png';
+
+import sweater1a from './clothes/sweater1a.jpg';
+import sweater1b from './clothes/sweater1b.jpg';
+import sweater1c from './clothes/sweater1c.jpg';
+import sweater1d from './clothes/sweater1d.jpg';
+
+import sweater2a from './clothes/sweater2a.jpg';
+import sweater2b from './clothes/sweater2b.jpg';
+import sweater2c from './clothes/sweater2c.jpg';
+import sweater2d from './clothes/sweater2d.jpg';
+
+import sweater3a from './clothes/sweater3a.jpg';
+import sweater3b from './clothes/sweater3b.jpg';
+import sweater3c from './clothes/sweater3c.jpg';
+import sweater3d from './clothes/sweater3d.jpg';
+
+import sweater4a from './clothes/sweater4a.jpg';
+import sweater4b from './clothes/sweater4b.jpg';
+import sweater4c from './clothes/sweater4c.jpg';
+import sweater4d from './clothes/sweater4d.jpg';
 
 export const assets = {
-    
-    //product lists 
-    cardigan2,
-    cardigan3,
-    shirt1,
-    shirt2,
-    shirt3,
-    shirt4,
-    shirt5,
-    shirt6,
-    dress,
-    hoodie,
-    souffle,
-    pants1,
-    pants2,
-    pants3, 
-    pants4,
-    shoe1,
-    shoe22,
-    shoe3,
-    shoe4,
-    
-
-    //cat pics
-    autumn,
-    summer, 
-    spring,
-    cardigan, 
-    sneakers, 
-    pants, 
-    
-    //brands
-    databizLogo, 
-    audiophileLogo, 
-    meetLogo,
-    makerLogo,
-
-    //sneakers 
-    p1,
-    p2,
-    p3,
-    p4,
-    p11,
-    p22,
-    p33,
-    p44,
-   
-    logo,
-    basket_icon,
-    search_icon,
-    rating_starts,
-    add_icon_green,
-    add_icon_white,
-    remove_icon_red,
-    app_store,
-    play_store,
-    linkedin_icon,
-    facebook_icon,
-    twitter_icon,
-    cross_icon,
-    selector_icon,
-    profile_icon,
-    logout_icon,
-    bag_icon,
-    parcel_icon,
+  logo,
+  basket_icon,
+  search_icon,
+  rating_starts,
+  add_icon_green,
+  add_icon_white,
+  remove_icon_red,
+  app_store,
+  play_store,
+  linkedin_icon,
+  facebook_icon,
+  twitter_icon,
+  cross_icon,
+  selector_icon,
+  profile_icon,
+  logout_icon,
+  bag_icon,
+  parcel_icon,
 
   //profile
-  lul, 
-  screen, 
+  lul,
+  screen,
+  //cat pics
+  autumn,
+  summer,
+  spring,
+  cardigan,
+  sneakers,
+  pants,
+
+  //brands
+  databizLogo,
+  audiophileLogo,
+  meetLogo,
+  makerLogo,
+
+  //product lists 
+  sweater4a,
+  shirt2,
+  shirt4,
+  shirt6,
+  dress,
+  pants3,
+  pants4,
+  shoe2,
+
+  //product list & product details 
+  shirt1a,
+  shirt1b,
+  shirt1c,
+  shirt1d,
+
+  shirt3a,
+  shirt3b,
+  shirt3c,
+  shirt3d,
+
+  shirt5a,
+  shirt5b,
+  shirt5c,
+  shirt5d,
+
+  pants1a,
+  pants1b,
+  pants1c,
+  pants1d,
+
+  pants2a,
+  pants2b,
+  pants2c,
+  pants2d,
+
+  shoe1a,
+  shoe1b,
+  shoe1c,
+  shoe1d,
+
+  shoe4a,
+  shoe4b,
+  shoe4c,
+  shoe4d,
+  shoe4e,
+
+  shoe3a,
+  shoe3b,
+  shoe3c,
+  shoe3d,
+
+  sweater1a,
+  sweater1b,
+  sweater1c,
+  sweater1d,
+
+  sweater2a,
+  sweater2b,
+  sweater2c,
+  sweater2d,
+
+  sweater3a,
+  sweater3b,
+  sweater3c,
+  sweater3d,
+
+  sweater4a,
+  sweater4b,
+  sweater4c,
+  sweater4d,
+
+ 
+
+
+
 }
 
 export const header = [
-    {
-        image: autumn,
-        title: "Autumn Collection",
-        desc: "Embrace the season with our cozy autumn collection. From warm layers to stylish accessories, find the perfect pieces to elevate your fall wardrobe."
-    },
-    {
-        image: summer,
-        title: "Summer Collection",
-        desc: "Embrace the warmth with our vibrant summer clothes collection. From breezy dresses to stylish shorts, find the perfect pieces to keep you cool and chic all season long."
-    },
-    {
-        image: spring,
-        title: "Spring Collection",
-        desc: "Refresh your wardrobe with our vibrant spring styles, featuring light fabrics and playful designs."
-    },
+  {
+    image: autumn,
+    title: "Autumn Collection",
+    desc: "Embrace the season with our cozy autumn collection. From warm layers to stylish accessories, find the perfect pieces to elevate your fall wardrobe."
+  },
+  {
+    image: summer,
+    title: "Summer Collection",
+    desc: "Embrace the warmth with our vibrant summer clothes collection. From breezy dresses to stylish shorts, find the perfect pieces to keep you cool and chic all season long."
+  },
+  {
+    image: spring,
+    title: "Spring Collection",
+    desc: "Refresh your wardrobe with our vibrant spring styles, featuring light fabrics and playful designs."
+  },
 ];
 
 // =================== Types Start here ====================
@@ -181,7 +263,7 @@ interface Product {
 export const productData = [
   {
     _id: "1001",
-    img: cardigan2,
+    img: sweater2a,
     productName: "Fleece Turtleneck",
     price: 135.00,
     color: "Beige and Orange",
@@ -190,7 +272,7 @@ export const productData = [
   },
   {
     _id: "1002",
-    img: cardigan3,
+    img: sweater4a,
     productName: "Fleece Cardigan",
     price: 180.00,
     color: "Cream and Orange",
@@ -208,7 +290,7 @@ export const productData = [
   },
   {
     _id: "1004",
-    img: souffle,
+    img: sweater3a,
     productName: "Souffle Sweater",
     price: 260.00,
     color: "Green",
@@ -226,7 +308,7 @@ export const productData = [
   },
   {
     _id: "1006",
-    img: shirt1,
+    img: shirt1a,
     productName: "Flannel Shirt",
     price: 220.00,
     color: "Black and White",
@@ -242,16 +324,16 @@ export const productData = [
 export const paginationItems: Product[] = [
   {
     _id: "1001",
-    img: shirt1,
+    img: shirt1a,
     productName: "Fleece Turtleneck",
-    price: "35.00",
+    price: "135.00",
     color: "Beige and Orange",
     badge: true,
     des: "The sleeves and body have been redesigned for better range of motion.",
   },
   {
     _id: "1002",
-    img: cardigan2,
+    img: sweater2a,
     productName: "Fleece Cardigan",
     price: "180.00",
     color: "Cream and Orange",
@@ -260,7 +342,7 @@ export const paginationItems: Product[] = [
   },
   {
     _id: "1003",
-    img: cardigan3,
+    img: sweater4a,
     productName: "Greece Cardigan",
     price: "125.00",
     color: "Cream and Orange",
@@ -269,7 +351,7 @@ export const paginationItems: Product[] = [
   },
   {
     _id: "1004",
-    img: shirt3,
+    img: shirt3a,
     productName: "Flannel Shirt",
     price: "220.00",
     color: "Black and White",
@@ -278,7 +360,7 @@ export const paginationItems: Product[] = [
   },
   {
     _id: "1005",
-    img: shoe4,
+    img: shoe4a,
     productName: "Fall Sneakers",
     price: "35.00",
     color: "Beige and Orange",
@@ -296,7 +378,7 @@ export const paginationItems: Product[] = [
   },
   {
     _id: "1007",
-    img: hoodie,
+    img: sweater1a,
     productName: "Sweat Hoodie",
     price: "125.00",
     color: "Pastel Green",
@@ -332,7 +414,7 @@ export const paginationItems: Product[] = [
   },
   {
     _id: "1011",
-    img: shirt5,
+    img: shirt5a,
     productName: "Kids Crew TShirt",
     price: "80.00",
     color: "Mixed",
@@ -341,7 +423,7 @@ export const paginationItems: Product[] = [
   },
   {
     _id: "1012",
-    img: souffle,
+    img: sweater3a,
     productName: "Souffle Sweater",
     price: "260.00",
     color: "Green",
@@ -359,7 +441,7 @@ export const paginationItems: Product[] = [
   },
   {
     _id: "1014",
-    img: pants1,
+    img: pants1a,
     productName: "Drapey Pants",
     price: "250.00",
     color: "Cream",
@@ -368,7 +450,7 @@ export const paginationItems: Product[] = [
   },
   {
     _id: "1015",
-    img: pants2,
+    img: pants2a,
     productName: "Kid Sweatpants",
     price: "60.00",
     color: "Gray",
@@ -377,7 +459,7 @@ export const paginationItems: Product[] = [
   },
   {
     _id: "1016",
-    img: shoe22,
+    img: shoe2,
     productName: "Lebron Jewel",
     price: "250.00",
     color: "Mixed",
@@ -386,7 +468,7 @@ export const paginationItems: Product[] = [
   },
   {
     _id: "1017",
-    img: shoe1,
+    img: shoe1a,
     productName: "Pegasus Plus",
     price: "220.00",
     color: "Mixed",
@@ -395,7 +477,7 @@ export const paginationItems: Product[] = [
   },
   {
     _id: "1018",
-    img: shoe3,
+    img: shoe3a,
     productName: "Victory Streakfly",
     price: "144.00",
     color: "Mixed",
@@ -411,6 +493,7 @@ export const paginationItems: Product[] = [
     badge: true,
     des: "Smooth yet silhouette-retaining fabric with elastic waistband.",
   },
+
 
 ];
 

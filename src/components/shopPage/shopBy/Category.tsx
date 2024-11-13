@@ -18,7 +18,7 @@ const Category: React.FC<CategoryProps> = ({ icons }) => {
   const items: Item[] = [
     { _id: 990, title: "Shirts", icons: true },
     { _id: 991, title: "Pants" },
-    { _id: 992, title: "Hoodies", icons: true },
+    { _id: 992, title: "Sweaters", icons: true },
     { _id: 993, title: "Sneakers" },
   ];
 

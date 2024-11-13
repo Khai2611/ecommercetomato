@@ -21,8 +21,9 @@ export const ProductCarousell = ({inLightbox = false}) => {
         nextBtnRef,
     } = useCarousel(inLightbox);
 
-    const fullImgs = [assets.p1, assets.p2, assets.p3, assets.p4];
-    const thumbImgs = [assets.p11, assets.p22, assets.p33, assets.p44];
+    const fullImgs = [assets.shoe4b, assets.shoe4c, assets.shoe4d, assets.shoe4e];
+    const thumbImgs = [assets.shoe4b, assets.shoe4c, assets.shoe4d, assets.shoe4e];
+    
 
     const displayPrevImage = useCallback(() => {
         setCurImageIdx((prevIdx) =>
@@ -118,7 +119,9 @@ export const ProductCarousell = ({inLightbox = false}) => {
                                     transform: `translateX(-${
                                         curImageIdx * 100
                                     }%)`,
+
                                 }}
+                           
                                 width={1000}
                                 height={1000}
                             />
@@ -221,7 +224,7 @@ export const ProductCarousell = ({inLightbox = false}) => {
                             <img
                                 src={imgThumb}
                                 alt='sneakers thumbnail image'
-                                className='w-40'
+                                className="w-40" // Ensure the thumbnail image fills the button container
                                 width={176}
                                 height={176}
                             />
