@@ -150,7 +150,6 @@ export const assets = {
   makerLogo,
 
   //product lists 
-  sweater4a,
   shirt2,
   shirt4,
   shirt6,
