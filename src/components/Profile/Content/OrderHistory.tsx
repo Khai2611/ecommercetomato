@@ -6,10 +6,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/Accordion";
-import ProductList from "../../../components/orderHistory/ProductList";
-import Title from "../../../components/orderHistory/Title";
+import ProductList from "../../orderHistory/ProductList";
+import Title from "../../orderHistory/Title";
 
-const CompanySettings: React.FC = () => {
+const OrderHistory: React.FC = () => {
   const products = [
     {
       id: 1,
@@ -62,7 +62,7 @@ const CompanySettings: React.FC = () => {
     },
   ];
   return (
-    <div className="max-w-1xl mx-auto px-2">
+    <div className="max-w-1xl mx-auto px-2 mb-10">
       <div className="space-y-5">
         {orders.map((order) => {
           // Filter products based on current orderId
@@ -89,15 +89,9 @@ const CompanySettings: React.FC = () => {
           );
         })}
       </div>
-
-      {/* Update/Save Button */}
-      <div className="col-span-full mt-5 mb-10">
-        <button className="py-2 px-4 rounded text-white bg-tomato hover:bg-white hover:text-tomato hover:border hover:border-tomato">
-          Save
-        </button>
-      </div>
+    
     </div>
   );
 };
 
-export default CompanySettings;
+export default OrderHistory;

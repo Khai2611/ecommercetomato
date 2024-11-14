@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import AccountSettings from "./AccountSettings";
-import CompanySettings from "./CompanySettings";
+import OrderHistory from "./OrderHistory";
 
 const Content: React.FC = () => {
   const [index, setIndex] = useState<number>(0);
@@ -39,7 +39,7 @@ const Content: React.FC = () => {
           </div>
         ) : (
           <div>
-            <CompanySettings />
+            <OrderHistory />
           </div>
         )}
       </div>
