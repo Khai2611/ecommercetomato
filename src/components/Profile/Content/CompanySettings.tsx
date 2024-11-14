@@ -1,77 +1,98 @@
-import React from 'react';
+import React from "react";
+import p1 from "../../../assets/frontend_assets/p1.jpg";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/Accordion";
+import ProductList from "../../../components/orderHistory/ProductList";
+import Title from "../../../components/orderHistory/Title";
 
 const CompanySettings: React.FC = () => {
+  const products = [
+    {
+      id: 1,
+      name: "Product 1 adsadas sadasdasd sadsadwa sdasdwad",
+      category: "Category 1",
+      price: "RM230",
+      image: p1,
+      quantity: 12,
+      orderId: "abc123",
+      date: "Oct 20, 2024",
+    },
+    {
+      id: 2,
+      name: "Product 2",
+      category: "Category 2",
+      price: "RM150",
+      image: p1,
+      quantity: 8,
+      orderId: "abc123",
+      date: "Oct 20, 2024",
+    },
+    {
+      id: 3,
+      name: "Product 3",
+      category: "Category 3",
+      price: "RM150",
+      image: p1,
+      quantity: 82,
+      orderId: "abc234",
+      date: "Oct 20, 2024",
+    },
+  ];
+
+  const orders = [
+    {
+      orderId: "abc123",
+      orderDate: "30 Oct 2024",
+    },
+    {
+      orderId: "abc234",
+      orderDate: "30 Nov 2025",
+    },
+    {
+      orderId: "abc234",
+      orderDate: "30 Nov 2025",
+    },
+    {
+      orderId: "abc234",
+      orderDate: "30 Nov 2025",
+    },
+  ];
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-1xl mx-auto px-2">
-      {/* Company ID */}
-      <div className="flex flex-col">
-        <label htmlFor="companyId" className="text-gray-700 font-medium">Company ID</label>
-        <div className="relative">
-          <div className="absolute left-0 top-0 bottom-0 flex items-center pl-3 text-gray-500">
-            <svg width="1em" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fillRule="evenodd"
-                d="M14.243 5.757a6 6 0 10-.986 9.284 1 1 0 111.087 1.678A8 8 0 1118 10a3 3 0 01-4.8 2.401A4 4 0 1114 10a1 1 0 102 0c0-1.537-.586-3.07-1.757-4.243zM12 10a2 2 0 10-4 0 2 2 0 004 0z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          <input
-            id="companyId"
-            type="text"
-            placeholder="apple"
-            className="pl-10 p-2 border rounded focus:ring-2 focus:ring-tomato w-full"
-          />
-        </div>
+    <div className="max-w-1xl mx-auto px-2">
+      <div className="space-y-5">
+        {orders.map((order) => {
+          // Filter products based on current orderId
+          const filteredProducts = products.filter(
+            (product) => product.orderId === order.orderId
+          );
+
+          return (
+            <Accordion
+              key={order.orderId}
+              type="single"
+              collapsible
+              className="w-full border rounded-2xl shadow-md"
+            >
+              <AccordionItem value={order.orderId}>
+                <AccordionTrigger className="mx-5">
+                  <Title orderId={order.orderId} orderDate={order.orderDate} />
+                </AccordionTrigger>
+                <AccordionContent className="border">
+                  <ProductList products={filteredProducts} />
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          );
+        })}
       </div>
 
-      {/* Company Name */}
-      <div className="flex flex-col">
-        <label htmlFor="companyName" className="text-gray-700 font-medium">Name</label>
-        <input
-          id="companyName"
-          type="text"
-          placeholder="Apple"
-          className="mt-1 p-2 border rounded focus:ring-2 focus:ring-tomato"
-        />
-      </div>
-
-      {/* Company Email */}
-      <div className="flex flex-col">
-        <label htmlFor="emailCompany" className="text-gray-700 font-medium">Email Address</label>
-        <input
-          id="emailCompany"
-          type="email"
-          placeholder="info@apple.com"
-          className="mt-1 p-2 border rounded focus:ring-2 focus:ring-tomato"
-        />
-      </div>
-
-      {/* Company Size */}
-      <div className="flex flex-col">
-        <label htmlFor="companySize" className="text-gray-700 font-medium">Size</label>
-        <div className="flex items-center border rounded">
-          <button className="px-3 py-2 border-r focus:outline-none focus:ring-2 focus:ring-tomato">
-            <span className="text-lg">+</span>
-          </button>
-          <input
-            id="companySize"
-            type="number"
-            placeholder="6000"
-            className="w-full px-4 py-2 focus:ring-2 focus:ring-tomato text-center"
-          />
-          <button className="px-3 py-2 border-l focus:outline-none focus:ring-2 focus:ring-tomato">
-            <span className="text-lg">-</span>
-          </button>
-        </div>
-      </div>
-
-
-       {/* Update/Save Button */}
-       <div className="col-span-full mt-5 mb-10">
-        <button
-          className="py-2 px-4 rounded text-white bg-tomato hover:bg-white hover:text-tomato hover:border hover:border-tomato"
-        >
+      {/* Update/Save Button */}
+      <div className="col-span-full mt-5 mb-10">
+        <button className="py-2 px-4 rounded text-white bg-tomato hover:bg-white hover:text-tomato hover:border hover:border-tomato">
           Save
         </button>
       </div>

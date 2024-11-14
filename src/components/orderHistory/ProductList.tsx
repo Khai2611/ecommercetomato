@@ -58,7 +58,7 @@ function ProductList({products}: ProductListProps) {
                     <img
                         src={p1}
                         alt='Product'
-                        className='w-24 h-24 object-cover mr-4'
+                        className='w-24 h-24 object-cover mr-4 rounded'
                     />
 
                     <div className='flex-grow text-left'>
@@ -77,7 +77,7 @@ function ProductList({products}: ProductListProps) {
 
                     <div className='text-center'>
                         <p className='text-lg font-semibold'>{product.price}</p>
-                        <Button className='mt-8'>Buy Again</Button>
+                        <Button className='mt-8 text-white bg-tomato hover:bg-white hover:text-tomato hover:border hover:border-tomato'>Buy Again</Button>
                     </div>
                 </div>
             ))}

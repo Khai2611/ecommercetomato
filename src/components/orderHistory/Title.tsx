@@ -5,7 +5,7 @@ interface TitleProps {
 
 function Title({orderId, orderDate}: TitleProps) {
     return (
-        <div className='flex justify-between items-center w-full'>
+        <div className='flex justify-between items-center w-full text-gray-600'>
             <div className='justify-items-start'>
                 <div>Order ID: {orderId}</div>
                 <div>Order Date: {orderDate}</div>

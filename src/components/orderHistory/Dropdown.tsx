@@ -3,7 +3,7 @@ import {
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
-} from '@/components/ui/accordion';
+} from '@/components/ui/Accordion';
 import ProductList from './ProductList';
 import p1 from '../../assets/frontend_assets/p1.jpg';
 import Title from './Title';
