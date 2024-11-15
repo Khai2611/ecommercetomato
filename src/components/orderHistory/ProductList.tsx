@@ -1,5 +1,5 @@
 import p1 from '../../assets/frontend_assets/p1.jpg';
-import {Button} from '../ui/button';
+import {Button} from '../ui/Button';
 
 interface Product {
     id: number;
