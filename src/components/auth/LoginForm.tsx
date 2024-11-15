@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {assets} from '@/assets/frontend_assets/assets';
 import {signInWithEmailAndPassword} from 'firebase/auth';
- import {auth} from "@/firebase/firebaseConfig";
+import {auth} from '@/firebase/firebaseConfig';
+import {loginUser} from '@/utils/auth';
 
 const LoginForm: React.FC = () => {
     const [email, setEmail] = useState<string>('');
@@ -29,6 +30,10 @@ const LoginForm: React.FC = () => {
                 setError('Please verify your email before logging in.');
                 return;
             }
+
+            // Store session data in localStorage
+            const userData = {userID: user.uid, token: user.refreshToken};
+            loginUser(userData); // Store user data
 
             // If email is verified, navigate to the dashboard (or protected route)
             console.log('User signed in successfully');
