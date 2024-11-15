@@ -8,7 +8,9 @@ const Profile: React.FC = () => {
     <div>
       <Cover />
       <div className="max-w-screen-xl mx-auto flex flex-col md:flex-row mt-1">
-        <Sidebar />
+        <div style={{flexShrink:0}}>
+          <Sidebar />
+        </div>
         <Content />
       </div>
     </div>
