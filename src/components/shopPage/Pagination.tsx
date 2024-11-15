@@ -22,20 +22,6 @@ interface ItemsProps {
     currentItems: Product[];
 }
 
-// interface Item {
-//     _id: string;
-//     img: string;
-//     productName: string;
-//     price: string;
-//     color: string;
-//     badge?: boolean;
-//     des: string;
-// }
-
-// interface ItemsProps {
-//     currentItems: Item[];
-// }
-
 function Items({currentItems}: ItemsProps) {
     return (
         <>
@@ -47,7 +33,6 @@ function Items({currentItems}: ItemsProps) {
                             img={item.p1}
                             productName={item.prodName}
                             price={item.prodPrice.toString()}
-                            // color={item.color}
                             badge={item.badge}
                             des={item.desc}
                         />

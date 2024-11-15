@@ -102,7 +102,7 @@ export const ProductCarousell: React.FC<ProductCarousellProps> = ({
 
   return (
     <>
-      <div ref={carouselRef} className="lg:max-w-3xl" style={{marginLeft:"150px"}}>
+      <div ref={carouselRef} className="lg:max-w-3xl">
         {inLightbox && (
           <Button
             ref={closeButtonRef}
@@ -142,7 +142,7 @@ export const ProductCarousell: React.FC<ProductCarousellProps> = ({
                 className="transition-transform duration-500 ease-in-out"
                 style={{
                   transform: `translateX(-${curImageIdx * 100}%)`,
-                  height: "640px", // Ensures image height adjusts according to width while maintaining aspect ratio
+                  height: "640px", 
                 }}
               />
             ))}
