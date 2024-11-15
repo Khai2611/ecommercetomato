@@ -46,9 +46,7 @@ function ProductList() {
     ];
 
     return (
-        <div className='space-y-4 p-4 divide-y divide-gray-300 max-w-xl'>
-        {/* <h2 className="text-3xl text-tomato font-semibold mb-4">Contact Information</h2> */}
-            
+        <div className='space-y-4 p-4 divide-y divide-gray-300 max-w-xl'>            
             <h2 className='text-3xl font-semibold mb-5'>Order Summary</h2>
             <div className='max-h-[350px] overflow-y-auto'>
                 {products.map((product) => (
