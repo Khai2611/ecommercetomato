@@ -22,7 +22,7 @@ interface ProductProps {
 }
 
 const Products: React.FC<ProductProps> = (props) => {
-    const _id = props.productName;
+    const _id = props._id;
 
     const idString = (_id: string) => {
         return String(_id).toLowerCase().split(' ').join('');
@@ -33,7 +33,7 @@ const Products: React.FC<ProductProps> = (props) => {
     // const productItem = props;
 
     const handleProductDetails = () => {
-        navigate(`/products/3`);
+        navigate(`/products/${_id}`);
     };
 
     return (

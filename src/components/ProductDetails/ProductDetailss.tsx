@@ -4,10 +4,28 @@ import {Button} from '../ui/Button2';
 import {MinusIcon, PlusIcon, CartIcon} from '../ui/Icons';
 import {Accordion} from '../ui/Accordion2';
 
-export const ProductDetailss = () => {
-    const id = 3; // Hardcoded ID
+interface ProductDetailssProps {
+    product: {
+        prodID: string;
+        prodName: string;
+        prodPrice: number;
+        desc: string;
+        badge?: boolean;
+    };
+}
+
+export const ProductDetailss: React.FC<ProductDetailssProps> = ({product}) => {
+    const {prodID, prodName, prodPrice, desc, badge} = product;
+
+    // const id = 2; // Hardcoded ID
     const [itemQty, setItemQty] = useState(0); // Manage quantity locally
     const [showMsg, setShowMsg] = useState(false); // Show update message
+
+    const handleAddToCart = () => {
+        console.log(`Added ${itemQty} ${prodName} ${prodID}`);
+        setShowMsg(true);
+        setTimeout(() => setShowMsg(false), 2000);
+    };
 
     return (
         <section
@@ -15,18 +33,20 @@ export const ProductDetailss = () => {
             className='m-8 mb-40 justify-self-start lg:max-w-3xl lg:m-0'
         >
             <div className='grid gap-4 mb-8 mt-10'>
-                <h3 className='text-xl font-bold tracking-wider uppercase text-Orange/80'>
-                    Sneaker Company
+                <h3 className='text-3xl font-bold tracking-wider text-Orange/100'>
+                    Tomato.
                 </h3>
                 <h2 className='mb-4 text-5xl font-bold capitalize text-Very_dark_blue'>
-                    Fall Limited Edition Sneakers
+                    {/* Fall Limited Edition Sneakers */}
+                    {prodName}
                 </h2>
 
                 <Accordion header='Product Description'>
                     <p className='px-8 py-12 text-2xl lg:text-[1.6rem] text-Orange'>
-                        These low-profile sneakers are your perfect casual wear
+                        {/* These low-profile sneakers are your perfect casual wear
                         companion. Featuring a durable rubber outer sole,
-                        they'll withstand everything the weather can offer.
+                        they'll withstand everything the weather can offer. */}
+                        {desc}
                     </p>
                 </Accordion>
             </div>
@@ -34,7 +54,9 @@ export const ProductDetailss = () => {
             <div className='grid gap-8'>
                 <div className='flex items-center justify-between lg:flex-col lg:items-start lg:gap-8'>
                     <div className='flex items-center gap-8'>
-                        <span className='text-4xl font-bold'>$125.00</span>
+                        <span className='text-4xl font-bold'>
+                            {/* $125.00 */}${prodPrice.toFixed(2)}
+                        </span>
                         {/* <span className="font-bold bg-Pale_orange text-Orange px-3 py-1 rounded-md text-2xl">
               50%
             </span> */}

@@ -8,7 +8,22 @@ import {Button} from '../ui/Button2';
 import {CloseIcon, ChevronLeftIcon, ChevronRightIcon} from '../ui/Icons';
 import React from 'react';
 
-export const ProductCarousell = ({inLightbox = false}) => {
+// Accept p1, p2, p3, p4 as props for the images
+interface ProductCarousellProps {
+    inLightbox?: boolean;
+    p1: keyof typeof assets;
+    p2: keyof typeof assets;
+    p3: keyof typeof assets;
+    p4: keyof typeof assets;
+}
+
+export const ProductCarousell: React.FC<ProductCarousellProps> = ({
+    inLightbox = false,
+    p1,
+    p2,
+    p3,
+    p4,
+}) => {
     const mainCarouselRef = useRef<HTMLDivElement>(null);
     const [curImageIdx, setCurImageIdx] = useState(0);
 
@@ -21,9 +36,23 @@ export const ProductCarousell = ({inLightbox = false}) => {
         nextBtnRef,
     } = useCarousel(inLightbox);
 
-    const fullImgs = [assets.shoe4b, assets.shoe4c, assets.shoe4d, assets.shoe4e];
-    const thumbImgs = [assets.shoe4b, assets.shoe4c, assets.shoe4d, assets.shoe4e];
-    
+    // Full images for carousel
+    const fullImgs = [p1, p2, p3, p4];
+    // Thumbnails for carousel
+    const thumbImgs = [p1, p2, p3, p4];
+
+    // const fullImgs = [
+    //     assets.shoe4b,
+    //     assets.shoe4c,
+    //     assets.shoe4d,
+    //     assets.shoe4e,
+    // ];
+    // const thumbImgs = [
+    //     assets.shoe4b,
+    //     assets.shoe4c,
+    //     assets.shoe4d,
+    //     assets.shoe4e,
+    // ];
 
     const displayPrevImage = useCallback(() => {
         setCurImageIdx((prevIdx) =>
@@ -111,7 +140,7 @@ export const ProductCarousell = ({inLightbox = false}) => {
                     <figure className='relative flex items-center overflow-hidden lg:rounded-3xl'>
                         {fullImgs.map((image, idx) => (
                             <img
-                                src={image}
+                                src={assets[image]}
                                 key={`slide_${idx}`}
                                 alt='sneakers image'
                                 className='transition-transform duration-500 ease-in-out'
@@ -119,9 +148,7 @@ export const ProductCarousell = ({inLightbox = false}) => {
                                     transform: `translateX(-${
                                         curImageIdx * 100
                                     }%)`,
-
                                 }}
-                           
                                 width={1000}
                                 height={1000}
                             />
@@ -222,9 +249,9 @@ export const ProductCarousell = ({inLightbox = false}) => {
                             ])}
                         >
                             <img
-                                src={imgThumb}
+                                src={assets[imgThumb]}
                                 alt='sneakers thumbnail image'
-                                className="w-40" // Ensure the thumbnail image fills the button container
+                                className='w-40' // Ensure the thumbnail image fills the button container
                                 width={176}
                                 height={176}
                             />
