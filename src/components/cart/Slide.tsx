@@ -147,7 +147,7 @@ const Example: React.FC<{
                     <Link to={"Checkout"}>
                       <a
                         href="#"
-                        className="flex items-center justify-center rounded-md border border-transparent bg-[tomato] px-6 py-3 text-base font-medium text-white shadow-sm hover:scale-105 hover:bg-[tomato] active:scale-95 transition-transform duration-150 ease-in-out"
+                        className="flex items-center justify-center rounded-md border border-transparent bg-[tomato] px-6 py-3 text-base font-medium text-white shadow-sm hover:scale-105 active:scale-95 transition-transform duration-150 ease-in-out"
                       >
                         Checkout
                       </a>

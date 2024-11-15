@@ -126,7 +126,7 @@ export const ProductDetailss: React.FC<ProductDetailssProps> = ({product}) => {
                     variant={'secondary_orange'}
                     className='flex items-center justify-center gap-8 shadow-xl shadow-Orange/30 lg:w-2/3'
                 >
-                    <CartIcon className='w-8 h-8 lg:w-10 lg:h-10 fill-Very_light_grayish_blue' />
+                    <CartIcon className='w-8 h-8 lg:w-10 lg:w-10 fill-Very_light_grayish_blue' />
                     <span>Add to cart</span>
                 </Button>
             </div>

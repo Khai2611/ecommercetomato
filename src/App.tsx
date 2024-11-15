@@ -22,8 +22,8 @@ const App: React.FC = () => {
     // Check if the current path is login or register
     const isAuthRoute =
         location.pathname.toLowerCase() === '/login' ||
-        location.pathname.toLowerCase() === '/register' ||
-        location.pathname.toLowerCase() === '/checkout';
+        location.pathname.toLowerCase() === '/register' 
+        // || location.pathname.toLowerCase() === '/checkout';
 
     return (
         <>

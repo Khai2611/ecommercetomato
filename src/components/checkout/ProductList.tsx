@@ -47,22 +47,23 @@ function ProductList() {
 
     return (
         <div className='space-y-4 p-4 divide-y divide-gray-300 max-w-xl'>
-            <h2 className='text-lg font-bold mb-4'>Order Summary</h2>
+        {/* <h2 className="text-3xl text-tomato font-semibold mb-4">Contact Information</h2> */}
+            
+            <h2 className='text-3xl font-semibold mb-5'>Order Summary</h2>
             <div className='max-h-[350px] overflow-y-auto'>
                 {products.map((product) => (
                     <div key={product.id} className='flex items-center p-4'>
                         <img
                             src={p1}
                             alt='Product'
-                            className='w-24 h-24 object-cover mr-4'
+                            className='w-24 h-24 object-cover mr-4 rounded'
                         />
-
                         <div className='flex-grow text-left'>
                             <h2 className='text-lg font-semibold'>
                                 {product.name}
                             </h2>
                             <p className='text-gray-500'>
-                                Var: {product.category}
+                                Variation: {product.category}
                             </p>
                             <p className='text-gray-500'>
                                 Quantity: {product.quantity}
