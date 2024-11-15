@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import './Navbar.css';
 import {assets} from '../../../assets/frontend_assets/assets';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import Example from '../../cart/Slide';
+import {isUserLoggedIn} from '@/utils/auth';
 
 // Remove the props interface since we're omitting setShowLogin
 const Navbar: React.FC = () => {
@@ -26,6 +27,17 @@ const Navbar: React.FC = () => {
     const handleCartClick = (e: React.MouseEvent) => {
         e.preventDefault(); // Prevent default link behavior
         setVisible(!isVisible);
+    };
+
+    const navigate = useNavigate();
+
+    // Handle profile click: if user is logged in, go to profile; else, go to login
+    const handleProfileClick = () => {
+        if (isUserLoggedIn()) {
+            navigate('/profile');
+        } else {
+            navigate('/login');
+        }
     };
 
     return (
@@ -87,8 +99,11 @@ const Navbar: React.FC = () => {
                     {/* <button onClick={() => alert("Sign in function not implemented")}> */}
                     {/* sign in */}
                     {/* </button> */}
-                    <div className='navbar-profile'>
-                        <a href='/profile'>
+                    <div
+                        className='navbar-profile'
+                        onClick={handleProfileClick}
+                    >
+                        <a href='#'>
                             <img
                                 className='profile-icon'
                                 src={assets.profile_icon}
