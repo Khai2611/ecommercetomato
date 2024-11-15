@@ -5,12 +5,15 @@ import {
     createUserWithEmailAndPassword,
     sendEmailVerification,
 } from 'firebase/auth';
-import {auth} from '@/firebase/firebaseConfig';
+import {auth, db} from '@/firebase/firebaseConfig';
+import {collection, addDoc} from 'firebase/firestore';
+import {doc, setDoc} from 'firebase/firestore';
 
 const RegisterForm: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirmPassword, setConfirmPassword] = useState<string>('');
+    const [name, setName] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate(); // To navigate after successful registration
 
@@ -36,6 +39,13 @@ const RegisterForm: React.FC = () => {
             // Send email verification
             await sendEmailVerification(user);
             setError('Verification email sent! Please check your inbox.');
+
+            const userRef = doc(db, 'Users', user.uid); // Specify the document ID as user.uid
+            await setDoc(userRef, {
+                email: user.email,
+                name: name, // Store the name (or displayName)
+                userID: user.uid, // Store the user's UID (same as document ID)
+            });
 
             console.log('User registered successfully');
             navigate('/login'); // Redirect to login page after successful registration
@@ -79,6 +89,8 @@ const RegisterForm: React.FC = () => {
                                 type='name'
                                 required
                                 autoComplete='name'
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                                 className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                             />
                         </div>
