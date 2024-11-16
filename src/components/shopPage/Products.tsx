@@ -45,8 +45,7 @@ const Products: React.FC<ProductProps> = (props) => {
           className="hover:cursor-pointer prod-item-img-container"
         >
           <Image
-            className="w-[235px] h-[298px] lg:w-full lg:h-full"
-            // className='w-full h-full'
+            className='w-full h-full'
             imgSrc={assets[props.img]}
           />
         </div>
@@ -60,9 +59,7 @@ const Products: React.FC<ProductProps> = (props) => {
           <p className="prod-item-namee">{props.productName}</p>
           <p className="prod-item-pricee">RM{props.price}</p>
         </div>
-        {/* <div>
-                    <p className='text-[#767676] text-[14px]'>{props.color}</p>
-                </div> */}
+   
       </div>
     </div>
   );

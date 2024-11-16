@@ -1,13 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import ReactPaginate from 'react-paginate';
 import Products from '../shopPage/Products';
-// import {paginationItems} from '../../assets/frontend_assets/assets';
 
 import {db} from '@/firebase/firebaseConfig';
 import {collection, getDocs} from 'firebase/firestore';
 import {assets} from '@/assets/frontend_assets/assets';
-
-// const items = paginationItems;
 
 interface Product {
     prodID: string;

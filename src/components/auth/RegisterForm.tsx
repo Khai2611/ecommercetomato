@@ -91,7 +91,8 @@ const RegisterForm: React.FC = () => {
                                 autoComplete='name'
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
-                                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[tomato] sm:text-sm sm:leading-6"
+                                // className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[tomato] sm:text-sm sm:leading-6'
                             />
                         </div>
                     </div>
@@ -112,7 +113,7 @@ const RegisterForm: React.FC = () => {
                                 autoComplete='email'
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[tomato] sm:text-sm sm:leading-6'
                             />
                         </div>
                     </div>
@@ -135,7 +136,7 @@ const RegisterForm: React.FC = () => {
                                 autoComplete='new-password'
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[tomato] sm:text-sm sm:leading-6'
                             />
                         </div>
                     </div>
@@ -160,17 +161,17 @@ const RegisterForm: React.FC = () => {
                                 onChange={(e) =>
                                     setConfirmPassword(e.target.value)
                                 }
-                                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[tomato] sm:text-sm sm:leading-6'
                             />
                         </div>
                     </div>
 
-                    <div>
-                        {/* <Link to={'/'}> */}
+                    <div className="flex justify-center">
+                    {/* <Link to={'/'}> */}
                         <button
                             type='submit'
-                            className='flex w-full justify-center rounded-md bg-[tomato] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[tomato] focus-visible:outline focus-visible:outline-2 focus-visible'
-                        >
+                            className="flex w-[150px] justify-center rounded-md bg-[tomato] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[tomato] focus-visible:outline focus-visible:outline-2 focus-visible "
+                            >
                             Register
                         </button>
                         {/* </Link> */}
