@@ -201,7 +201,7 @@ const AccountSettings: React.FC = () => {
           />
         )}
       </div>
-      {/* Update/Save Button */}
+    {/* Update/Save Button */}
       <div className="col-span-full mt-5 mb-10">
         <button
           onClick={toggleEditMode}
