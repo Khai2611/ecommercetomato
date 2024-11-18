@@ -10,29 +10,75 @@ import {
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import {Link} from 'react-router-dom';
 import React from 'react';
+import {assets} from '@/assets/frontend_assets/assets';
+import {db} from '@/firebase/firebaseConfig';
+import {collection, getDocs, query, where} from 'firebase/firestore';
+
+// Define the carts interface
+interface Cart {
+    cartID: string;
+    prodID: string;
+    qty: number;
+    userID: string;
+}
+
+// Define the products interface
+interface Products {
+    prodID: string;
+    p1: keyof typeof assets;
+    p2: keyof typeof assets;
+    p3: keyof typeof assets;
+    p4: keyof typeof assets;
+    prodName: string;
+    prodPrice: number;
+    catID: string;
+    genderID: string;
+    inventoryID: string;
+}
+
+// Define the Inventory interface
+interface Inventory {
+    inventoryID: string;
+    prodQty: number;
+    soldQty: number;
+}
+
+// Define the ProductCart interface
+interface ProductCart {
+    cartID: string;
+    prodID: string;
+    userID: string;
+    prodName: string;
+    category: string;
+    productPrice: number;
+    quantity: number;
+    img: keyof typeof assets; // This makes img a key of the assets object
+    genderID: string;
+    inventory: Inventory;
+}
 
 const products = [
     {
-        prodID: 1,
+        cartID: 'CR001',
+        prodID: 'PD001',
+        userID: 'UD001',
         prodName: 'Throwback Hip Bag',
         category: 'Salmon',
         price: '90.00',
         quantity: 1,
-        imageSrc:
-            'https://tailwindui.com/plus/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-        imageAlt:
-            'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
+        imageSrc: 'shirt2a',
+        genderID: 'GD001',
     },
     {
-        prodID: 2,
+        cartID: 'CR002',
+        prodID: 'PD002',
+        userID: 'UD002',
         prodName: 'Medium Stuff Satchel',
         category: 'Blue',
         price: '32.00',
         quantity: 1,
-        imageSrc:
-            'https://tailwindui.com/plus/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-        imageAlt:
-            'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
+        imageSrc: 'shirt1a',
+        genderID: 'GD001',
     },
     // More products...
 ];
@@ -42,9 +88,83 @@ const Example: React.FC<{
     setOpen: (open: boolean) => void;
 }> = ({open, setOpen}) => {
     // const [open, setOpen] = useState(true);
+
+    const [cartItems, setCartItems] = useState<ProductCart[]>([]);
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         console.log('Dialog state changed:', open);
     }, [open]);
+
+    // Fetch the cart data and products
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Step 1: Fetch Cart Data
+                const cartQuerySnapshot = await getDocs(collection(db, 'Cart'));
+                const cartData: Cart[] = cartQuerySnapshot.docs.map((doc) => ({
+                    ...doc.data(),
+                    cartID: doc.id,
+                })) as Cart[];
+
+                // Step 2: Fetch Products for each Cart Item
+                const productPromises = cartData.map(async (cartItem) => {
+                    const productDocRef = collection(db, 'Products');
+                    const productQuerySnapshot = await getDocs(
+                        query(
+                            productDocRef,
+                            where('prodID', '==', cartItem.prodID),
+                        ),
+                    );
+                    const productData =
+                        productQuerySnapshot.docs[0]?.data() as Products;
+
+                    // Step 3: Fetch Inventory Data for the Product
+                    const inventoryDocRef = collection(db, 'Inventory');
+                    const inventoryQuerySnapshot = await getDocs(
+                        query(
+                            inventoryDocRef,
+                            where('inventoryID', '==', productData.inventoryID),
+                        ),
+                    );
+                    const inventoryData =
+                        inventoryQuerySnapshot.docs[0]?.data() as Inventory;
+
+                    // Step 4: Get only the first image (p1)
+                    const imgKey = productData.p1; // Access the p1 image
+
+                    // Create the final product cart object
+                    return {
+                        cartID: cartItem.cartID,
+                        prodID: productData.prodID,
+                        userID: cartItem.userID,
+                        prodName: productData.prodName,
+                        category: productData.catID,
+                        productPrice: productData.prodPrice,
+                        quantity: cartItem.qty,
+                        img: imgKey, // Use only p1 image
+                        genderID: productData.genderID,
+                        inventory: inventoryData,
+                    };
+                });
+
+                // Wait for all promises to resolve and update the state
+                const resolvedProducts = await Promise.all(productPromises);
+                setCartItems(resolvedProducts);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            } finally {
+                setLoading(false); // Set loading to false once data is fetched
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    // If data is loading, display a loading indicator
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <Dialog
@@ -94,18 +214,20 @@ const Example: React.FC<{
                                                 role='list'
                                                 className='-my-6 divide-y divide-gray-200'
                                             >
-                                                {products.map((product) => (
+                                                {cartItems.map((item) => (
                                                     <li
-                                                        key={product.prodID}
+                                                        key={item.cartID}
                                                         className='flex py-6'
                                                     >
                                                         <div className='h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200'>
                                                             <img
-                                                                alt={
-                                                                    product.imageAlt
-                                                                }
+                                                                // alt={
+                                                                //     product.imageAlt
+                                                                // }
                                                                 src={
-                                                                    product.imageSrc
+                                                                    assets[
+                                                                        item.img
+                                                                    ]
                                                                 }
                                                                 className='h-full w-full object-cover object-center'
                                                             />
@@ -121,20 +243,20 @@ const Example: React.FC<{
                                                                         // }
                                                                         >
                                                                             {
-                                                                                product.prodName
+                                                                                item.prodName
                                                                             }
                                                                         </a>
                                                                     </h3>
                                                                     <p className='ml-4'>
                                                                         RM
                                                                         {
-                                                                            product.price
+                                                                            item.productPrice
                                                                         }
                                                                     </p>
                                                                 </div>
                                                                 <p className='mt-1 text-sm text-gray-500'>
                                                                     {
-                                                                        product.category
+                                                                        item.category
                                                                     }
                                                                 </p>
                                                             </div>
@@ -142,7 +264,7 @@ const Example: React.FC<{
                                                                 <p className='text-gray-500'>
                                                                     Qty{' '}
                                                                     {
-                                                                        product.quantity
+                                                                        item.quantity
                                                                     }
                                                                 </p>
 
@@ -166,7 +288,18 @@ const Example: React.FC<{
                                 <div className='border-t border-gray-200 px-4 py-6 sm:px-6'>
                                     <div className='flex justify-between text-base font-medium text-gray-900'>
                                         <p>Subtotal</p>
-                                        <p>RM262.00</p>
+                                        <p>
+                                            RM{' '}
+                                            {cartItems
+                                                .reduce(
+                                                    (total, item) =>
+                                                        total +
+                                                        item.productPrice *
+                                                            item.quantity,
+                                                    0,
+                                                )
+                                                .toFixed(2)}
+                                        </p>
                                     </div>
                                     <p className='mt-0.5 text-sm text-gray-500'>
                                         Shipping and taxes calculated at
