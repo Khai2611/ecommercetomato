@@ -60,10 +60,20 @@ import shirt3b from './clothes/shirt3b.jpg';
 import shirt3c from './clothes/shirt3c.jpg';
 import shirt3d from './clothes/shirt3d.jpg';
 
+import shirt4a from './clothes/shirt4a.jpg';
+import shirt4b from './clothes/shirt4b.jpg';
+import shirt4c from './clothes/shirt4c.jpg';
+import shirt4d from './clothes/shirt4d.jpg';
+
 import shirt5a from './clothes/shirt5a.jpg';
 import shirt5b from './clothes/shirt5b.jpg';
 import shirt5c from './clothes/shirt5c.jpg';
 import shirt5d from './clothes/shirt5d.jpg';
+
+import shirt6a from './clothes/shirt6a.jpg';
+import shirt6b from './clothes/shirt6b.jpg';
+import shirt6c from './clothes/shirt6c.jpg';
+import shirt6d from './clothes/shirt6d.jpg';
 
 import pants1a from './clothes/pants1a.jpg';
 import pants1b from './clothes/pants1b.jpg';
@@ -120,6 +130,11 @@ import sweater4a from './clothes/sweater4a.jpg';
 import sweater4b from './clothes/sweater4b.jpg';
 import sweater4c from './clothes/sweater4c.jpg';
 import sweater4d from './clothes/sweater4d.jpg';
+
+import sweater5a from './clothes/sweater5a.jpg';
+import sweater5b from './clothes/sweater5b.jpg';
+import sweater5c from './clothes/sweater5c.jpg';
+import sweater5d from './clothes/sweater5d.jpg';
 
 export const assets = {
     logo,
@@ -181,10 +196,20 @@ export const assets = {
     shirt3c,
     shirt3d,
 
+    shirt4a,
+    shirt4b,
+    shirt4c,
+    shirt4d,
+
     shirt5a,
     shirt5b,
     shirt5c,
     shirt5d,
+
+    shirt6a,
+    shirt6b,
+    shirt6c,
+    shirt6d,
 
     pants1a,
     pants1b,
@@ -241,6 +266,11 @@ export const assets = {
     sweater4b,
     sweater4c,
     sweater4d,
+
+    sweater5a,
+    sweater5b,
+    sweater5c,
+    sweater5d,
 };
 
 export const header = [
