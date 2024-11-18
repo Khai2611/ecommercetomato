@@ -50,6 +50,11 @@ import shirt1b from './clothes/shirt1b.jpg';
 import shirt1c from './clothes/shirt1c.jpg';
 import shirt1d from './clothes/shirt1d.jpg';
 
+import shirt2a from './clothes/shirt2a.jpg';
+import shirt2b from './clothes/shirt2b.jpg';
+import shirt2c from './clothes/shirt2c.jpg';
+import shirt2d from './clothes/shirt2d.jpg';
+
 import shirt3a from './clothes/shirt3a.jpg';
 import shirt3b from './clothes/shirt3b.jpg';
 import shirt3c from './clothes/shirt3c.jpg';
@@ -70,7 +75,15 @@ import pants2b from './clothes/pants2b.jpg';
 import pants2c from './clothes/pants2c.jpg';
 import pants2d from './clothes/pants2d.jpg';
 
-import pants3 from './clothes/pants3.jpg';
+import pants3a from './clothes/pants3a.jpg';
+import pants3b from './clothes/pants3b.jpg';
+import pants3c from './clothes/pants3c.jpg';
+import pants3d from './clothes/pants3d.jpg';
+
+import pants4a from './clothes/pants4a.jpg';
+import pants4b from './clothes/pants4b.jpg';
+import pants4c from './clothes/pants4c.jpg';
+import pants4d from './clothes/pants4d.jpg';
 
 import shoe1a from './clothes/shoe1a.jpg';
 import shoe1b from './clothes/shoe1b.jpg';
@@ -146,11 +159,9 @@ export const assets = {
     makerLogo,
 
     //product lists
-    shirt2,
     shirt4,
     shirt6,
     dress,
-    pants3,
     pants4,
     shoe2,
 
@@ -159,6 +170,11 @@ export const assets = {
     shirt1b,
     shirt1c,
     shirt1d,
+
+    shirt2a,
+    shirt2b,
+    shirt2c,
+    shirt2d,
 
     shirt3a,
     shirt3b,
@@ -179,6 +195,16 @@ export const assets = {
     pants2b,
     pants2c,
     pants2d,
+
+    pants3a,
+    pants3b,
+    pants3c,
+    pants3d,
+
+    pants4a,
+    pants4b,
+    pants4c,
+    pants4d,
 
     shoe1a,
     shoe1b,
@@ -386,7 +412,7 @@ export const paginationItems: Product[] = [
     {
         //sus
         _id: '1009',
-        img: shirt2,
+        img: shirt2a,
         productName: 'Crew Neck Tee',
         price: '180.00',
         color: 'White',
@@ -424,7 +450,7 @@ export const paginationItems: Product[] = [
     {
         //sus
         _id: '1013',
-        img: pants3,
+        img: pants3a,
         productName: 'Tapered Pants',
         price: '60.00',
         color: 'Black',
