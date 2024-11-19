@@ -1,6 +1,8 @@
 import {useEffect, useState} from 'react';
 import {getDocs, collection, query, where} from 'firebase/firestore';
 import {db} from '@/firebase/firebaseConfig';
+import {isUserLoggedIn, getUserData} from '@/utils/auth';
+import {useNavigate} from 'react-router-dom';
 
 import p1 from '../../assets/frontend_assets/p1.jpg';
 import {assets} from '@/assets/frontend_assets/assets';
@@ -27,59 +29,75 @@ interface Product {
     inventoryID: string;
 }
 
-const products = [
-    {
-        id: 1,
-        name: 'Product 1',
-        category: 'Category 1',
-        price: 'RM230',
-        image: p1,
-        quantity: 12,
-    },
-    {
-        id: 2,
-        name: 'Product 2',
-        category: 'Category 2',
-        price: 'RM150',
-        image: p1, // Replace with the correct image
-        quantity: 8,
-    },
-    // Add more products as needed
-    {
-        id: 2,
-        name: 'Product 2',
-        category: 'Category 2',
-        price: 'RM150',
-        image: p1, // Replace with the correct image
-        quantity: 8,
-    },
-    {
-        id: 2,
-        name: 'Product 2',
-        category: 'Category 2',
-        price: 'RM150',
-        image: p1, // Replace with the correct image
-        quantity: 8,
-    },
-    {
-        id: 2,
-        name: 'Product 2',
-        category: 'Category 2',
-        price: 'RM150',
-        image: p1, // Replace with the correct image
-        quantity: 8,
-    },
-];
+// const products = [
+//     {
+//         id: 1,
+//         name: 'Product 1',
+//         category: 'Category 1',
+//         price: 'RM230',
+//         image: p1,
+//         quantity: 12,
+//     },
+//     {
+//         id: 2,
+//         name: 'Product 2',
+//         category: 'Category 2',
+//         price: 'RM150',
+//         image: p1, // Replace with the correct image
+//         quantity: 8,
+//     },
+//     // Add more products as needed
+//     {
+//         id: 2,
+//         name: 'Product 2',
+//         category: 'Category 2',
+//         price: 'RM150',
+//         image: p1, // Replace with the correct image
+//         quantity: 8,
+//     },
+//     {
+//         id: 2,
+//         name: 'Product 2',
+//         category: 'Category 2',
+//         price: 'RM150',
+//         image: p1, // Replace with the correct image
+//         quantity: 8,
+//     },
+//     {
+//         id: 2,
+//         name: 'Product 2',
+//         category: 'Category 2',
+//         price: 'RM150',
+//         image: p1, // Replace with the correct image
+//         quantity: 8,
+//     },
+// ];
 
 function ProductList() {
     const [products, setProducts] = useState<Product[]>([]);
     const [cart, setCart] = useState<Cart[]>([]);
+    const [userID, setUserID] = useState<string | null>(null);
+    const navigate = useNavigate();
+
+    // Check if the user is logged in and retrieve user data
+    useEffect(() => {
+        const userData = getUserData(); // Get user data from localStorage
+        if (userData) {
+            setUserID(userData.userID); // Set the userID if the user is logged in
+        } else {
+            // If the user is not logged in, redirect to the homepage
+            navigate('/'); // Navigate to the homepage
+        }
+    }, [navigate]);
 
     // Fetch cart data and products data from Firestore
     useEffect(() => {
         const fetchCartData = async () => {
             // Get all items from the Cart collection
-            const cartQuery = query(collection(db, 'Cart'));
+            const cartQuery = query(
+                collection(db, 'Cart'),
+                where('userID', '==', userID),
+            );
             const cartSnapshot = await getDocs(cartQuery);
             const cartData = cartSnapshot.docs.map((doc) => doc.data() as Cart);
             setCart(cartData);
@@ -87,7 +105,7 @@ function ProductList() {
 
         // Fetch the cart data first
         fetchCartData();
-    }, []); // Only run once on mount
+    }, [userID]); // Only run once on mount
 
     useEffect(() => {
         // Fetch products only if cart is available
