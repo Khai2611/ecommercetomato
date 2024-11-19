@@ -13,6 +13,7 @@ import React from 'react';
 import {assets} from '@/assets/frontend_assets/assets';
 import {db} from '@/firebase/firebaseConfig';
 import {collection, getDocs, query, where} from 'firebase/firestore';
+import {getUserData} from '@/utils/auth';
 
 // Define the carts interface
 interface Cart {
@@ -57,31 +58,31 @@ interface ProductCart {
     inventory: Inventory;
 }
 
-const products = [
-    {
-        cartID: 'CR001',
-        prodID: 'PD001',
-        userID: 'UD001',
-        prodName: 'Throwback Hip Bag',
-        category: 'Salmon',
-        price: '90.00',
-        quantity: 1,
-        imageSrc: 'shirt2a',
-        genderID: 'GD001',
-    },
-    {
-        cartID: 'CR002',
-        prodID: 'PD002',
-        userID: 'UD002',
-        prodName: 'Medium Stuff Satchel',
-        category: 'Blue',
-        price: '32.00',
-        quantity: 1,
-        imageSrc: 'shirt1a',
-        genderID: 'GD001',
-    },
-    // More products...
-];
+// const products = [
+//     {
+//         cartID: 'CR001',
+//         prodID: 'PD001',
+//         userID: 'UD001',
+//         prodName: 'Throwback Hip Bag',
+//         category: 'Salmon',
+//         price: '90.00',
+//         quantity: 1,
+//         imageSrc: 'shirt2a',
+//         genderID: 'GD001',
+//     },
+//     {
+//         cartID: 'CR002',
+//         prodID: 'PD002',
+//         userID: 'UD002',
+//         prodName: 'Medium Stuff Satchel',
+//         category: 'Blue',
+//         price: '32.00',
+//         quantity: 1,
+//         imageSrc: 'shirt1a',
+//         genderID: 'GD001',
+//     },
+//     // More products...
+// ];
 
 const Example: React.FC<{
     open: boolean;
@@ -92,14 +93,107 @@ const Example: React.FC<{
     const [cartItems, setCartItems] = useState<ProductCart[]>([]);
     const [loading, setLoading] = useState(true);
 
+    // const user = 'UD001';
+    const [userID, setUserID] = useState<string | null>(null); // Local state for user ID
+
+    useEffect(() => {
+        // Get the userID from the session (localStorage)
+        const userData = getUserData();
+        if (userData) {
+            setUserID(userData.userID); // Set the userID from session data
+        } else {
+            setUserID(null); // No user logged in
+        }
+    }, []);
+
     useEffect(() => {
         console.log('Dialog state changed:', open);
     }, [open]);
 
-    // Fetch the cart data and products
+    // // Fetch the cart data and products
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             // Step 1: Fetch Cart Data
+    //             const cartQuerySnapshot = await getDocs(collection(db, 'Cart'));
+    //             const cartData: Cart[] = cartQuerySnapshot.docs.map((doc) => ({
+    //                 ...doc.data(),
+    //                 cartID: doc.id,
+    //             })) as Cart[];
+
+    //             // Filter cart items by userID
+    //             const filteredCartData = cartData.filter(
+    //                 (cartItem) => cartItem.userID === userID,
+    //             );
+
+    //             // Step 2: Fetch Products for each Cart Item
+    //             const productPromises = filteredCartData.map(
+    //                 async (cartItem) => {
+    //                     const productDocRef = collection(db, 'Products');
+    //                     const productQuerySnapshot = await getDocs(
+    //                         query(
+    //                             productDocRef,
+    //                             where('prodID', '==', cartItem.prodID),
+    //                         ),
+    //                     );
+    //                     const productData =
+    //                         productQuerySnapshot.docs[0]?.data() as Products;
+
+    //                     // Step 3: Fetch Inventory Data for the Product
+    //                     const inventoryDocRef = collection(db, 'Inventory');
+    //                     const inventoryQuerySnapshot = await getDocs(
+    //                         query(
+    //                             inventoryDocRef,
+    //                             where(
+    //                                 'inventoryID',
+    //                                 '==',
+    //                                 productData.inventoryID,
+    //                             ),
+    //                         ),
+    //                     );
+    //                     const inventoryData =
+    //                         inventoryQuerySnapshot.docs[0]?.data() as Inventory;
+
+    //                     // Step 4: Get only the first image (p1)
+    //                     const imgKey = productData.p1; // Access the p1 image
+
+    //                     // Create the final product cart object
+    //                     return {
+    //                         cartID: cartItem.cartID,
+    //                         prodID: productData.prodID,
+    //                         userID: cartItem.userID,
+    //                         prodName: productData.prodName,
+    //                         category: productData.catID,
+    //                         productPrice: productData.prodPrice,
+    //                         quantity: cartItem.qty,
+    //                         img: imgKey, // Use only p1 image
+    //                         genderID: productData.genderID,
+    //                         inventory: inventoryData,
+    //                     };
+    //                 },
+    //             );
+
+    //             // Wait for all promises to resolve and update the state
+    //             const resolvedProducts = await Promise.all(productPromises);
+    //             setCartItems(resolvedProducts);
+    //         } catch (error) {
+    //             console.error('Error fetching data:', error);
+    //         } finally {
+    //             setLoading(false); // Set loading to false once data is fetched
+    //         }
+    //     };
+
+    //     fetchData();
+    // }, []);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
+                if (!userID) {
+                    setCartItems([]); // If no user is logged in, don't fetch the cart
+                    return;
+                }
+
                 // Step 1: Fetch Cart Data
                 const cartQuerySnapshot = await getDocs(collection(db, 'Cart'));
                 const cartData: Cart[] = cartQuerySnapshot.docs.map((doc) => ({
@@ -107,46 +201,57 @@ const Example: React.FC<{
                     cartID: doc.id,
                 })) as Cart[];
 
+                // Filter cart items by userID
+                const filteredCartData = cartData.filter(
+                    (cartItem) => cartItem.userID === userID,
+                );
+
                 // Step 2: Fetch Products for each Cart Item
-                const productPromises = cartData.map(async (cartItem) => {
-                    const productDocRef = collection(db, 'Products');
-                    const productQuerySnapshot = await getDocs(
-                        query(
-                            productDocRef,
-                            where('prodID', '==', cartItem.prodID),
-                        ),
-                    );
-                    const productData =
-                        productQuerySnapshot.docs[0]?.data() as Products;
+                const productPromises = filteredCartData.map(
+                    async (cartItem) => {
+                        const productDocRef = collection(db, 'Products');
+                        const productQuerySnapshot = await getDocs(
+                            query(
+                                productDocRef,
+                                where('prodID', '==', cartItem.prodID),
+                            ),
+                        );
+                        const productData =
+                            productQuerySnapshot.docs[0]?.data() as Products;
 
-                    // Step 3: Fetch Inventory Data for the Product
-                    const inventoryDocRef = collection(db, 'Inventory');
-                    const inventoryQuerySnapshot = await getDocs(
-                        query(
-                            inventoryDocRef,
-                            where('inventoryID', '==', productData.inventoryID),
-                        ),
-                    );
-                    const inventoryData =
-                        inventoryQuerySnapshot.docs[0]?.data() as Inventory;
+                        // Step 3: Fetch Inventory Data for the Product
+                        const inventoryDocRef = collection(db, 'Inventory');
+                        const inventoryQuerySnapshot = await getDocs(
+                            query(
+                                inventoryDocRef,
+                                where(
+                                    'inventoryID',
+                                    '==',
+                                    productData.inventoryID,
+                                ),
+                            ),
+                        );
+                        const inventoryData =
+                            inventoryQuerySnapshot.docs[0]?.data() as Inventory;
 
-                    // Step 4: Get only the first image (p1)
-                    const imgKey = productData.p1; // Access the p1 image
+                        // Step 4: Get only the first image (p1)
+                        const imgKey = productData.p1; // Access the p1 image
 
-                    // Create the final product cart object
-                    return {
-                        cartID: cartItem.cartID,
-                        prodID: productData.prodID,
-                        userID: cartItem.userID,
-                        prodName: productData.prodName,
-                        category: productData.catID,
-                        productPrice: productData.prodPrice,
-                        quantity: cartItem.qty,
-                        img: imgKey, // Use only p1 image
-                        genderID: productData.genderID,
-                        inventory: inventoryData,
-                    };
-                });
+                        // Create the final product cart object
+                        return {
+                            cartID: cartItem.cartID,
+                            prodID: productData.prodID,
+                            userID: cartItem.userID,
+                            prodName: productData.prodName,
+                            category: productData.catID,
+                            productPrice: productData.prodPrice,
+                            quantity: cartItem.qty,
+                            img: imgKey, // Use only p1 image
+                            genderID: productData.genderID,
+                            inventory: inventoryData,
+                        };
+                    },
+                );
 
                 // Wait for all promises to resolve and update the state
                 const resolvedProducts = await Promise.all(productPromises);
@@ -159,7 +264,7 @@ const Example: React.FC<{
         };
 
         fetchData();
-    }, []);
+    }, [userID]); // Re-run the effect whenever the userID changes
 
     // If data is loading, display a loading indicator
     if (loading) {

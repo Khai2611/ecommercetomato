@@ -26,7 +26,11 @@ const Navbar: React.FC = () => {
     const [isVisible, setVisible] = useState<boolean>(false);
     const handleCartClick = (e: React.MouseEvent) => {
         e.preventDefault(); // Prevent default link behavior
-        setVisible(!isVisible);
+        if (isUserLoggedIn()) {
+            setVisible(!isVisible);
+        } else {
+            navigate('/login'); // Redirect to login page if not logged in
+        }
     };
 
     const navigate = useNavigate();
