@@ -1,8 +1,12 @@
 'use client';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Button} from '../ui/Button2';
 import {MinusIcon, PlusIcon, CartIcon} from '../ui/Icons';
 import {Accordion} from '../ui/Accordion2';
+import {doc, getDoc, collection, addDoc} from 'firebase/firestore';
+import {db} from '@/firebase/firebaseConfig';
+import {getUserData, isUserLoggedIn} from '@/utils/auth';
+import {useToast} from '@/hooks/use-toast';
 
 interface ProductDetailssProps {
     product: {
@@ -11,18 +15,86 @@ interface ProductDetailssProps {
         prodPrice: number;
         desc: string;
         badge?: boolean;
+        inventoryID: string;
     };
 }
 
 export const ProductDetailss: React.FC<ProductDetailssProps> = ({product}) => {
-    const {prodID, prodName, prodPrice, desc, badge} = product;
-    const [itemQty, setItemQty] = useState(0); // Manage quantity locally
+    const {prodID, prodName, prodPrice, desc, badge, inventoryID} = product;
+    const [itemQty, setItemQty] = useState(1); // Manage quantity locally
+    const [prodQty, setProdQty] = useState<number | null>(null); // Track product quantity
     const [showMsg, setShowMsg] = useState(false); // Show update message
+    const [loading, setLoading] = useState(true); // Track loading state for product quantity
+    const [error, setError] = useState<string | null>(null); // Track any errors
+    const {toast} = useToast();
 
-    const handleAddToCart = () => {
-        console.log(`Added ${itemQty} ${prodName} ${prodID}`);
-        setShowMsg(true);
-        setTimeout(() => setShowMsg(false), 2000);
+    // Fetch product quantity from Firestore
+    useEffect(() => {
+        const fetchProdQty = async () => {
+            try {
+                const inventoryRef = doc(db, 'Inventory', inventoryID);
+                const inventorySnap = await getDoc(inventoryRef);
+
+                if (inventorySnap.exists()) {
+                    setProdQty(inventorySnap.data()?.prodQty || 0); // Set quantity from Firestore
+                } else {
+                    setError('Product not found in inventory');
+                }
+            } catch (error) {
+                setError('Error fetching product quantity');
+                console.error('Error fetching prodQty: ', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProdQty();
+    }, [inventoryID]);
+
+    // const handleAddToCart = () => {
+    //     console.log(`Added ${itemQty} ${prodName} ${prodID}`);
+    //     setShowMsg(true);
+    //     setTimeout(() => setShowMsg(false), 2000);
+    // };
+    const handleAddToCart = async () => {
+        // Check if the user is logged in
+        const userData = getUserData();
+        if (!isUserLoggedIn() || !userData) {
+            // If not logged in, show toast asking to login
+            toast({
+                title: 'Login Required',
+                description: 'Please log in first to add items to your cart.',
+            });
+            return; // Exit the function
+        }
+
+        // If user is logged in, add the item to the cart
+        const {userID} = userData;
+
+        try {
+            // Add product data to Cart collection
+            await addDoc(collection(db, 'Cart'), {
+                prodID,
+                userID,
+                qty: itemQty,
+                createdAt: new Date(),
+            });
+
+            // Show success message
+            toast({
+                title: 'Item Added',
+                description: `${itemQty} ${prodName} added to cart!`,
+            });
+            setShowMsg(true);
+            setTimeout(() => setShowMsg(false), 2000);
+        } catch (error) {
+            console.error('Error adding product to cart: ', error);
+            toast({
+                title: 'Error',
+                description:
+                    'There was an error adding the product to the cart.',
+            });
+        }
     };
 
     return (
@@ -55,10 +127,27 @@ export const ProductDetailss: React.FC<ProductDetailssProps> = ({product}) => {
                 </div>
             </div>
 
-            <div className='mt-10'>
+            {/* <div className='mt-10'>
                 <span className='font-semibold bg-Pale_orange text-Orange px-3 py-1 rounded-md text-3xl'>
+                    {inventoryID}
                     10 products ready for purchase
                 </span>
+            </div> */}
+
+            <div className='mt-10'>
+                {loading ? (
+                    <span className='font-semibold bg-Pale_orange text-Orange px-3 py-1 rounded-md text-3xl'>
+                        Loading product availability...
+                    </span>
+                ) : error ? (
+                    <span className='font-semibold bg-red-500 text-white px-3 py-1 rounded-md text-3xl'>
+                        Error: {error}
+                    </span>
+                ) : (
+                    <span className='font-semibold bg-Pale_orange text-Orange px-3 py-1 rounded-md text-3xl'>
+                        {prodQty} products ready for purchase
+                    </span>
+                )}
             </div>
 
             <div className='lg:flex lg:items-center lg:gap-6'>
@@ -68,7 +157,7 @@ export const ProductDetailss: React.FC<ProductDetailssProps> = ({product}) => {
                         title='decrease quantity'
                         onClick={() => {
                             setItemQty((prevQty) =>
-                                prevQty > 0 ? prevQty - 1 : 0,
+                                prevQty > 1 ? prevQty - 1 : 1,
                             ); // Decrease quantity
                             setShowMsg(false); // Hide message when adjusting quantity
                         }}
@@ -85,8 +174,9 @@ export const ProductDetailss: React.FC<ProductDetailssProps> = ({product}) => {
                     <Button
                         title='increase quantity'
                         onClick={() => {
-                            setItemQty((prevQty) =>
-                                prevQty < 10 ? prevQty + 1 : 10,
+                            setItemQty(
+                                (prevQty) =>
+                                    prevQty < prodQty! ? prevQty + 1 : prodQty!, // Prevent exceeding stock quantity
                             ); // Increase quantity
                             setShowMsg(false); // Hide message when adjusting quantity
                         }}
@@ -113,6 +203,7 @@ export const ProductDetailss: React.FC<ProductDetailssProps> = ({product}) => {
                     title='add item to cart'
                     variant={'secondary_orange'}
                     className='flex items-center justify-center gap-8 shadow-xl shadow-Orange/30 lg:w-2/3'
+                    onClick={handleAddToCart}
                 >
                     <CartIcon className='w-8 h-8 lg:w-10 lg:w-10 fill-Very_light_grayish_blue' />
                     <span>Add to cart</span>

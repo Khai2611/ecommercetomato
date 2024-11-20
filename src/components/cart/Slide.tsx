@@ -12,7 +12,14 @@ import {Link} from 'react-router-dom';
 import React from 'react';
 import {assets} from '@/assets/frontend_assets/assets';
 import {db} from '@/firebase/firebaseConfig';
-import {collection, getDocs, query, where} from 'firebase/firestore';
+import {
+    collection,
+    getDocs,
+    query,
+    where,
+    deleteDoc,
+    doc,
+} from 'firebase/firestore';
 import {getUserData} from '@/utils/auth';
 
 // Define the carts interface
@@ -266,6 +273,22 @@ const Example: React.FC<{
         fetchData();
     }, [userID]); // Re-run the effect whenever the userID changes
 
+    // Function to handle removing an item from the cart
+    const handleRemoveFromCart = async (cartID: string) => {
+        try {
+            // Delete the cart item from Firestore
+            const cartDocRef = doc(db, 'Cart', cartID);
+            await deleteDoc(cartDocRef);
+
+            // Update the cart state to remove the item from the UI
+            setCartItems((prevItems) =>
+                prevItems.filter((item) => item.cartID !== cartID),
+            );
+        } catch (error) {
+            console.error('Error removing item from cart:', error);
+        }
+    };
+
     // If data is loading, display a loading indicator
     if (loading) {
         return <div>Loading...</div>;
@@ -376,6 +399,11 @@ const Example: React.FC<{
                                                                 <div className='flex'>
                                                                     <button
                                                                         type='button'
+                                                                        onClick={() =>
+                                                                            handleRemoveFromCart(
+                                                                                item.cartID,
+                                                                            )
+                                                                        }
                                                                         className='font-medium text-[tomato] hover:font-semibold hover:text-[tomato]'
                                                                     >
                                                                         Remove
