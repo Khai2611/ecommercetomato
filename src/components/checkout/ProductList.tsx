@@ -29,53 +29,13 @@ interface Product {
     inventoryID: string;
 }
 
-// const products = [
-//     {
-//         id: 1,
-//         name: 'Product 1',
-//         category: 'Category 1',
-//         price: 'RM230',
-//         image: p1,
-//         quantity: 12,
-//     },
-//     {
-//         id: 2,
-//         name: 'Product 2',
-//         category: 'Category 2',
-//         price: 'RM150',
-//         image: p1, // Replace with the correct image
-//         quantity: 8,
-//     },
-//     // Add more products as needed
-//     {
-//         id: 2,
-//         name: 'Product 2',
-//         category: 'Category 2',
-//         price: 'RM150',
-//         image: p1, // Replace with the correct image
-//         quantity: 8,
-//     },
-//     {
-//         id: 2,
-//         name: 'Product 2',
-//         category: 'Category 2',
-//         price: 'RM150',
-//         image: p1, // Replace with the correct image
-//         quantity: 8,
-//     },
-//     {
-//         id: 2,
-//         name: 'Product 2',
-//         category: 'Category 2',
-//         price: 'RM150',
-//         image: p1, // Replace with the correct image
-//         quantity: 8,
-//     },
-// ];
+interface ProductListProps {
+    products: (Product & Cart)[];
+}
 
-function ProductList() {
-    const [products, setProducts] = useState<Product[]>([]);
-    const [cart, setCart] = useState<Cart[]>([]);
+function ProductList({products}: ProductListProps) {
+    // const [products, setProducts] = useState<Product[]>([]);
+    // const [cart, setCart] = useState<Cart[]>([]);
     const [userID, setUserID] = useState<string | null>(null);
     const navigate = useNavigate();
 
@@ -90,60 +50,60 @@ function ProductList() {
         }
     }, [navigate]);
 
-    // Fetch cart data and products data from Firestore
-    useEffect(() => {
-        const fetchCartData = async () => {
-            // Get all items from the Cart collection
-            const cartQuery = query(
-                collection(db, 'Cart'),
-                where('userID', '==', userID),
-            );
-            const cartSnapshot = await getDocs(cartQuery);
-            const cartData = cartSnapshot.docs.map((doc) => doc.data() as Cart);
-            setCart(cartData);
-        };
+    // // Fetch cart data and products data from Firestore
+    // useEffect(() => {
+    //     const fetchCartData = async () => {
+    //         // Get all items from the Cart collection
+    //         const cartQuery = query(
+    //             collection(db, 'Cart'),
+    //             where('userID', '==', userID),
+    //         );
+    //         const cartSnapshot = await getDocs(cartQuery);
+    //         const cartData = cartSnapshot.docs.map((doc) => doc.data() as Cart);
+    //         setCart(cartData);
+    //     };
 
-        // Fetch the cart data first
-        fetchCartData();
-    }, [userID]); // Only run once on mount
+    //     // Fetch the cart data first
+    //     fetchCartData();
+    // }, [userID]); // Only run once on mount
 
-    useEffect(() => {
-        // Fetch products only if cart is available
-        if (cart.length > 0) {
-            const prodIDs = cart.map((item) => item.prodID);
+    // useEffect(() => {
+    //     // Fetch products only if cart is available
+    //     if (cart.length > 0) {
+    //         const prodIDs = cart.map((item) => item.prodID);
 
-            const fetchProductData = async () => {
-                // Get products based on prodID from Cart
-                const productsQuery = query(
-                    collection(db, 'Products'),
-                    where('prodID', 'in', prodIDs),
-                );
-                const productSnapshot = await getDocs(productsQuery);
-                const productData = productSnapshot.docs.map(
-                    (doc) => doc.data() as Product,
-                );
-                setProducts(productData);
-            };
+    //         const fetchProductData = async () => {
+    //             // Get products based on prodID from Cart
+    //             const productsQuery = query(
+    //                 collection(db, 'Products'),
+    //                 where('prodID', 'in', prodIDs),
+    //             );
+    //             const productSnapshot = await getDocs(productsQuery);
+    //             const productData = productSnapshot.docs.map(
+    //                 (doc) => doc.data() as Product,
+    //             );
+    //             setProducts(productData);
+    //         };
 
-            fetchProductData();
-        }
-    }, [cart]); // Only run when cart changes
+    //         fetchProductData();
+    //     }
+    // }, [cart]); // Only run when cart changes
 
-    // Filter products based on prodID in the cart
-    const cartProductDetails = cart
-        .map((cartItem) => {
-            const product = products.find(
-                (product) => product.prodID === cartItem.prodID,
-            );
-            return product ? {...cartItem, ...product} : null;
-        })
-        .filter((item) => item !== null);
+    // // Filter products based on prodID in the cart
+    // const cartProductDetails = cart
+    //     .map((cartItem) => {
+    //         const product = products.find(
+    //             (product) => product.prodID === cartItem.prodID,
+    //         );
+    //         return product ? {...cartItem, ...product} : null;
+    //     })
+    //     .filter((item) => item !== null);
 
     return (
         <div className='space-y-4 p-4 divide-y divide-gray-300 max-w-xl'>
             <h2 className='text-3xl font-semibold mb-5'>Order Summary</h2>
             <div className='max-h-[350px] overflow-y-auto'>
-                {cartProductDetails.map((item, index) => (
+                {products.map((item, index) => (
                     <div key={index} className='flex items-center p-4'>
                         <img
                             src={assets[item?.p1]}
@@ -175,7 +135,7 @@ function ProductList() {
                     <p className='font-semibold'>Subtotal</p>
                     <p>
                         RM
-                        {cartProductDetails.reduce(
+                        {products.reduce(
                             (acc, item) =>
                                 acc + (item?.prodPrice ?? 0) * (item?.qty ?? 0),
                             0,
@@ -192,7 +152,7 @@ function ProductList() {
                 <p className='font-semibold'>Total</p>
                 <p className=''>
                     RM
-                    {cartProductDetails.reduce(
+                    {products.reduce(
                         (acc, item) =>
                             acc + (item?.prodPrice ?? 0) * (item?.qty ?? 0),
                         0,

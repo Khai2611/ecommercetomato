@@ -13,7 +13,22 @@ import {
     FormMessage,
 } from '../ui/form';
 import {Input} from '../ui/input';
-import {Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
+
+import {
+    addDoc,
+    collection,
+    doc,
+    setDoc,
+    Timestamp,
+    deleteDoc,
+    query,
+    where,
+    getDocs,
+} from 'firebase/firestore';
+import {db} from '@/firebase/firebaseConfig';
+import {getUserData} from '@/utils/auth';
+import {assets} from '@/assets/frontend_assets/assets';
 
 const formSchema = z.object({
     name: z.string().min(2, {
@@ -42,7 +57,33 @@ const formSchema = z.object({
     }),
 });
 
-export function ProfileForm() {
+// Define the carts interface
+interface Cart {
+    cartID: string;
+    prodID: string;
+    qty: number;
+    userID: string;
+}
+
+// Define the products interface
+interface Product {
+    prodID: string;
+    p1: keyof typeof assets;
+    p2: keyof typeof assets;
+    p3: keyof typeof assets;
+    p4: keyof typeof assets;
+    prodName: string;
+    prodPrice: number;
+    catID: string;
+    genderID: string;
+    inventoryID: string;
+}
+
+interface ProfileFormProps {
+    cart: (Product & Cart)[]; // Accept combined data
+}
+
+export function ProfileForm({cart}: ProfileFormProps) {
     const navigate = useNavigate();
     // ...
 
@@ -60,12 +101,89 @@ export function ProfileForm() {
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values);
-        navigate('/');
-    }
+    // function onSubmit(values: z.infer<typeof formSchema>) {
+    //     // Do something with the form values.
+    //     // ✅ This will be type-safe and validated.
+    //     console.log(values);
+    //     navigate('/');
+    // }
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        // Get the user data (assuming user is logged in)
+        const userData = getUserData();
+        if (!userData) {
+            navigate('/'); // Redirect if user is not logged in
+            return;
+        }
+
+        const userID = userData.userID;
+
+        // Calculate the total price and collect cart details
+        const totalPrice =
+            cart.reduce(
+                (acc, item) => acc + (item.prodPrice ?? 0) * (item.qty ?? 0),
+                0,
+            ) + 15; // Adding shipping cost
+
+        // Step 1: Create Order document
+        try {
+            const orderRef = await addDoc(collection(db, 'Order'), {
+                userID,
+                address: values.address,
+                city: values.city,
+                country: values.country,
+                postalCode: values.postalCode,
+                state: values.state,
+                totalPrice,
+                date: Timestamp.now(), // Add current timestamp
+            });
+
+            // Step 2: Create OrderDetails for each cart item
+            const orderID = orderRef.id; // Use the newly created order's ID
+
+            // Function to generate custom orderDeetsID
+            const generateOrderDeetsID = (orderID: string, prodID: string) => {
+                return `${orderID}_${prodID}`; // Custom format for orderDeetsID
+            };
+
+            for (let item of cart) {
+                const orderDeetsID = generateOrderDeetsID(orderID, item.prodID);
+
+                await addDoc(collection(db, 'OrderDetails'), {
+                    orderDeetsID,
+                    orderID, // Link to the order
+                    prodID: item.prodID,
+                    price: item.prodPrice,
+                    qty: item.qty,
+                });
+            }
+
+            await setDoc(
+                orderRef,
+                {
+                    orderID: orderRef.id, // Explicitly store the orderID field if necessary
+                },
+                {merge: true},
+            );
+
+            // Step 3: Delete Cart items after order creation
+            const cartQuery = query(
+                collection(db, 'Cart'),
+                where('userID', '==', userID),
+            );
+            const cartSnapshot = await getDocs(cartQuery);
+
+            // Iterate through the cart items and delete them
+            cartSnapshot.forEach(async (docSnapshot) => {
+                await deleteDoc(doc(db, 'Cart', docSnapshot.id));
+            });
+
+            // Redirect to home or another page after successful submission
+            navigate('/');
+        } catch (error) {
+            console.error('Error creating order: ', error);
+            // Handle error (show message to the user)
+        }
+    };
 
     return (
         <Form {...form}>
