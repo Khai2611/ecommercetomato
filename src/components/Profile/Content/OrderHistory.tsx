@@ -1,97 +1,116 @@
-import React from "react";
-import p1 from "../../../assets/frontend_assets/p1.jpg";
+import React, {useEffect, useState} from 'react';
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/Accordion";
-import ProductList from "../../orderHistory/ProductList";
-import Title from "../../orderHistory/Title";
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from '@/components/ui/Accordion';
+import ProductList from '../../orderHistory/ProductList';
+import Title from '../../orderHistory/Title';
+
+import {useProductData} from '@/hooks/useProductData';
+import {useOrderData} from '@/hooks/useOrderData';
+import {useOrderDetailsData} from '@/hooks/useOrderDetailsData';
 
 const OrderHistory: React.FC = () => {
-  const products = [
-    {
-      id: 1,
-      name: "Product 1 adsadas sadasdasd sadsadwa sdasdwad",
-      category: "Category 1",
-      price: "RM230",
-      image: p1,
-      quantity: 12,
-      orderId: "abc123",
-      date: "Oct 20, 2024",
-    },
-    {
-      id: 2,
-      name: "Product 2",
-      category: "Category 2",
-      price: "RM150",
-      image: p1,
-      quantity: 8,
-      orderId: "abc123",
-      date: "Oct 20, 2024",
-    },
-    {
-      id: 3,
-      name: "Product 3",
-      category: "Category 3",
-      price: "RM150",
-      image: p1,
-      quantity: 82,
-      orderId: "abc234",
-      date: "Oct 20, 2024",
-    },
-  ];
+    const {orders, loading: ordersLoading, error: ordersError} = useOrderData();
+    const [orderDetailss, setOrderDetails] = useState<any[]>([]);
+    const [filteredOrders, setFilteredOrders] = useState<any[]>([]);
 
-  const orders = [
-    {
-      orderId: "abc123",
-      orderDate: "30 Oct 2024",
-    },
-    {
-      orderId: "abc234",
-      orderDate: "30 Nov 2025",
-    },
-    {
-      orderId: "abc234",
-      orderDate: "30 Nov 2025",
-    },
-    {
-      orderId: "abc234",
-      orderDate: "30 Nov 2025",
-    },
-  ];
-  return (
-    <div className="max-w-1xl mx-auto px-2 mb-10">
-      <div className="space-y-5">
-        {orders.map((order) => {
-          // Filter products based on current orderId
-          const filteredProducts = products.filter(
-            (product) => product.orderId === order.orderId
-          );
+    // Using useOrderDetailsData hook
+    const {
+        orderDetails: fetchedOrderDetails,
+        loading: detailsLoading,
+        error: detailsError,
+    } = useOrderDetailsData({
+        orders,
+    });
 
-          return (
-            <Accordion
-              key={order.orderId}
-              type="single"
-              collapsible
-              className="w-full border rounded-2xl shadow-md"
-            >
-              <AccordionItem value={order.orderId}>
-                <AccordionTrigger className="mx-5">
-                  <Title orderId={order.orderId} orderDate={order.orderDate} />
-                </AccordionTrigger>
-                <AccordionContent className="border">
-                  <ProductList products={filteredProducts} />
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          );
-        })}
-      </div>
-    
-    </div>
-  );
+    // Extract product IDs from orderDetails to fetch product data after orderDetails is fetched
+    const prodIDs = fetchedOrderDetails.map((detail) => detail.prodID);
+
+    // Fetch product data based on product IDs
+    const products = useProductData(prodIDs);
+
+    // Fetch and process the data once
+    useEffect(() => {
+        if (fetchedOrderDetails.length > 0) {
+            // Set order details after fetching
+            setOrderDetails(fetchedOrderDetails);
+
+            // Now, filter the orders and combine with their respective products
+            const combinedOrders = orders.map((order) => {
+                const filteredOrderDetails = fetchedOrderDetails.filter(
+                    (detail) => detail.orderID === order.orderID,
+                );
+
+                // Map the order details to their corresponding products
+                const filteredProducts = filteredOrderDetails.map(
+                    (orderDetail) => {
+                        const product = products.find(
+                            (prod) => prod.prodID === orderDetail.prodID,
+                        );
+                        return {
+                            ...orderDetail,
+                            product,
+                        };
+                    },
+                );
+
+                return {
+                    ...order,
+                    products: filteredProducts,
+                };
+            });
+
+            setFilteredOrders(combinedOrders);
+        }
+    }, [fetchedOrderDetails, orders, products]);
+
+    // Handle loading and error states
+    if (ordersLoading || detailsLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (ordersError || detailsError) {
+        return <div>Error: {ordersError || detailsError}</div>;
+    }
+
+    return (
+        <div className='max-w-1xl mx-auto px-2 mb-10'>
+            <div className='space-y-5'>
+                {filteredOrders.map((order) => (
+                    <Accordion
+                        key={order.orderID}
+                        type='single'
+                        collapsible
+                        className='w-full border rounded-2xl shadow-md'
+                    >
+                        <AccordionItem value={order.orderID}>
+                            <AccordionTrigger className='mx-5'>
+                                <Title
+                                    orderId={order.orderID}
+                                    orderDate={order.date
+                                        .toDate()
+                                        .toLocaleDateString()}
+                                />
+                            </AccordionTrigger>
+                            <AccordionContent className='border'>
+                                <ProductList
+                                    products={order.products.map(
+                                        (detail: {product: any; qty: any}) => ({
+                                            ...detail.product,
+                                            quantity: detail.qty,
+                                        }),
+                                    )}
+                                />
+                            </AccordionContent>
+                        </AccordionItem>
+                    </Accordion>
+                ))}
+            </div>
+        </div>
+    );
 };
 
 export default OrderHistory;

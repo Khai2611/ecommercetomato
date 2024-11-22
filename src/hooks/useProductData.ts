@@ -19,8 +19,6 @@ interface Product {
 
 export const useProductData = (prodIDs: string[]) => {
     const [products, setProducts] = useState<Product[]>([]);
-    // const [loading, setLoading] = useState<boolean>(false);
-    // const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         if (prodIDs.length > 0) {
