@@ -24,6 +24,7 @@ export const useOrderDetailsData = ({orders}: useOrderDetailsDataProps) => {
     const [orderDetails, setOrderDetails] = useState<OrderDetail[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+    const [productPurchaseCount, setProductPurchaseCount] = useState<number>(0);
 
     useEffect(() => {
         if (orders.length > 0) {
@@ -53,7 +54,20 @@ export const useOrderDetailsData = ({orders}: useOrderDetailsDataProps) => {
                     const allOrderDetails = await Promise.all(
                         orderDetailPromises,
                     );
-                    setOrderDetails(allOrderDetails.flat()); // Flatten the array
+
+                    //new
+                    const flattenedOrderDetails = allOrderDetails.flat();
+                    setOrderDetails(flattenedOrderDetails); // Flatten the array of order details
+
+                    // Calculate total product purchases (sum of all qty values)
+                    const totalProductPurchases = flattenedOrderDetails.reduce(
+                        (total, orderDetail) => total + orderDetail.qty,
+                        0,
+                    );
+                    setProductPurchaseCount(totalProductPurchases); // Update the product purchase count
+                    //new
+
+                    // setOrderDetails(allOrderDetails.flat()); // Flatten the array
                 } catch (err) {
                     console.error('Error fetching order details:', err);
                     setError('Failed to fetch order details');
@@ -66,5 +80,5 @@ export const useOrderDetailsData = ({orders}: useOrderDetailsDataProps) => {
         }
     }, [orders]);
 
-    return {orderDetails, loading, error};
+    return {orderDetails, loading, error, productPurchaseCount};
 };

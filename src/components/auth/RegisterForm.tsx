@@ -43,8 +43,12 @@ const RegisterForm: React.FC = () => {
             const userRef = doc(db, 'Users', user.uid); // Specify the document ID as user.uid
             await setDoc(userRef, {
                 email: user.email,
-                name: name, // Store the name (or displayName)
+                firstName: name, // Store the name (or displayName)
+                lastName: '',
                 userID: user.uid, // Store the user's UID (same as document ID)
+                phoneNo: '',
+                Country: '',
+                City: '',
             });
 
             console.log('User registered successfully');
@@ -91,7 +95,7 @@ const RegisterForm: React.FC = () => {
                                 autoComplete='name'
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[tomato] sm:text-sm sm:leading-6"
+                                className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[tomato] sm:text-sm sm:leading-6'
                                 // className='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-inset focus:ring-[tomato] sm:text-sm sm:leading-6'
                             />
                         </div>
@@ -166,12 +170,12 @@ const RegisterForm: React.FC = () => {
                         </div>
                     </div>
 
-                    <div className="flex justify-center">
-                    {/* <Link to={'/'}> */}
+                    <div className='flex justify-center'>
+                        {/* <Link to={'/'}> */}
                         <button
                             type='submit'
-                            className="flex w-[150px] justify-center rounded-md bg-[tomato] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[tomato] focus-visible:outline focus-visible:outline-2 focus-visible "
-                            >
+                            className='flex w-[150px] justify-center rounded-md bg-[tomato] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[tomato] focus-visible:outline focus-visible:outline-2 focus-visible '
+                        >
                             Register
                         </button>
                         {/* </Link> */}

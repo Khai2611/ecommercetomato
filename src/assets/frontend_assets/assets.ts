@@ -35,6 +35,7 @@ import makerLogo from './client-maker.svg';
 //profile pics
 import lul from './lul.jpg';
 import screen from './screen.png';
+import profile from './profile_icon.jpg';
 
 import shirt2 from './clothes/tshirt.jpg';
 import shirt4 from './clothes/sweatshirt.jpg';
@@ -159,6 +160,7 @@ export const assets = {
     //profile
     lul,
     screen,
+    profile,
     //cat pics
     autumn,
     summer,
