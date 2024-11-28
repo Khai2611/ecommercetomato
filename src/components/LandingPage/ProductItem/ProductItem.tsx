@@ -4,6 +4,7 @@ import './ProductItem.css'; // Import the CSS file
 import {motion} from 'framer-motion';
 import {SlideLeft} from '../../../utils/animation';
 import {assets} from '@/assets/frontend_assets/assets';
+import {useNavigate} from 'react-router-dom';
 
 // Define the props interface
 interface ProdItemProps {
@@ -22,9 +23,11 @@ const ProductItem: React.FC<ProdItemProps> = ({
     image,
 }) => {
     const [hoveredImage, setHoveredImage] = useState<number | null>(null);
+    const navigate = useNavigate();
 
     const handleImageClick = (index: number) => {
         setHoveredImage((prev) => (prev === index ? null : index));
+        navigate(`/products/${id}`);
     };
 
     return (

@@ -3,7 +3,7 @@ import './ProductDisplay.css';
 import ProductItem from '../ProductItem/ProductItem';
 import {motion} from 'framer-motion';
 import {SlideRight} from '../../../utils/animation';
-import {productData, assets} from '../../../assets/frontend_assets/assets';
+// import {productData, assets} from '../../../assets/frontend_assets/assets';
 import {useBestsellerData} from '@/hooks/useBestsellerData';
 
 // Define the props interface

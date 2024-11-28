@@ -25,9 +25,14 @@ const Shop: React.FC = () => {
     );
     const [selectedGender, setSelectedGender] = useState<string | null>(null);
     const [products, setProducts] = useState<Product[]>([]);
+    const [sortOption, setSortOption] = useState<string>('HighLow');
 
     const itemsPerPageFromBanner = (itemsPerPage: number) => {
         setItemsPerPage(itemsPerPage);
+    };
+
+    const onSortChange = (sortOption: string) => {
+        setSortOption(sortOption);
     };
 
     // // Fetch products from Firestore based on selected filters (category and gender)
@@ -100,6 +105,16 @@ const Shop: React.FC = () => {
         return matchesCategory && matchesGender;
     });
 
+    // Sort the products based on selected sort option
+    const sortedProducts = filteredProducts.sort((a, b) => {
+        if (sortOption === 'HighLow') {
+            return b.prodPrice - a.prodPrice;
+        } else if (sortOption === 'LowHigh') {
+            return a.prodPrice - b.prodPrice;
+        }
+        return 0;
+    });
+
     return (
         <div
             className='max-w-container mx-auto px-4'
@@ -116,10 +131,11 @@ const Shop: React.FC = () => {
                 <div className='w-full mdl:w-[80%] lgl:w-[75%] h-full flex flex-col gap-10'>
                     <ProductBanner
                         itemsPerPageFromBanner={itemsPerPageFromBanner}
+                        onSortChange={onSortChange}
                     />
                     <Pagination
                         itemsPerPage={itemsPerPage}
-                        products={filteredProducts}
+                        products={sortedProducts}
                     />
                 </div>
             </div>
