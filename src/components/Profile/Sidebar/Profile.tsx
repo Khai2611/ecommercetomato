@@ -38,6 +38,8 @@ const Profile: React.FC = () => {
     }
 
     return (
+
+
         <div className='flex flex-col items-center py-5 border-b border-gray-300 space-y-3'>
             <div className='relative'>
                 <img
@@ -112,6 +114,7 @@ const Profile: React.FC = () => {
                 </h3>
                 <p className='text-sm text-gray-500'>{user?.email}</p>
             </div>
+            
         </div>
     );
 };
