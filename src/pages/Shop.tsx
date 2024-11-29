@@ -18,11 +18,19 @@ interface Product {
     genderID: string;
 }
 
-const Shop: React.FC = () => {
+interface ShopProps {
+    selectedCategoryId: string | null;
+    setSelectedCategoryId: React.Dispatch<React.SetStateAction<string | null>>;
+}
+
+const Shop: React.FC<ShopProps> = ({
+    selectedCategoryId,
+    setSelectedCategoryId,
+}) => {
     const [itemsPerPage, setItemsPerPage] = useState<number>(12);
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(
-        null,
-    );
+    // const [selectedCategory, setSelectedCategory] = useState<string | null>(
+    //     null,
+    // );
     const [selectedGender, setSelectedGender] = useState<string | null>(null);
     const [products, setProducts] = useState<Product[]>([]);
     const [sortOption, setSortOption] = useState<string>('HighLow');
@@ -96,8 +104,8 @@ const Shop: React.FC = () => {
 
     // Filter products based on selected category and gender
     const filteredProducts = products.filter((product) => {
-        const matchesCategory = selectedCategory
-            ? product.catID === selectedCategory
+        const matchesCategory = selectedCategoryId
+            ? product.catID === selectedCategoryId
             : true;
         const matchesGender = selectedGender
             ? product.genderID === selectedGender
@@ -124,7 +132,8 @@ const Shop: React.FC = () => {
             <div className='w-full h-full flex pb-20 gap-10'>
                 <div className='w-[20%] lgl:w-[25%] hidden mdl:inline-flex h-full'>
                     <ShopSideNav
-                        setSelectedCategory={setSelectedCategory}
+                        selectedCategoryId={selectedCategoryId}
+                        setSelectedCategory={setSelectedCategoryId}
                         setSelectedGender={setSelectedGender}
                     />
                 </div>

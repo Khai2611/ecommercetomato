@@ -26,6 +26,7 @@ import spring from './spring.jpg';
 import cardigan from './cardigan.jpg';
 import sneakers from './sneakers.jpg';
 import pants from './pants.jpg';
+import shirt from './shirtlandingpage.jpg';
 
 import databizLogo from './client-databiz.svg';
 import audiophileLogo from './client-audiophile.svg';
@@ -156,6 +157,7 @@ export const assets = {
     logout_icon,
     bag_icon,
     parcel_icon,
+    shirt,
 
     //profile
     lul,
