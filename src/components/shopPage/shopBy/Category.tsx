@@ -13,11 +13,18 @@ interface Category {
 interface CategoryProps {
     icons?: boolean;
     setSelectedCategory: (category: string) => void;
+    selectedCategoryId: string | null;
 }
 
-const Category: React.FC<CategoryProps> = ({setSelectedCategory, icons}) => {
+const Category: React.FC<CategoryProps> = ({
+    selectedCategoryId,
+    setSelectedCategory,
+    icons,
+}) => {
     const [showItems] = useState<boolean>(true);
-    const [selectedItem, setSelectedItem] = useState<string | null>(null); // State to track selected item
+    const [selectedItem, setSelectedItem] = useState<string | null>(
+        selectedCategoryId,
+    ); // State to track selected item
     const [categories, setCategories] = useState<Category[]>([]);
     const [loading, setLoading] = useState<boolean>(false); // Loading state
     const [error, setError] = useState<string | null>(null); // Error state

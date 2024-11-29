@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {Route, Routes, useLocation} from 'react-router-dom';
@@ -16,14 +16,25 @@ import CheckoutForm from './pages/CheckoutForm';
 import Dropdown from './components/orderHistory/Dropdown';
 
 const App: React.FC = () => {
+    // State for selected category ID moved to App
+    const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
+        null,
+    );
+
     // Use useLocation to get the current path
     const location = useLocation();
 
     // Check if the current path is login or register
     const isAuthRoute =
         location.pathname.toLowerCase() === '/login' ||
-        location.pathname.toLowerCase() === '/register' 
-        // || location.pathname.toLowerCase() === '/checkout';
+        location.pathname.toLowerCase() === '/register';
+    // || location.pathname.toLowerCase() === '/checkout';
+
+    // Function to handle category selection
+    const handleCategoryClick = (categoryId: string) => {
+        console.log(`Category clicked in App: ${categoryId}`);
+        setSelectedCategoryId(categoryId); // Update selected category ID
+    };
 
     return (
         <>
@@ -33,8 +44,19 @@ const App: React.FC = () => {
             <div className={`app ${isAuthRoute ? 'full-width' : ''}`}>
                 <ToastContainer />
                 <Routes>
-                    <Route path='/' element={<Home />} />
-                    <Route path='/shop' element={<Shop />} />
+                    <Route
+                        path='/'
+                        element={<Home onCategoryClick={handleCategoryClick} />}
+                    />
+                    <Route
+                        path='/shop'
+                        element={
+                            <Shop
+                                selectedCategoryId={selectedCategoryId}
+                                setSelectedCategoryId={setSelectedCategoryId}
+                            />
+                        }
+                    />
                     <Route path='/profile' element={<Profile />} />
                     <Route path='/products/:id' element={<ProductDeets />} />
                     <Route path='/login' element={<Login />} />
