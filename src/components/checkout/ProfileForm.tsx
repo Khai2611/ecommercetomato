@@ -25,6 +25,8 @@ import {
     query,
     where,
     getDocs,
+    getDoc,
+    updateDoc,
 } from 'firebase/firestore';
 import {db} from '@/firebase/firebaseConfig';
 import {getUserData} from '@/utils/auth';
@@ -145,9 +147,46 @@ export function ProfileForm({cart}: ProfileFormProps) {
                 return `${orderID}_${prodID}`; // Custom format for orderDeetsID
             };
 
+            // for (let item of cart) {
+            //     const orderDeetsID = generateOrderDeetsID(orderID, item.prodID);
+
+            //     await addDoc(collection(db, 'OrderDetails'), {
+            //         orderDeetsID,
+            //         orderID, // Link to the order
+            //         prodID: item.prodID,
+            //         price: item.prodPrice,
+            //         qty: item.qty,
+            //     });
+            // }
+
             for (let item of cart) {
                 const orderDeetsID = generateOrderDeetsID(orderID, item.prodID);
 
+                // Step 3: Update Inventory
+                const inventoryRef = doc(db, 'Inventory', item.inventoryID);
+                const inventorySnapshot = await getDoc(inventoryRef);
+
+                if (inventorySnapshot.exists()) {
+                    const inventoryData = inventorySnapshot.data();
+                    const prodQty = inventoryData?.prodQty || 0;
+                    const soldQty = inventoryData?.soldQty || 0;
+
+                    // Check if there is enough stock
+                    if (prodQty < item.qty) {
+                        console.error(`Not enough stock for ${item.prodName}`);
+                        return; // You can show a message here to the user about the stock issue
+                    }
+
+                    // Update inventory: Decrease prodQty and increase soldQty
+                    await updateDoc(inventoryRef, {
+                        prodQty: prodQty - item.qty,
+                        soldQty: soldQty + item.qty,
+                    });
+                } else {
+                    console.error(`Inventory not found for ${item.prodName}`);
+                }
+
+                // Add the item to OrderDetails collection
                 await addDoc(collection(db, 'OrderDetails'), {
                     orderDeetsID,
                     orderID, // Link to the order
