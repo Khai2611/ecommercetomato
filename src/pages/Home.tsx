@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Category from '../components/LandingPage/Category/Category';
 import ProductDisplay from '../components/LandingPage/ProductDisplay/ProductDisplay';
 import Brands from '../components/LandingPage/Brands/Brands';
@@ -12,6 +12,11 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = ({onCategoryClick}) => {
     const [category] = useState<string>('All');
+
+    // useEffect(() => {
+    //     // This will reload the entire page when the component mounts
+    //     window.location.reload();
+    // }, []); // Runs only when the component is first mounted
 
     return (
         <div>

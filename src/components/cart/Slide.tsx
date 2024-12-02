@@ -270,8 +270,10 @@ const Example: React.FC<{
             }
         };
 
-        fetchData();
-    }, [userID]); // Re-run the effect whenever the userID changes
+        if (open) {
+            fetchData();
+        }
+    }, [userID, open]); // Re-run the effect whenever the userID changes
 
     // Function to handle removing an item from the cart
     const handleRemoveFromCart = async (cartID: string) => {

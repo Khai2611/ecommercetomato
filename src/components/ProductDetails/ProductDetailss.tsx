@@ -7,6 +7,8 @@ import {doc, getDoc, collection, addDoc} from 'firebase/firestore';
 import {db} from '@/firebase/firebaseConfig';
 import {getUserData, isUserLoggedIn} from '@/utils/auth';
 import {useToast} from '@/hooks/use-toast';
+import {useNavigate} from 'react-router-dom';
+import {BsWindowSidebar} from 'react-icons/bs';
 
 interface ProductDetailssProps {
     product: {
@@ -27,6 +29,8 @@ export const ProductDetailss: React.FC<ProductDetailssProps> = ({product}) => {
     const [loading, setLoading] = useState(true); // Track loading state for product quantity
     const [error, setError] = useState<string | null>(null); // Track any errors
     const {toast} = useToast();
+
+    const navigate = useNavigate();
 
     // Fetch product quantity from Firestore
     useEffect(() => {
@@ -87,6 +91,8 @@ export const ProductDetailss: React.FC<ProductDetailssProps> = ({product}) => {
             });
             setShowMsg(true);
             setTimeout(() => setShowMsg(false), 2000);
+
+            navigate('/');
         } catch (error) {
             console.error('Error adding product to cart: ', error);
             toast({
