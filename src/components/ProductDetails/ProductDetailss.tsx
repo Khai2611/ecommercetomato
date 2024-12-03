@@ -3,12 +3,13 @@ import React, {useState, useEffect} from 'react';
 import {Button} from '../ui/Button2';
 import {MinusIcon, PlusIcon, CartIcon} from '../ui/Icons';
 import {Accordion} from '../ui/Accordion2';
-import {doc, getDoc, collection, addDoc} from 'firebase/firestore';
+import {doc, getDoc, collection, addDoc, updateDoc} from 'firebase/firestore';
 import {db} from '@/firebase/firebaseConfig';
 import {getUserData, isUserLoggedIn} from '@/utils/auth';
 import {useToast} from '@/hooks/use-toast';
 import {useNavigate} from 'react-router-dom';
 import {BsWindowSidebar} from 'react-icons/bs';
+import {useCartData} from '@/hooks/useCartData';
 
 interface ProductDetailssProps {
     product: {
@@ -31,6 +32,7 @@ export const ProductDetailss: React.FC<ProductDetailssProps> = ({product}) => {
     const {toast} = useToast();
 
     const navigate = useNavigate();
+    const cart = useCartData();
 
     // Fetch product quantity from Firestore
     useEffect(() => {
@@ -75,32 +77,109 @@ export const ProductDetailss: React.FC<ProductDetailssProps> = ({product}) => {
         // If user is logged in, add the item to the cart
         const {userID} = userData;
 
-        try {
-            // Add product data to Cart collection
-            await addDoc(collection(db, 'Cart'), {
-                prodID,
-                userID,
-                qty: itemQty,
-                createdAt: new Date(),
-            });
+        // Check if the product already exists in the cart
+        const existingProductInCart = cart.find(
+            (item) => item.prodID === prodID,
+        );
+        console.log(existingProductInCart);
+        if (existingProductInCart) {
+            // Product exists in the cart, update the quantity
+            const newQty = existingProductInCart.qty + itemQty;
 
-            // Show success message
-            toast({
-                title: 'Item Added',
-                description: `${itemQty} ${prodName} added to cart!`,
-            });
-            setShowMsg(true);
-            setTimeout(() => setShowMsg(false), 2000);
+            try {
+                if (!existingProductInCart.cartID) {
+                    throw new Error('CartID is missing.');
+                }
+                // Update the cart with the new quantity
+                const cartDocRef = doc(
+                    db,
+                    'Cart',
+                    existingProductInCart.cartID,
+                );
+                await updateDoc(cartDocRef, {qty: newQty});
 
-            navigate('/');
-        } catch (error) {
-            console.error('Error adding product to cart: ', error);
-            toast({
-                title: 'Error',
-                description:
-                    'There was an error adding the product to the cart.',
-            });
+                // Show success message
+                toast({
+                    title: 'Quantity Updated',
+                    description: `${itemQty} more ${prodName} added to your cart!`,
+                });
+            } catch (error) {
+                console.error(
+                    'Error updating product quantity in cart:',
+                    error,
+                );
+                toast({
+                    title: 'Error',
+                    description:
+                        'There was an error updating the product quantity.',
+                });
+            }
+        } else {
+            // Product does not exist in the cart, add a new entry
+            try {
+                // Add product to the cart
+                const cartDocRef = await addDoc(collection(db, 'Cart'), {
+                    prodID,
+                    userID,
+                    qty: itemQty,
+                    createdAt: new Date(),
+                });
+
+                // Get the generated cartID (Firestore auto-generated document ID)
+                const cartID = cartDocRef.id;
+
+                // Update the new product entry with cartID
+                await updateDoc(cartDocRef, {
+                    cartID, // Add the cartID field to the document
+                });
+
+                // Show success message
+                toast({
+                    title: 'Item Added',
+                    description: `${itemQty} ${prodName} added to your cart!`,
+                });
+            } catch (error) {
+                console.error('Error adding product to cart:', error);
+                toast({
+                    title: 'Error',
+                    description:
+                        'There was an error adding the product to the cart.',
+                });
+            }
         }
+
+        // Show the cart updated message
+        setShowMsg(true);
+        setTimeout(() => setShowMsg(false), 2000);
+
+        navigate('/'); // Redirect to homepage or cart page
+
+        // try {
+        //     // Add product data to Cart collection
+        //     await addDoc(collection(db, 'Cart'), {
+        //         prodID,
+        //         userID,
+        //         qty: itemQty,
+        //         createdAt: new Date(),
+        //     });
+
+        //     // Show success message
+        //     toast({
+        //         title: 'Item Added',
+        //         description: `${itemQty} ${prodName} added to cart!`,
+        //     });
+        //     setShowMsg(true);
+        //     setTimeout(() => setShowMsg(false), 2000);
+
+        //     navigate('/');
+        // } catch (error) {
+        //     console.error('Error adding product to cart: ', error);
+        //     toast({
+        //         title: 'Error',
+        //         description:
+        //             'There was an error adding the product to the cart.',
+        //     });
+        // }
     };
 
     return (
