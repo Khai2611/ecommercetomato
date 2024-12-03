@@ -21,6 +21,7 @@ import {
     doc,
 } from 'firebase/firestore';
 import {getUserData} from '@/utils/auth';
+import {useCategoryData} from '@/hooks/useCategoryData';
 
 // Define the carts interface
 interface Cart {
@@ -65,32 +66,6 @@ interface ProductCart {
     inventory: Inventory;
 }
 
-// const products = [
-//     {
-//         cartID: 'CR001',
-//         prodID: 'PD001',
-//         userID: 'UD001',
-//         prodName: 'Throwback Hip Bag',
-//         category: 'Salmon',
-//         price: '90.00',
-//         quantity: 1,
-//         imageSrc: 'shirt2a',
-//         genderID: 'GD001',
-//     },
-//     {
-//         cartID: 'CR002',
-//         prodID: 'PD002',
-//         userID: 'UD002',
-//         prodName: 'Medium Stuff Satchel',
-//         category: 'Blue',
-//         price: '32.00',
-//         quantity: 1,
-//         imageSrc: 'shirt1a',
-//         genderID: 'GD001',
-//     },
-//     // More products...
-// ];
-
 const Example: React.FC<{
     open: boolean;
     setOpen: (open: boolean) => void;
@@ -102,6 +77,7 @@ const Example: React.FC<{
 
     // const user = 'UD001';
     const [userID, setUserID] = useState<string | null>(null); // Local state for user ID
+    const categories = useCategoryData(); // Get categories from the custom hook
 
     useEffect(() => {
         // Get the userID from the session (localStorage)
@@ -244,13 +220,19 @@ const Example: React.FC<{
                         // Step 4: Get only the first image (p1)
                         const imgKey = productData.p1; // Access the p1 image
 
+                        // Get category name by matching catID with categories state
+                        const category =
+                            categories.find(
+                                (cat) => cat.catID === productData.catID,
+                            )?.category || 'Unknown Category';
+
                         // Create the final product cart object
                         return {
                             cartID: cartItem.cartID,
                             prodID: productData.prodID,
                             userID: cartItem.userID,
                             prodName: productData.prodName,
-                            category: productData.catID,
+                            category: category,
                             productPrice: productData.prodPrice,
                             quantity: cartItem.qty,
                             img: imgKey, // Use only p1 image
