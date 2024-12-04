@@ -103,12 +103,29 @@ export function ProfileForm({cart}: ProfileFormProps) {
         },
     });
 
-    // function onSubmit(values: z.infer<typeof formSchema>) {
-    //     // Do something with the form values.
-    //     // ✅ This will be type-safe and validated.
-    //     console.log(values);
-    //     navigate('/');
-    // }
+    const getUserEmail = async (userID: string) => {
+        try {
+            // Get a reference to the user's document in the 'Users' collection
+            const userDocRef = doc(db, 'Users', userID); // Replace 'Users' with your actual collection name if different
+
+            // Fetch the document data
+            const userDoc = await getDoc(userDocRef);
+
+            if (userDoc.exists()) {
+                // Retrieve the email from the document
+                const userEmail = userDoc.data()?.email;
+                console.log('User email:', userEmail);
+                return userEmail;
+            } else {
+                console.error('No user found with the provided userID');
+                return null;
+            }
+        } catch (error) {
+            console.error('Error fetching user email:', error);
+            return null;
+        }
+    };
+
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         // Get the user data (assuming user is logged in)
         const userData = getUserData();
@@ -118,6 +135,12 @@ export function ProfileForm({cart}: ProfileFormProps) {
         }
 
         const userID = userData.userID;
+        // Retrieve the user's email from Firestore
+        const userEmail = await getUserEmail(userID);
+        if (!userEmail) {
+            console.error('User email not found');
+            return;
+        }
 
         // Calculate the total price and collect cart details
         const totalPrice =
@@ -139,25 +162,42 @@ export function ProfileForm({cart}: ProfileFormProps) {
                 date: Timestamp.now(), // Add current timestamp
             });
 
-            // Step 2: Create OrderDetails for each cart item
+            // // // After order is created, send email confirmation
+            // // const emailData = {
+            // //     name: values.name,
+            // //     user_email: userEmail,
+            // //     receipt_link: `http://localhost:5173/${orderRef.id}`, // Replace with actual receipt URL
+            // // };
+
+            // // After order is created, send email confirmation using Postmark
+            // const subject = 'Your receipt from TOMATO';
+            // // const text = `Thank you for your order, ${values.name}! Your order total is $${totalPrice}.`;
+            // const html = `
+            //     <p>Hi ${values.name},</p>
+
+            //     <p>Thank you for your purchase!</p>
+
+            //     <p>Your order has been successfully processed. You can view your receipt by clicking the link below:</p>
+
+            //     <p>
+            //     <a href="http://localhost:5173/${orderRef.id}" target="_blank" style="display: inline-block; background-color: tomato; color: white; padding: 12px 25px; text-align: center; text-decoration: none; border-radius: 5px; font-weight: bold; font-family: 'Poppins', sans-serif;">
+            //         View Receipt
+            //     </a>
+            //     </p>
+
+            //     <p>We hope to serve you again soon!</p>
+
+            //     <p>Best regards,<br>TOMATO</p>
+            // `;
+
+            // await sendEmail(userEmail, subject, '', html); // Send email using Postmark
+
             const orderID = orderRef.id; // Use the newly created order's ID
 
             // Function to generate custom orderDeetsID
             const generateOrderDeetsID = (orderID: string, prodID: string) => {
                 return `${orderID}_${prodID}`; // Custom format for orderDeetsID
             };
-
-            // for (let item of cart) {
-            //     const orderDeetsID = generateOrderDeetsID(orderID, item.prodID);
-
-            //     await addDoc(collection(db, 'OrderDetails'), {
-            //         orderDeetsID,
-            //         orderID, // Link to the order
-            //         prodID: item.prodID,
-            //         price: item.prodPrice,
-            //         qty: item.qty,
-            //     });
-            // }
 
             for (let item of cart) {
                 const orderDeetsID = generateOrderDeetsID(orderID, item.prodID);
