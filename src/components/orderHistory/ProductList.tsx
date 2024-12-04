@@ -61,9 +61,6 @@ function ProductList({products}: ProductListProps) {
                         <p className='text-lg font-semibold'>
                             RM{product.prodPrice}
                         </p>
-                        <Button className='mt-8 text-white bg-tomato hover:bg-white hover:text-tomato hover:border hover:border-tomato'>
-                            Buy Again
-                        </Button>
                     </div>
                 </div>
             ))}
