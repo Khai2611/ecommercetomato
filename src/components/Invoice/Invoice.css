@@ -1,0 +1,235 @@
+/* App.css */
+
+.app-container {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #000;
+  }
+  
+  .content-container {
+    max-width: 700px;
+    margin: auto;
+    text-align: center;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+  }
+  
+  .logo {
+    text-align: left;
+    padding: 15px;
+  }
+  
+  .logo img {
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  .back-to-home {
+    text-align: right;
+    padding: 15px;
+  }
+  
+  .back-button {
+    background-color: #ff6347;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 16px;
+    padding: 10px 20px;
+    display: inline-block;
+  }
+  
+  .purchase-section {
+    margin: 30px auto;
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+  }
+  
+  .purchase-text {
+    text-align: left;
+    padding-top: 95px;
+    margin-left: 20px;
+  }
+  
+  .purchase-text h1 {
+    color: #ff6347;
+    font-size: 43px;
+    margin: 0 0 20px;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  }
+  
+  .purchase-text .order-id {
+    color: #6f7077;
+    font-weight: 600;
+  }
+  
+  .purchase-text p {
+    color: #6f7077;
+  }
+  
+  .purchase-image img {
+    max-width: 100%;
+    border-radius: 7px;
+  }
+  
+  .invoice-section {
+    background-color: #ff6347;
+    padding: 25px;
+  }
+  
+  .invoice-section h1 {
+    color: #ffffff;
+    font-size: 38px;
+    margin: 0;
+    line-height: 120%;
+    text-align:center;    
+    font-family: Helvetica, Arial, sans-serif;
+
+  }
+  
+  .invoice-card {
+    text-align: left;
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 700px;
+    color: #000;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .invoice-for {
+    margin: 0;
+    font-family: Montserrat, sans-serif;
+    font-size: 15px;
+    color: #6f7077;
+    font-weight: 500;
+  }
+  
+  .invoice-name {
+    margin: 5px 0;
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: 19px;
+    color: #6f7077;
+    font-weight: 600;
+  }
+  
+  .invoice-address {
+    margin: 5px 0 0;
+    font-family: Montserrat, Arial, sans-serif;
+    font-size: 15px;
+    color: #6f7077;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+/* Styling individual product items */
+.product-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.product-image {
+  margin-top: 25px;
+}
+
+.product-image img {
+  width: auto;
+  height: 190px;
+  margin-left: 10px;
+  border-radius: 16px;
+}
+
+.product-text {
+  flex: 2;
+  margin-top: 45px;
+  margin-left: 15px;
+}
+
+.product-text h3 {
+  margin: 2px;
+  color: #232323;
+}
+
+.product-text p {
+  margin: 5px 0;
+  color: #848484;
+}
+
+.product-price {
+  flex: 1;
+  text-align: right;
+  margin-top: 45px;
+}
+
+.product-price p {
+  margin: 0;
+  color: #232323;
+}
+
+
+/* Subtotal.css */
+
+.subtotal1 {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 20px;
+}
+
+.subtotal1 p {
+  margin: 0;
+  font-size: 16px;
+  color: #232323;
+}
+
+.subtotal1 p:first-child {
+  text-align: left;
+  flex: 1;
+  margin-left: 40px;
+}
+
+.subtotal1 p:last-child {
+  text-align: center;
+  flex: 1;
+  margin-left: 400px;
+}
+
+.subtotal1.no-border {
+  margin-top: 1px;
+  border-top: none;
+}
+
+/* Thank You Text Styles */
+.thank-you-text {
+  color: #ffffff; /* Tomato color */
+  font-family: "Montserrat", "Trebuchet MS", Tahoma, sans-serif;
+  font-size: 35px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.5;
+  margin: 20px 0;
+}
+
+.alignment {
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* Social Media Follow Section */
+.social-follow {
+  color: #ffffff;
+  font-family: "Montserrat", "Trebuchet MS", Tahoma, sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 120%;
+  text-align: center;
+  margin-top: 20px;
+}

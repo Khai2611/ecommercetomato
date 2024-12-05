@@ -9,6 +9,7 @@ import ProductDeets from '../src/pages/ProductDeets';
 import Shop from '../src/pages/Shop';
 import Profile from '../src/pages/Profile';
 import Footer from './components/ui/Footer/Footer';
+import Invoice from './components/Invoice/Invoice';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -27,8 +28,8 @@ const App: React.FC = () => {
     // Check if the current path is login or register
     const isAuthRoute =
         location.pathname.toLowerCase() === '/login' ||
-        location.pathname.toLowerCase() === '/register';
-    // || location.pathname.toLowerCase() === '/checkout';
+        location.pathname.toLowerCase() === '/register'
+    || location.pathname.toLowerCase() === '/invoice';
 
     // Function to handle category selection
     const handleCategoryClick = (categoryId: string) => {
@@ -58,6 +59,7 @@ const App: React.FC = () => {
                         }
                     />
                     <Route path='/profile' element={<Profile />} />
+                    <Route path='/invoice' element={<Invoice />} />
                     <Route path='/products/:id' element={<ProductDeets />} />
                     <Route path='/login' element={<Login />} />
                     <Route path='/register' element={<Register />} />

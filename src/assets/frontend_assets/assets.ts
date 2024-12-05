@@ -137,6 +137,7 @@ import sweater5a from './clothes/sweater5a.jpg';
 import sweater5b from './clothes/sweater5b.jpg';
 import sweater5c from './clothes/sweater5c.jpg';
 import sweater5d from './clothes/sweater5d.jpg';
+import autumnn from './autumn_1.png';
 
 export const assets = {
     logo,
@@ -158,6 +159,7 @@ export const assets = {
     bag_icon,
     parcel_icon,
     shirt,
+    autumnn,
 
     //profile
     lul,
