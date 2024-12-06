@@ -15,6 +15,7 @@ interface Product {
     catID: string;
     genderID: string;
     inventoryID: string;
+    desc: string;
 }
 
 export const useProductData = (prodIDs: string[]) => {

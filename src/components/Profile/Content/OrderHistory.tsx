@@ -77,6 +77,12 @@ const OrderHistory: React.FC = () => {
         return <div>Error: {ordersError || detailsError}</div>;
     }
 
+    // Handle button click to navigate to Invoice page with orderId
+    const handleViewReceipt = (orderId: string) => {
+        const invoiceUrl = `/invoice/${orderId}`;
+        window.open(invoiceUrl, '_blank');
+    };
+
     return (
         <div className='max-w-1xl mx-auto px-2 mb-10'>
             <div className='space-y-5'>
@@ -107,7 +113,12 @@ const OrderHistory: React.FC = () => {
                                 />
                                 <hr></hr>
                                 <div className='flex justify-end mt-4'>
-                                    <Button className='text-white bg-tomato hover:bg-white hover:text-tomato hover:border hover:border-tomato ml-auto mr-4'>
+                                    <Button
+                                        onClick={() =>
+                                            handleViewReceipt(order.orderID)
+                                        }
+                                        className='text-white bg-tomato hover:bg-white hover:text-tomato hover:border hover:border-tomato ml-auto mr-4'
+                                    >
                                         View Receipt
                                     </Button>
                                 </div>

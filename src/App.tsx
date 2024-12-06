@@ -28,8 +28,8 @@ const App: React.FC = () => {
     // Check if the current path is login or register
     const isAuthRoute =
         location.pathname.toLowerCase() === '/login' ||
-        location.pathname.toLowerCase() === '/register'
-    || location.pathname.toLowerCase() === '/invoice';
+        location.pathname.toLowerCase() === '/register' ||
+        location.pathname.toLowerCase().startsWith('/invoice/');
 
     // Function to handle category selection
     const handleCategoryClick = (categoryId: string) => {
@@ -59,7 +59,7 @@ const App: React.FC = () => {
                         }
                     />
                     <Route path='/profile' element={<Profile />} />
-                    <Route path='/invoice' element={<Invoice />} />
+                    <Route path='/invoice/:orderId' element={<Invoice />} />
                     <Route path='/products/:id' element={<ProductDeets />} />
                     <Route path='/login' element={<Login />} />
                     <Route path='/register' element={<Register />} />
