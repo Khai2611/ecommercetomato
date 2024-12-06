@@ -136,8 +136,8 @@ const Invoice: React.FC = () => {
 
                                         <div className='product-text'>
                                             <h3>
-                                                {orderDetail.qty}x{' '}
-                                                {product?.prodName}
+                                                {product?.prodName} x
+                                                {orderDetail.qty}
                                             </h3>
                                             <p>{product?.desc}</p>
                                         </div>

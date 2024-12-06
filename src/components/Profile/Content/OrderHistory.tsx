@@ -64,7 +64,16 @@ const OrderHistory: React.FC = () => {
                 };
             });
 
-            setFilteredOrders(combinedOrders);
+            // Sort the combinedOrders by date in descending order (newest first)
+            const sortedOrders = combinedOrders.sort((a, b) => {
+                // Make sure the date is converted to a comparable format
+                const dateA = a.date.toDate(); // Convert Firestore Timestamp to Date
+                const dateB = b.date.toDate();
+                return dateB.getTime() - dateA.getTime(); // Sort in descending order
+            });
+
+            // setFilteredOrders(combinedOrders);
+            setFilteredOrders(sortedOrders);
         }
     }, [fetchedOrderDetails, orders, products]);
 
