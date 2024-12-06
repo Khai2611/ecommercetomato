@@ -19,6 +19,7 @@ import {
     where,
     deleteDoc,
     doc,
+    updateDoc,
 } from 'firebase/firestore';
 import {getUserData} from '@/utils/auth';
 import {useCategoryData} from '@/hooks/useCategoryData';
@@ -93,82 +94,6 @@ const Example: React.FC<{
         console.log('Dialog state changed:', open);
     }, [open]);
 
-    // // Fetch the cart data and products
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             // Step 1: Fetch Cart Data
-    //             const cartQuerySnapshot = await getDocs(collection(db, 'Cart'));
-    //             const cartData: Cart[] = cartQuerySnapshot.docs.map((doc) => ({
-    //                 ...doc.data(),
-    //                 cartID: doc.id,
-    //             })) as Cart[];
-
-    //             // Filter cart items by userID
-    //             const filteredCartData = cartData.filter(
-    //                 (cartItem) => cartItem.userID === userID,
-    //             );
-
-    //             // Step 2: Fetch Products for each Cart Item
-    //             const productPromises = filteredCartData.map(
-    //                 async (cartItem) => {
-    //                     const productDocRef = collection(db, 'Products');
-    //                     const productQuerySnapshot = await getDocs(
-    //                         query(
-    //                             productDocRef,
-    //                             where('prodID', '==', cartItem.prodID),
-    //                         ),
-    //                     );
-    //                     const productData =
-    //                         productQuerySnapshot.docs[0]?.data() as Products;
-
-    //                     // Step 3: Fetch Inventory Data for the Product
-    //                     const inventoryDocRef = collection(db, 'Inventory');
-    //                     const inventoryQuerySnapshot = await getDocs(
-    //                         query(
-    //                             inventoryDocRef,
-    //                             where(
-    //                                 'inventoryID',
-    //                                 '==',
-    //                                 productData.inventoryID,
-    //                             ),
-    //                         ),
-    //                     );
-    //                     const inventoryData =
-    //                         inventoryQuerySnapshot.docs[0]?.data() as Inventory;
-
-    //                     // Step 4: Get only the first image (p1)
-    //                     const imgKey = productData.p1; // Access the p1 image
-
-    //                     // Create the final product cart object
-    //                     return {
-    //                         cartID: cartItem.cartID,
-    //                         prodID: productData.prodID,
-    //                         userID: cartItem.userID,
-    //                         prodName: productData.prodName,
-    //                         category: productData.catID,
-    //                         productPrice: productData.prodPrice,
-    //                         quantity: cartItem.qty,
-    //                         img: imgKey, // Use only p1 image
-    //                         genderID: productData.genderID,
-    //                         inventory: inventoryData,
-    //                     };
-    //                 },
-    //             );
-
-    //             // Wait for all promises to resolve and update the state
-    //             const resolvedProducts = await Promise.all(productPromises);
-    //             setCartItems(resolvedProducts);
-    //         } catch (error) {
-    //             console.error('Error fetching data:', error);
-    //         } finally {
-    //             setLoading(false); // Set loading to false once data is fetched
-    //         }
-    //     };
-
-    //     fetchData();
-    // }, []);
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -217,6 +142,17 @@ const Example: React.FC<{
                         const inventoryData =
                             inventoryQuerySnapshot.docs[0]?.data() as Inventory;
 
+                        // Step 4: Check and adjust quantity
+                        let cartQuantity = cartItem.qty;
+                        if (cartQuantity > inventoryData.prodQty) {
+                            // If cart quantity is greater than available stock, update to available stock
+                            cartQuantity = inventoryData.prodQty;
+
+                            // Optionally, you can update the cart in Firestore here:
+                            const cartDocRef = doc(db, 'Cart', cartItem.cartID);
+                            await updateDoc(cartDocRef, {qty: cartQuantity});
+                        }
+
                         // Step 4: Get only the first image (p1)
                         const imgKey = productData.p1; // Access the p1 image
 
@@ -234,6 +170,7 @@ const Example: React.FC<{
                             prodName: productData.prodName,
                             category: category,
                             productPrice: productData.prodPrice,
+                            // quantity: cartQuantity,
                             quantity: cartItem.qty,
                             img: imgKey, // Use only p1 image
                             genderID: productData.genderID,
