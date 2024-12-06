@@ -126,6 +126,29 @@ export function ProfileForm({cart}: ProfileFormProps) {
         }
     };
 
+    // Function to check stock for each cart item
+    const checkStockAvailability = async () => {
+        for (let item of cart) {
+            const inventoryRef = doc(db, 'Inventory', item.inventoryID);
+            const inventorySnapshot = await getDoc(inventoryRef);
+
+            if (inventorySnapshot.exists()) {
+                const inventoryData = inventorySnapshot.data();
+                const prodQty = inventoryData?.prodQty || 0;
+
+                if (prodQty < item.qty) {
+                    // Stock not sufficient for this item
+                    return {
+                        success: false,
+                        productName: item.prodName,
+                        availableStock: prodQty,
+                    };
+                }
+            }
+        }
+        return {success: true}; // If all items have enough stock
+    };
+
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         // Get the user data (assuming user is logged in)
         const userData = getUserData();
@@ -140,6 +163,16 @@ export function ProfileForm({cart}: ProfileFormProps) {
         if (!userEmail) {
             console.error('User email not found');
             return;
+        }
+
+        // Check stock availability for all cart items
+        const stockCheck = await checkStockAvailability();
+        if (!stockCheck.success) {
+            // Show error message for insufficient stock
+            alert(
+                `Not enough stock for ${stockCheck.productName}. Available stock: ${stockCheck.availableStock}`,
+            );
+            return; // Prevent form submission
         }
 
         // Calculate the total price and collect cart details

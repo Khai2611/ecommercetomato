@@ -1,11 +1,8 @@
 import {useEffect, useState} from 'react';
-import {getDocs, collection, query, where} from 'firebase/firestore';
-import {db} from '@/firebase/firebaseConfig';
-import {isUserLoggedIn, getUserData} from '@/utils/auth';
+import {getUserData} from '@/utils/auth';
 import {useNavigate} from 'react-router-dom';
-
-import p1 from '../../assets/frontend_assets/p1.jpg';
 import {assets} from '@/assets/frontend_assets/assets';
+import {useCategoryData} from '@/hooks/useCategoryData';
 
 // Define the carts interface
 interface Cart {
@@ -34,10 +31,10 @@ interface ProductListProps {
 }
 
 function ProductList({products}: ProductListProps) {
-    // const [products, setProducts] = useState<Product[]>([]);
-    // const [cart, setCart] = useState<Cart[]>([]);
     const [userID, setUserID] = useState<string | null>(null);
+
     const navigate = useNavigate();
+    const categories = useCategoryData();
 
     // Check if the user is logged in and retrieve user data
     useEffect(() => {
@@ -50,54 +47,11 @@ function ProductList({products}: ProductListProps) {
         }
     }, [navigate]);
 
-    // // Fetch cart data and products data from Firestore
-    // useEffect(() => {
-    //     const fetchCartData = async () => {
-    //         // Get all items from the Cart collection
-    //         const cartQuery = query(
-    //             collection(db, 'Cart'),
-    //             where('userID', '==', userID),
-    //         );
-    //         const cartSnapshot = await getDocs(cartQuery);
-    //         const cartData = cartSnapshot.docs.map((doc) => doc.data() as Cart);
-    //         setCart(cartData);
-    //     };
-
-    //     // Fetch the cart data first
-    //     fetchCartData();
-    // }, [userID]); // Only run once on mount
-
-    // useEffect(() => {
-    //     // Fetch products only if cart is available
-    //     if (cart.length > 0) {
-    //         const prodIDs = cart.map((item) => item.prodID);
-
-    //         const fetchProductData = async () => {
-    //             // Get products based on prodID from Cart
-    //             const productsQuery = query(
-    //                 collection(db, 'Products'),
-    //                 where('prodID', 'in', prodIDs),
-    //             );
-    //             const productSnapshot = await getDocs(productsQuery);
-    //             const productData = productSnapshot.docs.map(
-    //                 (doc) => doc.data() as Product,
-    //             );
-    //             setProducts(productData);
-    //         };
-
-    //         fetchProductData();
-    //     }
-    // }, [cart]); // Only run when cart changes
-
-    // // Filter products based on prodID in the cart
-    // const cartProductDetails = cart
-    //     .map((cartItem) => {
-    //         const product = products.find(
-    //             (product) => product.prodID === cartItem.prodID,
-    //         );
-    //         return product ? {...cartItem, ...product} : null;
-    //     })
-    //     .filter((item) => item !== null);
+    // Function to get category name by matching catID
+    const getCategoryName = (catID: string) => {
+        const category = categories.find((cat) => cat.catID === catID);
+        return category ? category.category : 'Loading...'; // Return category name or fallback
+    };
 
     return (
         <div className='space-y-4 p-4 divide-y divide-gray-300 max-w-xl'>
@@ -115,7 +69,7 @@ function ProductList({products}: ProductListProps) {
                                 {item.prodName}
                             </h2>
                             <p className='text-gray-500'>
-                                Category: {item.catID}
+                                Category: {getCategoryName(item.catID)}
                             </p>
                             <p className='text-gray-500'>
                                 Quantity: {item.qty}
