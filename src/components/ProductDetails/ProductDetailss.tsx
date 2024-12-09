@@ -102,6 +102,7 @@ export const ProductDetailss: React.FC<ProductDetailssProps> = ({product}) => {
                 toast({
                     title: 'Quantity Updated',
                     description: `${itemQty} more ${prodName} added to your cart!`,
+                    className: 'bg-green-500 text-white ',
                 });
             } catch (error) {
                 console.error(
@@ -112,6 +113,7 @@ export const ProductDetailss: React.FC<ProductDetailssProps> = ({product}) => {
                     title: 'Error',
                     description:
                         'There was an error updating the product quantity.',
+                    className: 'bg-red-500 text-white ',
                 });
             }
         } else {
@@ -137,6 +139,7 @@ export const ProductDetailss: React.FC<ProductDetailssProps> = ({product}) => {
                 toast({
                     title: 'Item Added',
                     description: `${itemQty} ${prodName} added to your cart!`,
+                    className: 'bg-green-500 text-white ',
                 });
             } catch (error) {
                 console.error('Error adding product to cart:', error);
@@ -144,6 +147,7 @@ export const ProductDetailss: React.FC<ProductDetailssProps> = ({product}) => {
                     title: 'Error',
                     description:
                         'There was an error adding the product to the cart.',
+                    className: 'bg-red-500 text-white ',
                 });
             }
         }

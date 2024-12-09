@@ -31,6 +31,7 @@ import {
 import {db} from '@/firebase/firebaseConfig';
 import {getUserData} from '@/utils/auth';
 import {assets} from '@/assets/frontend_assets/assets';
+import {useToast} from '@/hooks/use-toast';
 
 const formSchema = z.object({
     name: z.string().min(2, {
@@ -87,6 +88,7 @@ interface ProfileFormProps {
 
 export function ProfileForm({cart}: ProfileFormProps) {
     const navigate = useNavigate();
+    const {toast} = useToast();
     // ...
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -287,6 +289,13 @@ export function ProfileForm({cart}: ProfileFormProps) {
             // Iterate through the cart items and delete them
             cartSnapshot.forEach(async (docSnapshot) => {
                 await deleteDoc(doc(db, 'Cart', docSnapshot.id));
+            });
+
+            toast({
+                title: 'Order successfully created',
+                description:
+                    'Your order has been placed successfully. Thank you for your purchase!',
+                className: 'bg-green-500 text-white ',
             });
 
             // Redirect to home or another page after successful submission
