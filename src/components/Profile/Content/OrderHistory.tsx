@@ -128,7 +128,7 @@ const OrderHistory: React.FC = () => {
                                         }
                                         className='text-white bg-tomato hover:bg-white hover:text-tomato hover:border hover:border-tomato ml-auto mr-4'
                                     >
-                                        View Receipt
+                                        View Receipt ola
                                     </Button>
                                 </div>
                             </AccordionContent>
