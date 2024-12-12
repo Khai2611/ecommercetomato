@@ -77,7 +77,7 @@ function ProductList({products}: ProductListProps) {
                         </div>
                         <div className='text-center'>
                             <p className='text-lg font-semibold'>
-                                RM{item.prodPrice}
+                                RM{item.prodPrice.toFixed(2)}
                             </p>
                         </div>
                     </div>
@@ -89,16 +89,19 @@ function ProductList({products}: ProductListProps) {
                     <p className='font-semibold'>Subtotal</p>
                     <p>
                         RM
-                        {products.reduce(
-                            (acc, item) =>
-                                acc + (item?.prodPrice ?? 0) * (item?.qty ?? 0),
-                            0,
-                        )}
+                        {products
+                            .reduce(
+                                (acc, item) =>
+                                    acc +
+                                    (item?.prodPrice ?? 0) * (item?.qty ?? 0),
+                                0,
+                            )
+                            .toFixed(2)}
                     </p>
                 </div>
                 <div className='flex pt-4 justify-between'>
                     <p className='font-semibold'>Shipping</p>
-                    <p>RM15</p>
+                    <p>RM15.00</p>
                 </div>
             </div>
 
@@ -106,11 +109,13 @@ function ProductList({products}: ProductListProps) {
                 <p className='font-semibold'>Total</p>
                 <p className=''>
                     RM
-                    {products.reduce(
-                        (acc, item) =>
-                            acc + (item?.prodPrice ?? 0) * (item?.qty ?? 0),
-                        0,
-                    ) + 15}
+                    {(
+                        products.reduce(
+                            (acc, item) =>
+                                acc + (item?.prodPrice ?? 0) * (item?.qty ?? 0),
+                            0,
+                        ) + 15
+                    ).toFixed(2)}
                 </p>
             </div>
         </div>

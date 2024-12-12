@@ -298,9 +298,9 @@ const Example: React.FC<{
                                                                     </h3>
                                                                     <p className='ml-4'>
                                                                         RM
-                                                                        {
-                                                                            item.productPrice
-                                                                        }
+                                                                        {item.productPrice.toFixed(
+                                                                            2,
+                                                                        )}
                                                                     </p>
                                                                 </div>
                                                                 <p className='mt-1 text-sm text-gray-500'>

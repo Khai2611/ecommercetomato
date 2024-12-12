@@ -31,7 +31,7 @@ function Items({currentItems}: ItemsProps) {
                             _id={item.prodID}
                             img={item.p1}
                             productName={item.prodName}
-                            price={item.prodPrice.toString()}
+                            price={item.prodPrice}
                             badge={item.badge}
                             des={item.desc}
                             catID={item.catID}

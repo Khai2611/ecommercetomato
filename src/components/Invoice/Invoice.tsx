@@ -143,7 +143,10 @@ const Invoice: React.FC = () => {
                                         </div>
 
                                         <div className='product-price'>
-                                            <p>RM {product?.prodPrice}</p>
+                                            <p>
+                                                RM{' '}
+                                                {product?.prodPrice.toFixed(2)}
+                                            </p>
                                         </div>
                                     </div>
                                 );

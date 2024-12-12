@@ -59,7 +59,7 @@ function ProductList({products}: ProductListProps) {
 
                     <div className='text-center'>
                         <p className='text-lg font-semibold'>
-                            RM{product.prodPrice}
+                            RM{product.prodPrice.toFixed(2)}
                         </p>
                     </div>
                 </div>

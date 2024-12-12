@@ -15,7 +15,7 @@ interface ProductProps {
     // img: string;
     img: keyof typeof assets; // This makes img a key of the assets object
     productName: string;
-    price: string; // Change to number if needed
+    price: number; // Change to number if needed
     // color: string;
     badge?: boolean; // Make badge a boolean
     des: string;
@@ -59,7 +59,9 @@ const Products: React.FC<ProductProps> = (props) => {
             <div className='prod-item-info'>
                 <div className='flex items-center justify-between font-titleFont'>
                     <p className='prod-item-namee'>{props.productName}</p>
-                    <p className='prod-item-pricee'>RM{props.price}</p>
+                    <p className='prod-item-pricee'>
+                        RM{props.price.toFixed(2)}
+                    </p>
                 </div>
             </div>
         </div>
